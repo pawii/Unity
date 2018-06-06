@@ -18,14 +18,16 @@ public class ReactiveTarget : MonoBehaviour {
 
 	public void ReactToHit()
 	{
-		ai.SetAlive (false);
 		StartCoroutine (Die());
+		ai.isAlive = false;
 	}
 
 	private IEnumerator Die()
 	{
-		transform.Rotate (-75, 0, 0);
-		yield return new WaitForSeconds (1.5f);
-		Destroy (this.gameObject);
+		if (ai.isAlive) {
+			transform.Rotate (-75, 0, 0);
+			yield return new WaitForSeconds (1.5f);
+			Destroy (this.gameObject);
+		}
 	}
 }
