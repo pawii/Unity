@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Mouse.cs" />
      <Compile Include="Assets\Scripts\Move.cs" />
+     <None Include="Assets\Bench\ReadMe.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Unity5/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
