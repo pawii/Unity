@@ -35,21 +35,7 @@ public class RelativeMovement : MonoBehaviour {
 		Vector3 movement = Vector3.zero;
 
 
-		if (_charController.isGrounded)
-		{
-			if (Input.GetButtonDown("Jump"))
-				_vertSpeed = jumpSpeed;
-			else
-				_vertSpeed = minFall;
-		}
-		else 
-		{
-			_vertSpeed += gravity * 5 * Time.deltaTime;
-			if (_vertSpeed < terminalVelocity)
-				_vertSpeed = terminalVelocity;
-		}
-
-
+		// ДВИЖЕНИЕ ПО ГОРИЗОНТАЛИ
 		float horInput = Input.GetAxis("Horizontal");
 		float verInput = Input.GetAxis("Vertical");
 		if (horInput != 0f || verInput != 0f)
@@ -65,14 +51,66 @@ public class RelativeMovement : MonoBehaviour {
 
 			Quaternion direction = Quaternion.LookRotation(movement);
 			transform.rotation = Quaternion.Lerp(transform.rotation, direction, rotSpeed * Time.deltaTime);
-
-			movement.y = _vertSpeed;
-			movement *= Time.deltaTime;
-			_charController.Move(movement);
 		}
+
+
+
+		// РАСПОЗНОВАНИЕ ПОВЕРХНОСТИ
+		bool hitGround = false;
+		RaycastHit hit;
+		if (_vertSpeed < 0 && Physics.Raycast(transform.position, Vector3.down, out hit)) 
+		{
+			float check = // РАССТОЯНИЕ ЧУТЬ ВЫХОДИТ ЗА ГРАНИЦЫ КАПСУЛЫ
+				(_charController.height + _charController.radius) / 1.9f;
+			hitGround = hit.distance <= check;
+		}
+
+
+
+		// СОСТОЯНИЯ: 
+		// 1) ПЕРСОНАЖ ПРЫГАЕТ: _vertSpeed > 0 
+		// 2) ПЕРСОНАЖ СТОИТ НА КРАЮ: 
+		//       hitGround == false && _charController.isGrounded == true
+		// 3) ПЕРСОНАЖ СТОИТ НА ПОВЕРХНОСТИ: hitGround == true;
+
+
+
+
+		// ДВИЖЕНИЕ ПО ВЕРТИКАЛИ
+
+		// СТОИТ НА ПОВЕРХНОСТИ ИЛИ ПРЫГАЕТ
+		if (hitGround)
+		{
+			if (Input.GetButtonDown("Jump"))
+				_vertSpeed = jumpSpeed;
+			else
+				_vertSpeed = minFall;
+		}
+		else 
+		{
+			_vertSpeed += gravity * 5 * Time.deltaTime;
+			if (_vertSpeed<terminalVelocity)
+				_vertSpeed = terminalVelocity;
+
+
+			// СТОИТ НА КРАЮ
+			if (_charController.isGrounded)
+			{
+				if (Vector3.Dot(movement, _contact.normal) < 0)
+				{ movement = _contact.normal * moveSpeed;}
+				else
+				{ movement += _contact.normal * moveSpeed; }
+			}
+		}
+
+		movement.y = _vertSpeed;
+
+
+		movement *= Time.deltaTime;
+		_charController.Move(movement);
 	}
 
-	void OnControllerColladerHit(ControllerColliderHit hit)
+	void OnControllerColliderHit(ControllerColliderHit hit)
 	{
 		_contact = hit;
 	}
