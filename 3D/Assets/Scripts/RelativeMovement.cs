@@ -20,6 +20,8 @@ public class RelativeMovement : MonoBehaviour {
 
 	private CharacterController _charController;
 
+	private Animator _animator;
+
 	private Vector3 movement;
 
 	// Use this for initialization
@@ -27,6 +29,7 @@ public class RelativeMovement : MonoBehaviour {
 		movement = Vector3.zero;
 		_charController = GetComponent<CharacterController>();
 		_vertSpeed = minFall;
+		_animator = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -52,6 +55,8 @@ public class RelativeMovement : MonoBehaviour {
 			Quaternion direction = Quaternion.LookRotation(movement);
 			transform.rotation = Quaternion.Lerp(transform.rotation, direction, rotSpeed * Time.deltaTime);
 		}
+
+		_animator.SetFloat("Speed", movement.sqrMagnitude);
 
 
 
@@ -84,13 +89,19 @@ public class RelativeMovement : MonoBehaviour {
 			if (Input.GetButtonDown("Jump"))
 				_vertSpeed = jumpSpeed;
 			else
+			{ 
 				_vertSpeed = minFall;
+				_animator.SetBool("Jumping", false);
+			}
 		}
 		else 
 		{
 			_vertSpeed += gravity * 5 * Time.deltaTime;
 			if (_vertSpeed<terminalVelocity)
 				_vertSpeed = terminalVelocity;
+
+			if (_contact != null)
+				_animator.SetBool("Jumping", true);
 
 
 			// СТОИТ НА КРАЮ
