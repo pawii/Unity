@@ -15,6 +15,8 @@ public class RelativeMovement : MonoBehaviour {
 	public float terminalVelocity = -10f;
 	public float minFall = -1.5f;
 
+	public float pushForce = 3f;
+
 	private float _vertSpeed;
 	private ControllerColliderHit _contact;
 
@@ -124,5 +126,9 @@ public class RelativeMovement : MonoBehaviour {
 	void OnControllerColliderHit(ControllerColliderHit hit)
 	{
 		_contact = hit;
+
+		Rigidbody rb = hit.collider.attachedRigidbody;
+		if (rb != null && !rb.isKinematic)
+			rb.velocity = hit.moveDirection * pushForce;
 	}
 }
