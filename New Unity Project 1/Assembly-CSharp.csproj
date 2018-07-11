@@ -47,17 +47,27 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Controller.cs" />
+     <Compile Include="Assets\Scripts\DeviceOperator.cs" />
      <Compile Include="Assets\Scripts\FPSInput.cs" />
      <Compile Include="Assets\Scripts\Fireball.cs" />
      <Compile Include="Assets\Scripts\GameEvent.cs" />
+     <Compile Include="Assets\Scripts\IGameManager.cs" />
+     <Compile Include="Assets\Scripts\ImagesManager.cs" />
+     <Compile Include="Assets\Scripts\ManagerStatus.cs" />
+     <Compile Include="Assets\Scripts\Managers.cs" />
      <Compile Include="Assets\Scripts\Messenger.cs" />
      <Compile Include="Assets\Scripts\MouseLook.cs" />
+     <Compile Include="Assets\Scripts\NetworkService.cs" />
      <Compile Include="Assets\Scripts\PlayerCharacter.cs" />
      <Compile Include="Assets\Scripts\RayShooter.cs" />
      <Compile Include="Assets\Scripts\ReactiveTarget.cs" />
      <Compile Include="Assets\Scripts\SttingsPopup.cs" />
      <Compile Include="Assets\Scripts\UIController.cs" />
      <Compile Include="Assets\Scripts\WanderingAI.cs" />
+     <Compile Include="Assets\Scripts\WeatherController.cs" />
+     <Compile Include="Assets\Scripts\WeatherManager.cs" />
+     <Compile Include="Assets\Scripts\WebLoadinBilboard.cs" />
+     <None Include="Assets\SkyBox\SkyBoxBlended.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Unity5/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
