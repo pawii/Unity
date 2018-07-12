@@ -12,20 +12,34 @@ public class UIController : MonoBehaviour {
 
 	private int score;
 
-	public void OnOpenSettings()
-	{
-		pop.Open();
-	}
-
 	void Start () 
 	{
 		score = 0;
 		scoreLabel.text = "Score: " + score;
-		pop.Close();
+
+		pop.gameObject.SetActive(false);
+		Cursor.lockState = CursorLockMode.Locked;
+		Cursor.visible = false;
 	}
 
 	void Update () 
 	{
+		if (Input.GetKeyDown(KeyCode.M))
+		{
+			bool isShowing = pop.gameObject.activeSelf;
+			pop.gameObject.SetActive(!isShowing);
+
+			if (isShowing)
+			{
+				Cursor.lockState = CursorLockMode.Locked;
+				Cursor.visible = false;
+			}
+			else
+			{
+				Cursor.lockState = CursorLockMode.None;
+				Cursor.visible = true;
+			}
+		}
 	}
 
 
