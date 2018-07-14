@@ -47,7 +47,9 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\CollectibleItem.cs" />
-     <Compile Include="Assets\Scripts\Controller.cs" />
+     <Compile Include="Assets\Scripts\Controllers\Controller.cs" />
+     <Compile Include="Assets\Scripts\Controllers\StartupController.cs" />
+     <Compile Include="Assets\Scripts\Controllers\UIController.cs" />
      <Compile Include="Assets\Scripts\Devices\BaseDevice.cs" />
      <Compile Include="Assets\Scripts\Devices\ColorChangeDevice.cs" />
      <Compile Include="Assets\Scripts\Devices\DeviceTrigger.cs" />
@@ -57,18 +59,21 @@
      <Compile Include="Assets\Scripts\Enemies\WanderingAI.cs" />
      <Compile Include="Assets\Scripts\Events\GameEvent.cs" />
      <Compile Include="Assets\Scripts\Events\Messenger.cs" />
+     <Compile Include="Assets\Scripts\Events\StartupEvent.cs" />
      <Compile Include="Assets\Scripts\InventoryPoppup.cs" />
+     <Compile Include="Assets\Scripts\Managers\DataManager.cs" />
      <Compile Include="Assets\Scripts\Managers\IGameManager.cs" />
      <Compile Include="Assets\Scripts\Managers\InventoryManager.cs" />
      <Compile Include="Assets\Scripts\Managers\ManagerStatus.cs" />
      <Compile Include="Assets\Scripts\Managers\Managers.cs" />
+     <Compile Include="Assets\Scripts\Managers\MissionManager.cs" />
      <Compile Include="Assets\Scripts\Managers\NetworkService.cs" />
      <Compile Include="Assets\Scripts\Managers\PlayerManager.cs" />
+     <Compile Include="Assets\Scripts\ObjectiveTrigger.cs" />
      <Compile Include="Assets\Scripts\OrbitCamera.cs" />
      <Compile Include="Assets\Scripts\PlayerCharacter.cs" />
      <Compile Include="Assets\Scripts\PointClickMovement.cs" />
      <Compile Include="Assets\Scripts\RelativeMovement.cs" />
-     <Compile Include="Assets\Scripts\UIController.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Unity5/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

@@ -84,4 +84,14 @@ public class InventoryManager : MonoBehaviour, IGameManager
 		Debug.Log("Cannot consume " + name);
 		return false;
 	}
+
+	public void UpdateData(Dictionary<string, int> items)
+	{
+		_items = items;
+	}
+
+	public Dictionary<string, int> GetData()
+	{
+		return _items;
+	}
 }

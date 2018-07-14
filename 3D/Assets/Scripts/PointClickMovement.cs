@@ -149,7 +149,7 @@ public class PointClickMovement : MonoBehaviour
 
 
 		movement *= Time.deltaTime;
-		Debug.Log(movement.x + ", " + movement.z);
+		//Debug.Log(movement.x + ", " + movement.z);
 		_charController.Move(movement);
 	}
 

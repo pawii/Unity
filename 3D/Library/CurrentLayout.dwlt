@@ -68,10 +68,10 @@ MonoBehaviour:
     y: 30
     width: 1366
     height: 635
-  m_MinSize: {x: 681, y: 492}
+  m_MinSize: {x: 679, y: 492}
   m_MaxSize: {x: 14002, y: 14042}
   vertical: 0
-  controlID: 39
+  controlID: 11
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -117,10 +117,10 @@ MonoBehaviour:
     y: 0
     width: 898
     height: 635
-  m_MinSize: {x: 406, y: 492}
+  m_MinSize: {x: 404, y: 492}
   m_MaxSize: {x: 10002, y: 14042}
   vertical: 1
-  controlID: 40
+  controlID: 12
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -139,8 +139,8 @@ MonoBehaviour:
     y: 0
     width: 218
     height: 364
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 19}
@@ -210,10 +210,10 @@ MonoBehaviour:
     y: 0
     width: 898
     height: 364
-  m_MinSize: {x: 406, y: 221}
-  m_MaxSize: {x: 8006, y: 4021}
+  m_MinSize: {x: 404, y: 221}
+  m_MaxSize: {x: 8004, y: 4021}
   vertical: 0
-  controlID: 41
+  controlID: 13
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -436,20 +436,20 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Resources/icons
+    - Assets/Scenes
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Resources/icons
+  - Assets/Scenes
   m_LastFoldersGridSize: -1
   m_LastProjectPath: "C:\\Users\\pawii\\Desktop\\\u0423\u0447\u0435\u0431\u0430\\GameDev\\\u041F\u0440\u043E\u043A\u0435\u0442\u044B
     Unity\\3D"
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 4e250000
-    m_LastClickedID: 9550
-    m_ExpandedIDs: 00000000be2400000c2500008c250000ffffff7f
+    m_SelectedIDs: 76250000
+    m_LastClickedID: 9590
+    m_ExpandedIDs: 00000000d8240000ffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -477,7 +477,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 2a290000
     m_LastClickedID: 10538
-    m_ExpandedIDs: 00000000be2400000c2500008c250000
+    m_ExpandedIDs: 00000000d8240000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -635,14 +635,14 @@ MonoBehaviour:
     width: 676
     height: 343
   m_SceneLighting: 1
-  lastFramingTime: 43842.7815501886
-  m_2DMode: 0
+  lastFramingTime: 4782.589027096839
+  m_2DMode: 1
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 7.3867955, y: 13.652836, z: -15.000056}
+    m_Target: {x: 338, y: 163, z: 0}
     speed: 2
-    m_Value: {x: 7.3867955, y: 13.652836, z: -15.000056}
+    m_Value: {x: 338, y: 163, z: 0}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -657,26 +657,26 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
     yGrid:
-      m_Target: 1
-      speed: 2
-      m_Value: 1
-    zGrid:
       m_Target: 0
       speed: 2
       m_Value: 0
+    zGrid:
+      m_Target: 1
+      speed: 2
+      m_Value: 1
   m_Rotation:
-    m_Target: {x: 0.6373323, y: 0.15834321, z: -0.13604899, w: 0.74177194}
+    m_Target: {x: 0, y: 0, z: 0, w: 1}
     speed: 2
-    m_Value: {x: 0.6373323, y: 0.15834321, z: -0.13604899, w: 0.74177194}
+    m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 39.129425
+    m_Target: 446.69742
     speed: 2
-    m_Value: 39.129425
+    m_Value: 446.69742
   m_Ortho:
-    m_Target: 0
+    m_Target: 1
     speed: 2
-    m_Value: 0
-  m_LastSceneViewRotation: {x: -0.6093829, y: -0.22780536, z: 0.18871127, w: -0.73562574}
+    m_Value: 1
+  m_LastSceneViewRotation: {x: 0.05009648, y: -0.92934746, z: 0.33903778, w: 0.13732094}
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
@@ -710,28 +710,28 @@ MonoBehaviour:
     height: 343
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: a0260000
-    m_LastClickedID: 9888
-    m_ExpandedIDs: d27afcffe8fbffff00000000f8250000
+    m_SelectedIDs: 1e250000
+    m_LastClickedID: 0
+    m_ExpandedIDs: 2ea5feff38fdfeff9402fffff410ffff4617ffff6029ffff44d2ffffb0d3ffff0af7ffffe8fbffff000000001e2700002c4c0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Door (1)
-      m_OriginalName: Door (1)
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 9946
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 0
       m_ClientGUIView: {fileID: 6}
     m_SearchString: 
   m_ExpandedScenes:
-  - main
+  - Startup
   m_CurrenRootInstanceID: 0
   m_Locked: 0
   m_CurrentSortingName: TransformSorting
