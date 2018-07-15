@@ -47,7 +47,7 @@ public class PointClickMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		Vector3 movement = Vector3.zero;
+		movement = Vector3.zero;
 
 
 		// ОПРЕДЕЛЕНИЕ ТОЧКИ ДВИЖЕНИЯ

@@ -9,7 +9,11 @@ public class CollectibleItem : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other)
 	{
-		Managers.Inventory.AddItem(itemName);
-		Destroy(this.gameObject);
+		PlayerCharacter pc = other.GetComponent<PlayerCharacter>();
+		if (pc != null)
+		{
+			Managers.Inventory.AddItem(itemName);
+			Destroy(this.gameObject);
+		}
 	}
 }

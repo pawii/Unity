@@ -9,14 +9,18 @@ public class UIController : MonoBehaviour {
 	private Text healthLabel;
 
 	[SerializeField]
-	private InventoryPoppup poppup;
+	private InventoryPoppup inventoryPoppup;
+
+	[SerializeField]
+	private AudioPoppup audioPoppup;
 
 	[SerializeField]
 	private Text levelEnding;
 
 	void Start () 
 	{
-		poppup.gameObject.SetActive(false);
+		inventoryPoppup.gameObject.SetActive(false);
+		audioPoppup.gameObject.SetActive(false);
 		levelEnding.gameObject.SetActive(false);
 		OnHealthUpdated();
 	}
@@ -25,9 +29,18 @@ public class UIController : MonoBehaviour {
 	{
 		if (Input.GetKeyDown(KeyCode.M))
 		{
-			bool isActive = poppup.gameObject.activeSelf;
-			poppup.gameObject.SetActive(!isActive);
-			poppup.Refresh();
+			audioPoppup.gameObject.SetActive(false);
+
+			bool isActive = inventoryPoppup.gameObject.activeSelf;
+			inventoryPoppup.gameObject.SetActive(!isActive);
+			inventoryPoppup.Refresh();
+		}
+		if (Input.GetKeyDown(KeyCode.N))
+		{
+			inventoryPoppup.gameObject.SetActive(false);
+
+			bool isActive = audioPoppup.gameObject.activeSelf;
+			audioPoppup.gameObject.SetActive(!isActive);
 		}
 	}
 

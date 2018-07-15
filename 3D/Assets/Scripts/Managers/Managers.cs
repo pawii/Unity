@@ -6,12 +6,17 @@ using UnityEngine;
 [RequireComponent(typeof(InventoryManager))]
 [RequireComponent(typeof(MissionManager))]
 [RequireComponent(typeof(DataManager))]
+[RequireComponent(typeof(AudioManager))]
 public class Managers : MonoBehaviour 
 {
+	[SerializeField]
+	private GameObject[] dontDestroy;
+
 	public static InventoryManager Inventory { get; private set;}
 	public static PlayerManager Player { get; private set; }
 	public static MissionManager Mission { get; private set; }
 	public static DataManager Data { get; private set; }
+	public static AudioManager Audio { get; private set; }
 
 	private List<IGameManager> _startSequence;
 
@@ -19,17 +24,21 @@ public class Managers : MonoBehaviour
 	void Awake () 
 	{
 		DontDestroyOnLoad(gameObject);
+		foreach(GameObject gObject in dontDestroy)
+			DontDestroyOnLoad(gObject);
 
 		Inventory = GetComponent<InventoryManager>();
 		Player = GetComponent<PlayerManager>();
 		Mission = GetComponent<MissionManager>();
 		Data = GetComponent<DataManager>();
+		Audio = GetComponent<AudioManager>();
 
 		_startSequence = new List<IGameManager>();
 		_startSequence.Add(Player);
 		_startSequence.Add(Inventory);
 		_startSequence.Add(Mission);
 		_startSequence.Add(Data);
+		_startSequence.Add(Audio);
 		StartCoroutine(StartupManagers());
 	}
 

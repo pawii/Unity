@@ -17,6 +17,9 @@ public class InventoryPoppup : MonoBehaviour
 	[SerializeField]
 	private Button useButton;
 
+	[SerializeField]
+	AudioClip buttonClickClip;
+
 	private string _curItem;
 
 	public void Refresh()
@@ -88,6 +91,7 @@ public class InventoryPoppup : MonoBehaviour
 	{
 		Managers.Inventory.EquipItem(_curItem);
 		Refresh();
+		Managers.Audio.PlaySound(buttonClickClip);
 	}
 
 	public void OnUse()
@@ -96,5 +100,6 @@ public class InventoryPoppup : MonoBehaviour
 		if (_curItem == "health")
 			Managers.Player.ChangeHealth(25);
 		Refresh();
+		Managers.Audio.PlaySound(buttonClickClip);
 	}
 }
