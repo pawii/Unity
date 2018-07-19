@@ -1,16 +1,32 @@
-﻿<Properties StartupConfiguration="{8BD133AA-96FC-03E1-C1AC-FD63C8D749AB}|Unit Tests">
+﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Managers\AudioManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Devices\BaseDevice.cs">
     <Files>
       <File FileName="Assets\Scripts\AudioPoppup.cs" Line="23" Column="3" />
       <File FileName="Assets\Scripts\Managers\AudioManager.cs" Line="105" Column="54" />
       <File FileName="Assets\Scripts\InventoryPoppup.cs" Line="100" Column="5" />
       <File FileName="Assets\Scripts\PointClickMovement.cs" Line="55" Column="4" />
+      <File FileName="Assets\Editor\TestPostBuild.cs" Line="8" Column="2" />
+      <File FileName="Assets\Scripts\PlatformTest.cs" Line="9" Column="3" />
+      <File FileName="Assets\Scripts\Managers\Managers.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Managers\MissionManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Managers\PlayerManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Events\GameEvent.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Controllers\Controller.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Controllers\StartupController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Controllers\UIController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\CollectibleItem.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\ObjectiveTrigger.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Enemies\Fireball.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Events\StartupEvent.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Devices\ColorChangeDevice.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Devices\DeviceTrigger.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Devices\DoorOpenDevice.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Devices\BaseDevice.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MultiItemStartupConfigurations />
