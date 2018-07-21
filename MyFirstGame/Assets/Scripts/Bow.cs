@@ -70,8 +70,9 @@ public class Bow : MonoBehaviour
 		newBullet.transform.position = transform.position;
 		newBullet.transform.rotation = transform.rotation;
 
-		Rigidbody2D rb = newBullet.GetComponent<Rigidbody2D>();
+		Bullet script = newBullet.GetComponent<Bullet>();
+		script.Parent = transform.parent.gameObject.transform.parent.gameObject;
 		Vector2 force = transform.right * charge;
-		rb.AddForce(force, ForceMode2D.Impulse);
+		script.Shoot(force);
 	}
 }
