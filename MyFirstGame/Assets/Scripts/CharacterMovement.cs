@@ -41,4 +41,9 @@ public class CharacterMovement : MonoBehaviour
 		Vector2 force = transform.up * jumpPower;
 		rb.AddForce(force, ForceMode2D.Impulse);
 	}
+
+	public void RecieveDamage()
+	{
+		
+	}
 }

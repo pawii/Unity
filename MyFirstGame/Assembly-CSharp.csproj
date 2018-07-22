@@ -50,6 +50,13 @@
      <Compile Include="Assets\Scripts\Bullet.cs" />
      <Compile Include="Assets\Scripts\CameraMovement.cs" />
      <Compile Include="Assets\Scripts\CharacterMovement.cs" />
+     <Compile Include="Assets\Scripts\Monsters\Ghost.cs" />
+     <Compile Include="Assets\Scripts\Monsters\Monster.cs" />
+     <Compile Include="Assets\Scripts\Monsters\Movement\AgressiveMovement.cs" />
+     <Compile Include="Assets\Scripts\Monsters\Movement\IMovement.cs" />
+     <Compile Include="Assets\Scripts\Monsters\Movement\IntelligenceMovement.cs" />
+     <Compile Include="Assets\Scripts\Monsters\Movement\StayInPlaceMovement.cs" />
+     <Compile Include="Assets\Scripts\Monsters\Movement\TwoPointMovement.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Unity5/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

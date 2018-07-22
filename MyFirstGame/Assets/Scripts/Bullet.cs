@@ -17,6 +17,8 @@ public class Bullet : MonoBehaviour
 	Vector2 startRot;
 	Vector2 curRot;
 	float percent;
+	Vector2 attachOffset;
+	Transform target;
 
 
 
@@ -34,12 +36,27 @@ public class Bullet : MonoBehaviour
 			curRot.y = startRot.y - startRot.y * percent;
 			transform.right = curRot;
 		}
+		else
+		{
+			if (target)				transform.position = (Vector2)target.position - attachOffset;
+			else
+				Destroy(gameObject);
+		}
 	}
 
-	void OnCollisionEnter2D(Collision2D collision)
+	void OnTriggerEnter2D(Collider2D collider)
 	{
-		if (collision.gameObject != parent)
-			StartCoroutine(Hitting());
+		Vector2 spherePos = transform.position + transform.right / 10;
+		if (Physics2D.OverlapCircle(spherePos, 0.1f))
+		{
+			if (collider.gameObject != parent && !hit)
+			{
+				attachOffset = collider.transform.position - transform.position;
+				target = collider.gameObject.transform;
+				collider.gameObject.SendMessage("OnHit", SendMessageOptions.DontRequireReceiver);
+				StartCoroutine(Hitting());
+			}
+		}
 	}
 
 	IEnumerator Hitting()
