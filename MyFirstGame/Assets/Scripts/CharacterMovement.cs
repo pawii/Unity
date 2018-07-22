@@ -6,6 +6,8 @@ public class CharacterMovement : MonoBehaviour
 {
 	public float speed = 5f;
 	public float jumpPower = 5f;
+	[SerializeField]
+	int getDamagePower = 2;
 
 	private Rigidbody2D rb;
 
@@ -14,6 +16,7 @@ public class CharacterMovement : MonoBehaviour
 	void Awake()
 	{
 		rb = GetComponent<Rigidbody2D>();
+		Messenger<SpriteRenderer>.AddListener(GameEvent.RECIEVE_DAMAGE, OnRecieveDamage);
 	}
 
 	void Update()
@@ -21,6 +24,11 @@ public class CharacterMovement : MonoBehaviour
 		SetGrounded();
 		if (Input.GetButton("Horizontal")) Run();
 		if (Input.GetButtonDown("Jump") && isGrounded) Jump();
+	}
+
+	void Destroy()
+	{
+		Messenger<SpriteRenderer>.RemoveListener(GameEvent.RECIEVE_DAMAGE, OnRecieveDamage);
 	}
 
 	void SetGrounded()
@@ -42,8 +50,10 @@ public class CharacterMovement : MonoBehaviour
 		rb.AddForce(force, ForceMode2D.Impulse);
 	}
 
-	public void RecieveDamage()
+	public void OnRecieveDamage(SpriteRenderer monsterSprite)
 	{
-		
+		Vector2 getDamageForce = new Vector2(1, 1);
+		int getDamageDiretion = monsterSprite.flipX ? 1 : -1;
+		rb.AddForce(getDamagePower * getDamageDiretion * getDamageForce, ForceMode2D.Impulse);
 	}
 }

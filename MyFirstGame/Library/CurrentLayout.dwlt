@@ -356,9 +356,9 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
-    x: 371
+    x: 313
     y: 92
-    width: 716
+    width: 595
     height: 322
 --- !u!114 &15
 MonoBehaviour:
@@ -461,20 +461,20 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Scripts/Monsters/Movement
+    - Assets/Scenes
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts/Monsters/Movement
+  - Assets/Scenes
   m_LastFoldersGridSize: -1
   m_LastProjectPath: "C:\\Users\\pawii\\Desktop\\\u0423\u0447\u0435\u0431\u0430\\GameDev\\\u041F\u0440\u043E\u043A\u0435\u0442\u044B
     Unity\\MyFirstGame"
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 842b0000
-    m_LastClickedID: 11140
-    m_ExpandedIDs: 00000000b02400002c2500007e2b0000ffffff7f
+    m_SelectedIDs: c6a00000
+    m_LastClickedID: 41158
+    m_ExpandedIDs: 00000000c62400004625000052250000ffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -502,7 +502,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 2a290000
     m_LastClickedID: 10538
-    m_ExpandedIDs: 00000000b0240000
+    m_ExpandedIDs: 00000000c62400004625000052250000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -660,14 +660,14 @@ MonoBehaviour:
     width: 595
     height: 322
   m_SceneLighting: 1
-  lastFramingTime: 2570.9103038261683
+  lastFramingTime: 11447.679543100889
   m_2DMode: 1
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 0.5568733, y: 1.4286499, z: 0}
+    m_Target: {x: 297.5, y: 152.5, z: 0}
     speed: 2
-    m_Value: {x: 0.5568733, y: 1.4286499, z: 0}
+    m_Value: {x: 297.5, y: 152.5, z: 0}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -694,9 +694,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 10.881676
+    m_Target: 407.3133
     speed: 2
-    m_Value: 10.881676
+    m_Value: 407.3133
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -735,9 +735,9 @@ MonoBehaviour:
     height: 322
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 44270000
-    m_LastClickedID: 10052
-    m_ExpandedIDs: e8fbffff0000000072270000
+    m_SelectedIDs: 5c250000
+    m_LastClickedID: 0
+    m_ExpandedIDs: 7aa0fdff2eb3fdffe6fffdff2e0afeff080cfeff7243feffe6fbffffe8fbffff0000000068270000b2290000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -756,7 +756,7 @@ MonoBehaviour:
       m_ClientGUIView: {fileID: 6}
     m_SearchString: 
   m_ExpandedScenes:
-  - Main
+  - Level1
   m_CurrenRootInstanceID: 0
   m_Locked: 0
   m_CurrentSortingName: TransformSorting

@@ -21,7 +21,6 @@ public class Bullet : MonoBehaviour
 	Transform target;
 
 
-
 	void Awake()
 	{
 		rb = GetComponent<Rigidbody2D>();
@@ -47,9 +46,11 @@ public class Bullet : MonoBehaviour
 	void OnTriggerEnter2D(Collider2D collider)
 	{
 		Vector2 spherePos = transform.position + transform.right / 10;
-		if (Physics2D.OverlapCircle(spherePos, 0.1f))
+		Collider2D[] colliders = Physics2D.OverlapCircleAll(spherePos, 0.1f);
+		if (colliders.Length > 0)
 		{
-			if (collider.gameObject != parent && !hit)
+			if (collider.gameObject != parent && !hit && collider.gameObject.tag != "arrow"
+			    && collider.gameObject.tag != "bow")
 			{
 				attachOffset = collider.transform.position - transform.position;
 				target = collider.gameObject.transform;

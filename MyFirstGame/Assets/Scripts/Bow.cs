@@ -16,6 +16,10 @@ public class Bow : MonoBehaviour
 	private float time1;
 	private float time2;
 	public float shotPower = 7f;
+	bool requireShoot = true;
+	bool power = false;
+	public float shootDelay = 1f;
+
 
 	void Start()
 	{
@@ -48,10 +52,13 @@ public class Bow : MonoBehaviour
 		transform.localPosition = pos;
 
 		// ВЫСТРЕЛ
-		if (Input.GetMouseButtonDown(0))
+		if (Input.GetMouseButtonDown(0) && requireShoot)
+		{
 			time1 = (float)DateTime.Now.Second + (float)DateTime.Now.Millisecond / (float)1000;
+			power = true;
+		}
 
-		if (Input.GetMouseButtonUp(0))
+		if (Input.GetMouseButtonUp(0) && power)
 		{
 			time2 = (float)DateTime.Now.Second + (float)DateTime.Now.Millisecond / (float)1000;
 			if (time2 < time1)
@@ -59,9 +66,10 @@ public class Bow : MonoBehaviour
 			float charge = time2 - time1;
 			charge = Mathf.Clamp(charge, 0.5f, 2); // ОГРАНИЧЕНИЕ ПО ВРЕМЕНИ ЗАРЯДА (СЕК)
 			charge *= shotPower;
+			StartCoroutine(ShootDelay());
 			Shoot(charge);
+			power = false;
 		}
-		
 	}
 
 	private void Shoot(float charge)
@@ -74,5 +82,14 @@ public class Bow : MonoBehaviour
 		script.Parent = transform.parent.gameObject.transform.parent.gameObject;
 		Vector2 force = transform.right * charge;
 		script.Shoot(force);
+	}
+
+	private IEnumerator ShootDelay()
+	{
+		requireShoot = false;
+
+		yield return new WaitForSeconds(shootDelay);
+
+		requireShoot = true;
 	}
 }
