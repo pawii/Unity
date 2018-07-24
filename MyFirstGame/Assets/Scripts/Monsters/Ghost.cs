@@ -6,16 +6,19 @@ public class Ghost : Monster
 {
 	void Awake()
 	{
-		speed = 3f;
 		health = 3;
+		speed = 3f;
 		damage = -1;
-		damageArea = 1f;
-		damageRate = 2f;
-		triggerArea = 5f;
+		damageArea = 1;
+		damageRate = 1f;
+
+		triggerArea = 3f;
+
 		sprite = GetComponentInChildren<SpriteRenderer>();
-		movement = new IntelligenceMovement(-1, sprite, transform, null, null);
-		triggerMovement = new AgressiveMovement(-1, sprite, transform, character, null);
-		attackMovement = new GhostAttackMovement(-1, null, transform, null);
+
+		movement = new IntelligenceMovement(sprite, transform);
+		triggerMovement = new AgressiveMovement(sprite, transform, character);
+		attackMovement = new StayInPlaceMovement(sprite, transform, character);
 		attackMethod = (damage, velocity) => { Managers.Player.ChangeHealth(damage, sprite); };
 	}
 }

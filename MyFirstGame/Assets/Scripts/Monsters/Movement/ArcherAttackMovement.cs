@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ArcherAttackMovement : IMovement
 {
-	public int Direction { get; set; }
 	public SpriteRenderer Sprite { get; set; }
 	public Transform Target { get; set; }
 	public Transform TriggerTarget { get; set; }
@@ -12,10 +11,9 @@ public class ArcherAttackMovement : IMovement
 	public float Velocity { get; set; }
 	public int MinCoordY { get; set; }
 
-	public ArcherAttackMovement(int direction, SpriteRenderer sprite, Transform target, Transform triggerTarget, Transform weapon,
+	public ArcherAttackMovement(SpriteRenderer sprite, Transform target, Transform triggerTarget, Transform weapon,
 					   float velocity, int minCoordY)
 	{
-		Direction = direction;
 		Sprite = sprite;
 		Target = target;
 		TriggerTarget = triggerTarget;
@@ -23,6 +21,7 @@ public class ArcherAttackMovement : IMovement
 		Velocity = velocity;
 		MinCoordY = minCoordY;
 
+		// ЦЕЛИТСЯ НЕ В ПУСТОЙ ОБЪЕКТ, А В СПРАЙТ
 		TriggerTarget = triggerTarget.GetComponentInChildren<SpriteRenderer>().transform;
 	}
 
@@ -67,7 +66,6 @@ public class ArcherAttackMovement : IMovement
 
 		// ИЗМЕНЕНИЕ ПОЛОЖЕНИЯ
 		Vector3 pos = new Vector3();
-		Debug.Log(Vector3.Dot(Weapon.right, Target.up));
 		pos.y = Vector3.Dot(Weapon.right, Target.up);
 		if (pos.y > MinCoordY)
 			pos.x = Vector3.Dot(Weapon.right, Target.right);

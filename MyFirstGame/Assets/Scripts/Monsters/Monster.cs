@@ -13,32 +13,38 @@ public class Monster : MonoBehaviour
 	protected float damageRate;
 	private bool damaging;
 
+	protected float triggerArea;
+	private bool trigger;
+
+	[SerializeField]
+	protected Transform character;
+	protected SpriteRenderer sprite;
+
 	protected IMovement movement;
 	protected IMovement triggerMovement;
 	protected IMovement attackMovement;
 	protected Action<int, float> attackMethod;
 
-	protected SpriteRenderer sprite;
-	private bool trigger = false;
-	protected float triggerArea;
-	[SerializeField]
-	protected Transform character;
-
 	void Awake()
 	{
-		velocity = 0f;
-		health = 0;
+		health = 1;
 		speed = 1f;
-		damage = 0;
-		damageArea = 0;
-		damageRate = 0f;
+		damage = -1;
+		velocity = 1f;
+		damageArea = 1;
+		damageRate = 1f;
 		damaging = false;
-		triggerArea = 0f;
+
+		triggerArea = 3f;
+		trigger = false;
+
 		sprite = GetComponentInChildren<SpriteRenderer>();
-		movement = new StayInPlaceMovement(-1, sprite, transform, null); // ПАТТЕРН "СТРАТЕГИЯ
+
+		movement = new StayInPlaceMovement(sprite, transform, character);
 		triggerMovement = movement;
 		attackMovement = movement;
 		attackMethod = (damage, velocity) => { };
+
 	}
 
 	void OnHit()
@@ -90,7 +96,7 @@ public class Monster : MonoBehaviour
 			}
 		}
 		Move();
-		//Debug.Log(movement.ToString());	}
+		Debug.Log(movement.ToString());	}
 	IEnumerator Damaging()
 	{
 		damaging = true;

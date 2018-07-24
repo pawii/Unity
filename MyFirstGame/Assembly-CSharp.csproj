@@ -67,7 +67,6 @@
      <Compile Include="Assets\Scripts\Monsters\MonsterBow.cs" />
      <Compile Include="Assets\Scripts\Monsters\Movement\AgressiveMovement.cs" />
      <Compile Include="Assets\Scripts\Monsters\Movement\ArcherAttackMovement.cs" />
-     <Compile Include="Assets\Scripts\Monsters\Movement\GhostAttackMovement.cs" />
      <Compile Include="Assets\Scripts\Monsters\Movement\IMovement.cs" />
      <Compile Include="Assets\Scripts\Monsters\Movement\IntelligenceMovement.cs" />
      <Compile Include="Assets\Scripts\Monsters\Movement\StayInPlaceMovement.cs" />

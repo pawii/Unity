@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour 
 {
-	private GameObject parent;
-	public GameObject Parent { set { parent = value; } }
-	public float rotSpeed = 1.5f;
+	public GameObject Parent { get; set; }
 	private Rigidbody2D rb;
 	private bool hit = true;
 
@@ -15,8 +13,6 @@ public class Bullet : MonoBehaviour
 	Vector2 startPos;
 	Vector2 endPos;
 	Vector2 startRot;
-	Vector2 curRot;
-	float percent;
 	Vector2 attachOffset;
 	Transform target;
 
@@ -30,7 +26,8 @@ public class Bullet : MonoBehaviour
 	{
 		if (!hit)
 		{
-			percent = (transform.position.x - startPos.x) / ((endPos.x - startPos.x) / 2);
+			float percent = (transform.position.x - startPos.x) / ((endPos.x - startPos.x) / 2);
+			Vector2 curRot;
 			curRot.x = startRot.x;
 			curRot.y = startRot.y - startRot.y * percent;
 			transform.right = curRot;
@@ -49,7 +46,7 @@ public class Bullet : MonoBehaviour
 		Collider2D[] colliders = Physics2D.OverlapCircleAll(spherePos, 0.1f);
 		if (colliders.Length > 0)
 		{
-			if (collider.gameObject != parent && !hit && collider.gameObject.tag != "arrow"
+			if (collider.gameObject != Parent && !hit && collider.gameObject.tag != "arrow"
 			    && collider.gameObject.tag != "bow")
 			{
 				attachOffset = collider.transform.position - transform.position;

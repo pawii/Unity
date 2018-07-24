@@ -4,30 +4,31 @@ using UnityEngine;
 
 public class IntelligenceMovement : IMovement
 {
-	public int Direction { get; set; }
 	public SpriteRenderer Sprite { get; set; }
 	public Transform Target { get; set; }
-	public Transform TriggerTarget { get; set; }
 	public Transform Weapon { get; set; }
 
-	public IntelligenceMovement(int direction, SpriteRenderer sprite, Transform target, Transform triggerTarget, Transform weapon)
+	public IntelligenceMovement(SpriteRenderer sprite, Transform target)
 	{
-		Direction = direction;
 		Sprite = sprite;
 		Target = target;
-		TriggerTarget = triggerTarget;
+		Weapon = null;
+	}
+
+	public IntelligenceMovement(SpriteRenderer sprite, Transform target, Transform weapon) : this(sprite, target)
+	{
 		Weapon = weapon;
 	}
 
 	public Vector2 Move()
 	{
+		int direction = Sprite.flipX ? 1 : -1;
 		Vector2 spherePos = Target.position;
 		spherePos.y += 0.5f;
-		spherePos.x += 0.5f * Direction;
+		spherePos.x += 0.5f * direction;
 		foreach (Collider2D collider in Physics2D.OverlapCircleAll(spherePos, 0.1f))
 			if (collider.gameObject.layer == LayerMask.NameToLayer("ground"))
 			{
-				Direction = -Direction;
 				Sprite.flipX = !Sprite.flipX;
 				if (Weapon != null)
 				{
@@ -37,7 +38,7 @@ public class IntelligenceMovement : IMovement
 				}
 			}
 
-		Vector2 pos = Target.position + Target.right * Direction;
+		Vector2 pos = Target.position + Target.right * direction;
 		return pos;
 	}
 }
