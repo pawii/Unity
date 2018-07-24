@@ -54,6 +54,7 @@ public class CharacterMovement : MonoBehaviour
 	{
 		Vector2 getDamageForce = new Vector2(1, 1);
 		int getDamageDiretion = monsterSprite.flipX ? 1 : -1;
-		rb.AddForce(getDamagePower * getDamageDiretion * getDamageForce, ForceMode2D.Impulse);
+		if (rb != null)
+			rb.AddForce(getDamagePower * getDamageDiretion * getDamageForce, ForceMode2D.Impulse);
 	}
 }

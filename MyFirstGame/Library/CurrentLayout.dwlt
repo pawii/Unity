@@ -461,20 +461,20 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Scenes
+    - Assets/Resources
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scenes
+  - Assets/Resources
   m_LastFoldersGridSize: -1
   m_LastProjectPath: "C:\\Users\\pawii\\Desktop\\\u0423\u0447\u0435\u0431\u0430\\GameDev\\\u041F\u0440\u043E\u043A\u0435\u0442\u044B
     Unity\\MyFirstGame"
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: c6a00000
-    m_LastClickedID: 41158
-    m_ExpandedIDs: 00000000c62400004625000052250000ffffff7f
+    m_SelectedIDs: 34250000
+    m_LastClickedID: 9524
+    m_ExpandedIDs: 00000000d82400005e2500006a250000ffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -502,7 +502,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 2a290000
     m_LastClickedID: 10538
-    m_ExpandedIDs: 00000000c62400004625000052250000
+    m_ExpandedIDs: 00000000d82400005e2500006a250000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -660,14 +660,14 @@ MonoBehaviour:
     width: 595
     height: 322
   m_SceneLighting: 1
-  lastFramingTime: 11447.679543100889
+  lastFramingTime: 1265.6241288235442
   m_2DMode: 1
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 297.5, y: 152.5, z: 0}
+    m_Target: {x: -4.514404, y: 1.3266239, z: 10}
     speed: 2
-    m_Value: {x: 297.5, y: 152.5, z: 0}
+    m_Value: {x: -4.514404, y: 1.3266239, z: 10}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -694,9 +694,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 407.3133
+    m_Target: 11.127779
     speed: 2
-    m_Value: 407.3133
+    m_Value: 11.127779
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -735,23 +735,23 @@ MonoBehaviour:
     height: 322
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 5c250000
+    m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 7aa0fdff2eb3fdffe6fffdff2e0afeff080cfeff7243feffe6fbffffe8fbffff0000000068270000b2290000
+    m_ExpandedIDs: fc03fffffe03ffff4411ffff0429ffff3031ffff0435ffff5252ffffe8fbffff00000000fe25000082280000142b0000be880000468b0000d88d0000769600007c9800007a9a0000f69a0000eaaa0000b4ae00004aaf0000a0af0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: Block (1)
+      m_OriginalName: Block (1)
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: 39778
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 0
       m_ClientGUIView: {fileID: 6}
     m_SearchString: 

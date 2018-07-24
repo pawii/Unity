@@ -19,6 +19,11 @@ public class StayInPlaceMovement : IMovement
 
 	public Vector2 Move()
 	{
+		if (Target.position.x - TriggerTarget.position.x >= 0)
+			Sprite.flipX = false;
+		else
+			Sprite.flipX = true;
+		
 		Vector2 pos = Target.position;
 		return pos;	}
 }

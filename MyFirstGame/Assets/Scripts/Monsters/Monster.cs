@@ -8,6 +8,7 @@ public class Monster : MonoBehaviour
 	protected int health;
 	protected float speed;
 	protected int damage;
+	protected float velocity;
 	protected float damageArea;
 	protected float damageRate;
 	private bool damaging;
@@ -15,7 +16,7 @@ public class Monster : MonoBehaviour
 	protected IMovement movement;
 	protected IMovement triggerMovement;
 	protected IMovement attackMovement;
-	protected Action<int> attackMethod;
+	protected Action<int, float> attackMethod;
 
 	protected SpriteRenderer sprite;
 	private bool trigger = false;
@@ -25,6 +26,7 @@ public class Monster : MonoBehaviour
 
 	void Awake()
 	{
+		velocity = 0f;
 		health = 0;
 		speed = 1f;
 		damage = 0;
@@ -36,7 +38,7 @@ public class Monster : MonoBehaviour
 		movement = new StayInPlaceMovement(-1, sprite, transform, null); // ПАТТЕРН "СТРАТЕГИЯ
 		triggerMovement = movement;
 		attackMovement = movement;
-		attackMethod = (damage) => { };
+		attackMethod = (damage, velocity) => { };
 	}
 
 	void OnHit()
@@ -92,7 +94,7 @@ public class Monster : MonoBehaviour
 	IEnumerator Damaging()
 	{
 		damaging = true;
-		attackMethod.Invoke(damage);
+		attackMethod.Invoke(damage, velocity);
 		yield return new WaitForSeconds(damageRate);
 		damaging = false;
 		movement = triggerMovement;

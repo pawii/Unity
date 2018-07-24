@@ -1,17 +1,27 @@
-﻿<Properties>
+﻿<Properties StartupConfiguration="{F536D4E2-7E6F-BB40-F6EB-7C64A65B74DF}|Unit Tests">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Monsters\Ghost.cs">
     <Files>
       <File FileName="Assets\Scripts\Managers\PlayerManager.cs" Line="37" Column="26" />
       <File FileName="Assets\Scripts\Controllers\UIController.cs" Line="24" Column="3" />
       <File FileName="Assets\Scripts\Managers\MissionManager.cs" Line="44" Column="20" />
-      <File FileName="Assets\Scripts\GameController.cs" Line="36" Column="28" />
-      <File FileName="Assets\Scripts\Monsters\Monster.cs" Line="83" Column="3" />
-      <File FileName="Assets\Scripts\Monsters\Ghost.cs" Line="7" Column="11" />
+      <File FileName="Assets\Scripts\Monsters\Monster.cs" Line="87" Column="7" />
+      <File FileName="Assets\Scripts\Monsters\Ghost.cs" Line="17" Column="12" />
+      <File FileName="Assets\Scripts\CharacterMovement.cs" Line="26" Column="19" />
+      <File FileName="Assets\Scripts\Bow.cs" Line="87" Column="28" />
+      <File FileName="Assets\Scripts\Monsters\Archer.cs" Line="24" Column="21" />
+      <File FileName="Assets\Scripts\Monsters\Movement\AgressiveMovement.cs" Line="40" Column="5" />
+      <File FileName="Assets\Scripts\Monsters\MonsterBow.cs" Line="10" Column="28" />
+      <File FileName="Assets\Scripts\Bullet.cs" Line="36" Column="24" />
+      <File FileName="Assets\Scripts\Monsters\Movement\GhostAttackMovement.cs" Line="16" Column="19" />
+      <File FileName="Assets\Scripts\Monsters\Movement\ArcherAttackMovement.cs" Line="26" Column="27" />
+      <File FileName="Assets\Scripts\Monsters\Movement\StayInPlaceMovement.cs" Line="26" Column="3" />
+      <File FileName="Assets\Scripts\Monsters\Movement\IntelligenceMovement.cs" Line="13" Column="123" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MultiItemStartupConfigurations />

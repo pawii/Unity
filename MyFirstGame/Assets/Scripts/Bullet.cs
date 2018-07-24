@@ -81,7 +81,7 @@ public class Bullet : MonoBehaviour
 	{
 		float angel = Vector2.Angle(start, end);
 		angel = angel / 180 * Mathf.PI;
-		return angel;	 }
+		return angel;	}
 
 	public void Shoot(Vector2 force)
 	{
