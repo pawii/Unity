@@ -62,11 +62,15 @@
      <Compile Include="Assets\Scripts\Managers\MissionManager.cs" />
      <Compile Include="Assets\Scripts\Managers\PlayerManager.cs" />
      <Compile Include="Assets\Scripts\Monsters\Archer.cs" />
+     <Compile Include="Assets\Scripts\Monsters\Bat.cs" />
+     <Compile Include="Assets\Scripts\Monsters\BatBullet.cs" />
      <Compile Include="Assets\Scripts\Monsters\Ghost.cs" />
      <Compile Include="Assets\Scripts\Monsters\Monster.cs" />
      <Compile Include="Assets\Scripts\Monsters\MonsterBow.cs" />
      <Compile Include="Assets\Scripts\Monsters\Movement\AgressiveMovement.cs" />
      <Compile Include="Assets\Scripts\Monsters\Movement\ArcherAttackMovement.cs" />
+     <Compile Include="Assets\Scripts\Monsters\Movement\BatAgressiveMovement.cs" />
+     <Compile Include="Assets\Scripts\Monsters\Movement\BatTwoPointMovement.cs" />
      <Compile Include="Assets\Scripts\Monsters\Movement\IMovement.cs" />
      <Compile Include="Assets\Scripts\Monsters\Movement\IntelligenceMovement.cs" />
      <Compile Include="Assets\Scripts\Monsters\Movement\StayInPlaceMovement.cs" />

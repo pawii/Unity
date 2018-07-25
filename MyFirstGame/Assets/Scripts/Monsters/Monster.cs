@@ -20,6 +20,8 @@ public class Monster : MonoBehaviour
 	protected Transform character;
 	protected SpriteRenderer sprite;
 
+	protected float xMinPos;
+	protected float xMaxPos;
 	protected IMovement movement;
 	protected IMovement triggerMovement;
 	protected IMovement attackMovement;
@@ -40,6 +42,8 @@ public class Monster : MonoBehaviour
 
 		sprite = GetComponentInChildren<SpriteRenderer>();
 
+		xMinPos = 0f;
+		xMaxPos = 0f;
 		movement = new StayInPlaceMovement(sprite, transform, character);
 		triggerMovement = movement;
 		attackMovement = movement;
@@ -67,7 +71,7 @@ public class Monster : MonoBehaviour
 
 	protected void Move()
 	{
-		transform.position = Vector2.MoveTowards(transform.position, movement.Move(), speed* Time.deltaTime);
+		transform.position = Vector2.Lerp(transform.position, movement.Move(), speed* Time.deltaTime);
 	}
 
 
@@ -96,7 +100,7 @@ public class Monster : MonoBehaviour
 			}
 		}
 		Move();
-		Debug.Log(movement.ToString());	}
+		//Debug.Log(movement.ToString());	}
 	IEnumerator Damaging()
 	{
 		damaging = true;

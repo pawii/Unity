@@ -22,7 +22,7 @@ public class AgressiveMovement : IMovement
 		Weapon = weapon;
 	}
 
-	public Vector2 Move()
+	public virtual Vector2 Move()
 	{
 		int direction = Sprite.flipX ? 1 : -1;
 		if (Target.position.x - TriggerTarget.position.x > 0)
