@@ -13,10 +13,10 @@ public class MonsterBow : MonoBehaviour
 	{
 		GameObject newBullet = Instantiate(bullet);
 		newBullet.transform.position = transform.position;
-		newBullet.transform.rotation = transform.rotation;
+		newBullet.transform.right = transform.right;
 
 		Bullet script = newBullet.GetComponent<Bullet>();
 		script.Parent = transform.parent.gameObject.transform.parent.gameObject;
 		Vector2 force = transform.right * charge;
-		script.Shoot(force);	}
+		script.Shoot(damage, force);	}
 }

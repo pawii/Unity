@@ -16,13 +16,18 @@ public class Ghost : Monster
 
 		sprite = GetComponentInChildren<SpriteRenderer>();
 
-		xMinPos = 2f;
-		xMaxPos = 7f;
+
 		movement = new TwoPointMovement(sprite, transform, xMinPos, xMaxPos);
-		triggerMovement = movement;
-		attackMovement = movement;
-		//triggerMovement = new AgressiveMovement(sprite, transform, character);
-		//attackMovement = new StayInPlaceMovement(sprite, transform, character);
-		//attackMethod = (damage, velocity) => { Managers.Player.ChangeHealth(damage, sprite); };
+		triggerMovement = new AgressiveMovement(sprite, transform, character);
+		attackMovement = new StayInPlaceMovement(sprite, transform, character);
+		attackMethod = Damaging;
+
+		getDamagePower = 5;
+		rb = GetComponent<Rigidbody2D>();
 	}
+
+	void Damaging(int damage, float velocity)
+	{
+		MessageParameters parameters = new MessageParameters(sprite, damage);
+		character.SendMessage("OnHit", parameters, SendMessageOptions.DontRequireReceiver);	}
 }

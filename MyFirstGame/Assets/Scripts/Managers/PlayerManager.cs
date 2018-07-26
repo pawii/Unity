@@ -25,10 +25,8 @@ public class PlayerManager : MonoBehaviour, IGameManager
 		this.maxHealth = maxHealth;
 	}
 
-	public void ChangeHealth(int value, SpriteRenderer monsterSprite)
+	public void ChangeHealth(int value)
 	{
-		if (value < 0)
-			Messenger<SpriteRenderer>.Broadcast(GameEvent.RECIEVE_DAMAGE, monsterSprite);
 		health += value;
 		Messenger.Broadcast(GameEvent.HEALTH_CHANGE, MessengerMode.DONT_REQUIRE_LISTENER);
 		if (health > maxHealth) health = maxHealth;

@@ -61,6 +61,7 @@
      <Compile Include="Assets\Scripts\Managers\Managers.cs" />
      <Compile Include="Assets\Scripts\Managers\MissionManager.cs" />
      <Compile Include="Assets\Scripts\Managers\PlayerManager.cs" />
+     <Compile Include="Assets\Scripts\MessageParameters.cs" />
      <Compile Include="Assets\Scripts\Monsters\Archer.cs" />
      <Compile Include="Assets\Scripts\Monsters\Bat.cs" />
      <Compile Include="Assets\Scripts\Monsters\BatBullet.cs" />

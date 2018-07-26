@@ -20,6 +20,8 @@ public class Bow : MonoBehaviour
 	bool power = false;
 	public float shootDelay = 1f;
 
+	public int damage = 1;
+
 
 	void Start()
 	{
@@ -81,7 +83,7 @@ public class Bow : MonoBehaviour
 		Bullet script = newBullet.GetComponent<Bullet>();
 		script.Parent = transform.parent.gameObject.transform.parent.gameObject;
 		Vector2 force = transform.right * charge;
-		script.Shoot(force);
+		script.Shoot(damage, force);
 	}
 
 	private IEnumerator ShootDelay()

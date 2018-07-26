@@ -20,12 +20,16 @@ public class Monster : MonoBehaviour
 	protected Transform character;
 	protected SpriteRenderer sprite;
 
-	protected float xMinPos;
-	protected float xMaxPos;
+	public float xMinPos;
+	public float xMaxPos;
 	protected IMovement movement;
 	protected IMovement triggerMovement;
 	protected IMovement attackMovement;
 	protected Action<int, float> attackMethod;
+
+	protected float getDamagePower;
+	protected Rigidbody2D rb;
+	bool getHit;
 
 	void Awake()
 	{
@@ -49,29 +53,34 @@ public class Monster : MonoBehaviour
 		attackMovement = movement;
 		attackMethod = (damage, velocity) => { };
 
+		getDamagePower = 1f;
+		getHit = false;
 	}
 
-	void OnHit()
+	public void OnHit(MessageParameters parameters)
 	{
+		StartCoroutine(GetHit());
 		health--;
-		Debug.Log(health);
 		if (health < 1)
 			Destroy(gameObject);
+		Vector2 getDamageForce = new Vector2(0.1f, 1);
+		int getDamageDiretion = parameters.Sprite.flipX ? -1 : 1;
+		getDamageForce.x *= getDamageDiretion;
+		if (rb != null)
+			rb.AddForce(getDamagePower * getDamageForce, ForceMode2D.Impulse);
 	}
 
-	/*protected virtual void OnCollisionEnter2D(Collision2D collision)
+	IEnumerator GetHit()
 	{
-		CharacterMovement character = collision.gameObject.GetComponent<CharacterMovement>();
-
-		if (character)                
-		{
-			character.RecieveDamage(sprite); 
-		}
-	}*/
+		getHit = true;
+		yield return new WaitForSeconds(1);
+		getHit = false;
+	}
 
 	protected void Move()
 	{
-		transform.position = Vector2.Lerp(transform.position, movement.Move(), speed* Time.deltaTime);
+		if(!getHit)
+			transform.position = Vector2.Lerp(transform.position, movement.Move(), speed* Time.deltaTime);
 	}
 
 
@@ -100,7 +109,7 @@ public class Monster : MonoBehaviour
 			}
 		}
 		Move();
-		//Debug.Log(movement.ToString());	}
+		Debug.Log(movement);	}
 	IEnumerator Damaging()
 	{
 		damaging = true;

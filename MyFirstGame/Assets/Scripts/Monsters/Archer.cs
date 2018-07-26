@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Archer : Monster 
 {
-	private int minCoordY;
+	public float minCoordY;
 	private Transform bowTransform;
 	private MonsterBow bowScript;
 
@@ -13,20 +13,23 @@ public class Archer : Monster
 		health = 3;
 		speed = 3f;
 		damage = -1;
-		damageArea = 5f;
-		damageRate = 1f;
+		damageArea = 20f;
+		damageRate = 5f;
 
-		triggerArea = 5f;
+		triggerArea = 20f;
 
 		sprite = GetComponentInChildren<SpriteRenderer>();
 		bowScript = GetComponentInChildren<MonsterBow>();
 		bowTransform = bowScript.gameObject.transform;
 
 		velocity = Mathf.Sqrt(damageArea* Physics2D.gravity.magnitude);
-		minCoordY = 0;
+		minCoordY = -0.5f;
 
-		movement = new IntelligenceMovement(sprite, transform, bowTransform);
+		movement = new TwoPointMovement(sprite, transform, xMinPos, xMaxPos, bowTransform);
 		triggerMovement = new AgressiveMovement(sprite, transform, character, bowTransform);
 		attackMovement = new ArcherAttackMovement(sprite, transform, character, bowTransform, velocity, minCoordY);
-		attackMethod = bowScript.Shoot;	}
+		attackMethod = bowScript.Shoot;
+
+		getDamagePower = 5;
+		rb = GetComponent<Rigidbody2D>();	}
 }

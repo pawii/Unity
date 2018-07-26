@@ -9,10 +9,10 @@ public class ArcherAttackMovement : IMovement
 	public Transform TriggerTarget { get; set; }
 	public Transform Weapon { get; set; }
 	public float Velocity { get; set; }
-	public int MinCoordY { get; set; }
+	public float MinCoordY { get; set; }
 
 	public ArcherAttackMovement(SpriteRenderer sprite, Transform target, Transform triggerTarget, Transform weapon,
-					   float velocity, int minCoordY)
+					   float velocity, float minCoordY)
 	{
 		Sprite = sprite;
 		Target = target;
@@ -42,7 +42,7 @@ public class ArcherAttackMovement : IMovement
 		}
 		if (monsterToCharacter.x >= 0 && monsterToCharacter.y <= 0)
 		{
-			offsetAngle = Angle(monsterToCharacter, new Vector2(1, 0));
+			offsetAngle = Angle(new Vector2(1, 0), monsterToCharacter);
 			angle -= offsetAngle;
 		}
 		if (monsterToCharacter.x <= 0 && monsterToCharacter.y >= 0)
@@ -66,13 +66,16 @@ public class ArcherAttackMovement : IMovement
 
 		// ИЗМЕНЕНИЕ ПОЛОЖЕНИЯ
 		Vector3 pos = new Vector3();
-		pos.y = Vector3.Dot(Weapon.right, Target.up);
+		if (directionPoint.y >= 0)
+			pos.y = Vector3.Dot(Weapon.right, Target.up);
+		else
+			pos.y = -Vector3.Dot(Weapon.right, Target.up * -1);
 		if (pos.y > MinCoordY)
 			pos.x = Vector3.Dot(Weapon.right, Target.right);
 		else
 			pos.x = Weapon.localPosition.x;
 
-		pos.y = Mathf.Clamp(pos.y, 0, 1);
+		pos.y = Mathf.Clamp(pos.y, MinCoordY, 1);
 		pos.z = 0;
 		Weapon.localPosition = pos;
 

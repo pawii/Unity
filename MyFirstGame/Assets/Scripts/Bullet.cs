@@ -15,6 +15,9 @@ public class Bullet : MonoBehaviour
 	Vector2 startRot;
 	Vector2 attachOffset;
 	Transform target;
+	int rotDirection;
+
+	int damage;
 
 
 	void Awake()
@@ -29,7 +32,10 @@ public class Bullet : MonoBehaviour
 			float percent = (transform.position.x - startPos.x) / ((endPos.x - startPos.x) / 2);
 			Vector2 curRot;
 			curRot.x = startRot.x;
-			curRot.y = startRot.y - startRot.y * percent;
+			if (rotDirection == 1)
+				curRot.y = startRot.y - startRot.y * percent;
+			else
+				curRot.y = startRot.y + startRot.y* percent;
 			transform.right = curRot;
 		}
 		else
@@ -51,7 +57,8 @@ public class Bullet : MonoBehaviour
 			{
 				attachOffset = collider.transform.position - transform.position;
 				target = collider.gameObject.transform;
-				collider.gameObject.SendMessage("OnHit", SendMessageOptions.DontRequireReceiver);
+				MessageParameters parameters = new MessageParameters(Parent.GetComponentInChildren<SpriteRenderer>(), damage);
+				collider.gameObject.SendMessage("OnHit", parameters, SendMessageOptions.DontRequireReceiver);
 				StartCoroutine(Hitting());
 			}
 		}
@@ -72,6 +79,7 @@ public class Bullet : MonoBehaviour
 		float time = (2f * (float)force.magnitude * (float)Mathf.Sin((float)Angle(new Vector2(1, 0), force))) / (float)Physics2D.gravity.magnitude;
 		endPos = startPos;
 		endPos.x += Vector2.Dot(force, new Vector2(1, 0)) * time;
+		rotDirection = transform.right.y < 0 ? -1 : 1;
 	}
 
 	private float Angle(Vector2 start, Vector2 end)
@@ -80,8 +88,9 @@ public class Bullet : MonoBehaviour
 		angel = angel / 180 * Mathf.PI;
 		return angel;	}
 
-	public void Shoot(Vector2 force)
+	public void Shoot(int damage, Vector2 force)
 	{
+		this.damage = damage;
 		this.force = force;
 		CalculateData();
 		rb.AddForce(force, ForceMode2D.Impulse);

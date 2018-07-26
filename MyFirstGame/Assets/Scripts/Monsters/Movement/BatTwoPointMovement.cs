@@ -22,24 +22,21 @@ public class BatTwoPointMovement : TwoPointMovement
 
 	public override Vector2 Move()
 	{
-		Debug.Log(Target.up.y);
 		Vector2 pos = base.Move();
 
 		if (pos.y >= (avgPoint + amplitude))
 		{
 			direction = -1;
-			pos.y += Target.up.y * direction * 2;
 		}
 		else if (pos.y <= (avgPoint - amplitude))
 		{
 			direction = 1;
-			pos.y += Target.up.y * direction * 2;
 		}
-		else if (pos.y <= (avgPoint + 0.01f) || pos.y >= (avgPoint - 0.01f))
+		else if (pos.y <= (avgPoint + 0.1f) && pos.y >= (avgPoint - 0.1f))
 		{
 			SetAmplitude();
-			pos.y += Target.up.y * direction;
 		}
+		pos.y += Target.up.y* direction;
 
 		return pos;
 	}
