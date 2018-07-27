@@ -46,11 +46,15 @@ public class CharacterMovement : MonoBehaviour
 
 	public void OnHit(MessageParameters parameters)
 	{
+		GameController.ChangeHealth(parameters.Damage);
+
 		Vector2 getDamageForce = new Vector2(0.1f, 1);
 		int getDamageDiretion = parameters.Sprite.flipX ? 1 : -1;
 		getDamageForce.x *= getDamageDiretion;
 		if (rb != null)
+		{
+			rb.velocity = Vector3.zero;
 			rb.AddForce(getDamagePower * getDamageForce, ForceMode2D.Impulse);
-		Managers.Player.ChangeHealth(parameters.Damage);
+		}
 	}
 }

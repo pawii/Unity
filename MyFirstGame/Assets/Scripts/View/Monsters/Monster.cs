@@ -67,7 +67,10 @@ public class Monster : MonoBehaviour
 		int getDamageDiretion = parameters.Sprite.flipX ? -1 : 1;
 		getDamageForce.x *= getDamageDiretion;
 		if (rb != null)
+		{
+			rb.velocity = Vector3.zero;
 			rb.AddForce(getDamagePower * getDamageForce, ForceMode2D.Impulse);
+		}
 	}
 
 	IEnumerator GetHit()
@@ -108,8 +111,7 @@ public class Monster : MonoBehaviour
 					}
 			}
 		}
-		Move();
-		Debug.Log(movement);	}
+		Move();	}
 	IEnumerator Damaging()
 	{
 		damaging = true;

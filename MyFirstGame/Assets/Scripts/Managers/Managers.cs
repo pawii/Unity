@@ -51,5 +51,5 @@ public class Managers : MonoBehaviour
 		}
 
 		Debug.Log("All managers started up");
-		Messenger.Broadcast(StartupEvent.MANAGER_STARTED);	}
+		GameController.OnManagersStarted();	}
 }

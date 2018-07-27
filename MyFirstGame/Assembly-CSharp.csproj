@@ -46,36 +46,37 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Bow.cs" />
-     <Compile Include="Assets\Scripts\Bullet.cs" />
-     <Compile Include="Assets\Scripts\CameraMovement.cs" />
-     <Compile Include="Assets\Scripts\CharacterMovement.cs" />
-     <Compile Include="Assets\Scripts\Controllers\GameController.cs" />
-     <Compile Include="Assets\Scripts\Controllers\StartupController.cs" />
-     <Compile Include="Assets\Scripts\Controllers\UIController.cs" />
      <Compile Include="Assets\Scripts\Event\GameEvent.cs" />
      <Compile Include="Assets\Scripts\Event\Messenger.cs" />
-     <Compile Include="Assets\Scripts\Event\StartupEvent.cs" />
+     <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\Scripts\Managers\IGameManager.cs" />
      <Compile Include="Assets\Scripts\Managers\ManagerStatus.cs" />
      <Compile Include="Assets\Scripts\Managers\Managers.cs" />
      <Compile Include="Assets\Scripts\Managers\MissionManager.cs" />
      <Compile Include="Assets\Scripts\Managers\PlayerManager.cs" />
-     <Compile Include="Assets\Scripts\MessageParameters.cs" />
-     <Compile Include="Assets\Scripts\Monsters\Archer.cs" />
-     <Compile Include="Assets\Scripts\Monsters\Bat.cs" />
-     <Compile Include="Assets\Scripts\Monsters\BatBullet.cs" />
-     <Compile Include="Assets\Scripts\Monsters\Ghost.cs" />
-     <Compile Include="Assets\Scripts\Monsters\Monster.cs" />
-     <Compile Include="Assets\Scripts\Monsters\MonsterBow.cs" />
-     <Compile Include="Assets\Scripts\Monsters\Movement\AgressiveMovement.cs" />
-     <Compile Include="Assets\Scripts\Monsters\Movement\ArcherAttackMovement.cs" />
-     <Compile Include="Assets\Scripts\Monsters\Movement\BatAgressiveMovement.cs" />
-     <Compile Include="Assets\Scripts\Monsters\Movement\BatTwoPointMovement.cs" />
-     <Compile Include="Assets\Scripts\Monsters\Movement\IMovement.cs" />
-     <Compile Include="Assets\Scripts\Monsters\Movement\IntelligenceMovement.cs" />
-     <Compile Include="Assets\Scripts\Monsters\Movement\StayInPlaceMovement.cs" />
-     <Compile Include="Assets\Scripts\Monsters\Movement\TwoPointMovement.cs" />
+     <Compile Include="Assets\Scripts\UI\LivesPanel.cs" />
+     <Compile Include="Assets\Scripts\UI\NotificationText.cs" />
+     <Compile Include="Assets\Scripts\UI\UIController.cs" />
+     <Compile Include="Assets\Scripts\View\Bow.cs" />
+     <Compile Include="Assets\Scripts\View\Bullet.cs" />
+     <Compile Include="Assets\Scripts\View\CameraMovement.cs" />
+     <Compile Include="Assets\Scripts\View\CharacterMovement.cs" />
+     <Compile Include="Assets\Scripts\View\Health.cs" />
+     <Compile Include="Assets\Scripts\View\MessageParameters.cs" />
+     <Compile Include="Assets\Scripts\View\Monsters\Archer.cs" />
+     <Compile Include="Assets\Scripts\View\Monsters\Bat.cs" />
+     <Compile Include="Assets\Scripts\View\Monsters\BatBullet.cs" />
+     <Compile Include="Assets\Scripts\View\Monsters\Ghost.cs" />
+     <Compile Include="Assets\Scripts\View\Monsters\Monster.cs" />
+     <Compile Include="Assets\Scripts\View\Monsters\MonsterBow.cs" />
+     <Compile Include="Assets\Scripts\View\Monsters\Movement\AgressiveMovement.cs" />
+     <Compile Include="Assets\Scripts\View\Monsters\Movement\ArcherAttackMovement.cs" />
+     <Compile Include="Assets\Scripts\View\Monsters\Movement\BatAgressiveMovement.cs" />
+     <Compile Include="Assets\Scripts\View\Monsters\Movement\BatTwoPointMovement.cs" />
+     <Compile Include="Assets\Scripts\View\Monsters\Movement\IMovement.cs" />
+     <Compile Include="Assets\Scripts\View\Monsters\Movement\IntelligenceMovement.cs" />
+     <Compile Include="Assets\Scripts\View\Monsters\Movement\StayInPlaceMovement.cs" />
+     <Compile Include="Assets\Scripts\View\Monsters\Movement\TwoPointMovement.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Unity5/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

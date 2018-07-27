@@ -28,9 +28,8 @@ public class PlayerManager : MonoBehaviour, IGameManager
 	public void ChangeHealth(int value)
 	{
 		health += value;
-		Messenger.Broadcast(GameEvent.HEALTH_CHANGE, MessengerMode.DONT_REQUIRE_LISTENER);
 		if (health > maxHealth) health = maxHealth;
-		else if (health < 0) health = 0;		if (health == 0) Messenger.Broadcast(GameEvent.LEVEL_FAILED, MessengerMode.DONT_REQUIRE_LISTENER);
+		else if (health < 0) health = 0;		if (health == 0) StartCoroutine(GameController.ReloadGame());
 		Debug.Log("Health: " + health);
 	}
 
