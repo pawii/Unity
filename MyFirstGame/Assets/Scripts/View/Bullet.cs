@@ -53,7 +53,7 @@ public class Bullet : MonoBehaviour
 		if (colliders.Length > 0)
 		{
 			if (collider.gameObject != Parent && !hit && collider.gameObject.tag != "arrow"
-			    && collider.gameObject.tag != "bow")
+			    && collider.gameObject.tag != "bow" && collider.gameObject.tag != "health")
 			{
 				attachOffset = collider.transform.position - transform.position;
 				target = collider.gameObject.transform;

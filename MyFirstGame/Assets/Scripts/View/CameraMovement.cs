@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour 
 {
-	[SerializeField]
 	private Transform target;
 	public float speed = 2f;
+
+	void Start()
+	{
+		target = GameController.character;
+	}
 
 	void Update()
 	{

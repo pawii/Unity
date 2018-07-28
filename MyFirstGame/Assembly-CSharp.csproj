@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scripts\Event\Messenger.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\Scripts\Managers\IGameManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\InventoryManager.cs" />
      <Compile Include="Assets\Scripts\Managers\ManagerStatus.cs" />
      <Compile Include="Assets\Scripts\Managers\Managers.cs" />
      <Compile Include="Assets\Scripts\Managers\MissionManager.cs" />
@@ -61,7 +62,9 @@
      <Compile Include="Assets\Scripts\View\Bullet.cs" />
      <Compile Include="Assets\Scripts\View\CameraMovement.cs" />
      <Compile Include="Assets\Scripts\View\CharacterMovement.cs" />
+     <Compile Include="Assets\Scripts\View\Finish.cs" />
      <Compile Include="Assets\Scripts\View\Health.cs" />
+     <Compile Include="Assets\Scripts\View\Light.cs" />
      <Compile Include="Assets\Scripts\View\MessageParameters.cs" />
      <Compile Include="Assets\Scripts\View\Monsters\Archer.cs" />
      <Compile Include="Assets\Scripts\View\Monsters\Bat.cs" />

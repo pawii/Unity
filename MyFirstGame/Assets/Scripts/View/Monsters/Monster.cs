@@ -16,7 +16,6 @@ public class Monster : MonoBehaviour
 	protected float triggerArea;
 	private bool trigger;
 
-	[SerializeField]
 	protected Transform character;
 	protected SpriteRenderer sprite;
 
@@ -44,10 +43,10 @@ public class Monster : MonoBehaviour
 		triggerArea = 3f;
 		trigger = false;
 
+		character = GameController.character;
 		sprite = GetComponentInChildren<SpriteRenderer>();
 
-		xMinPos = 0f;
-		xMaxPos = 0f;
+
 		movement = new StayInPlaceMovement(sprite, transform, character);
 		triggerMovement = movement;
 		attackMovement = movement;

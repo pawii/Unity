@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Ghost : Monster 
 {
-	void Awake()
+	void Start()
 	{
 		health = 3;
 		speed = 3f;

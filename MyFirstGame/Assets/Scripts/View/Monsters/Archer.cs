@@ -8,7 +8,7 @@ public class Archer : Monster
 	private Transform bowTransform;
 	private MonsterBow bowScript;
 
-	void Awake()
+	void Start()
 	{
 		health = 3;
 		speed = 3f;

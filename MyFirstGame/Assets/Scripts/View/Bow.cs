@@ -18,7 +18,7 @@ public class Bow : MonoBehaviour
 	public float shotPower = 7f;
 	bool requireShoot = true;
 	bool power = false;
-	public float shootDelay = 1f;
+	public float shootDelay = 0.5f;
 
 	public int damage = 1;
 
@@ -79,6 +79,13 @@ public class Bow : MonoBehaviour
 		GameObject newBullet = Instantiate(bullet);
 		newBullet.transform.position = transform.position;
 		newBullet.transform.rotation = transform.rotation;
+
+		if (Managers.Inventory.ligth)
+		{
+			GameObject light = Instantiate(GameController.lightPrefab);
+			light.transform.parent = newBullet.transform;
+			light.transform.localPosition = new Vector3(0, 0, -2);
+		}
 
 		Bullet script = newBullet.GetComponent<Bullet>();
 		script.Parent = transform.parent.gameObject.transform.parent.gameObject;
