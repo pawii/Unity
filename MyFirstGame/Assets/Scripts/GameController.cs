@@ -52,7 +52,7 @@ public class GameController : MonoBehaviour
 	public static void AddLight()
 	{
 		Transform bow = character.GetChild(0).GetChild(0);
-		if (!bow.Find("Light"))
+		if (!Managers.Inventory.ligth)
 		{
 			Managers.Inventory.ligth = true;
 

@@ -1,9 +1,10 @@
-﻿<Properties>
+﻿<Properties StartupConfiguration="{F536D4E2-7E6F-BB40-F6EB-7C64A65B74DF}|Unit Tests">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GameController.cs">
     <Files>
       <File FileName="Assets\Scripts\Managers\InventoryManager.cs" Line="16" Column="3" />
@@ -11,7 +12,7 @@
       <File FileName="Assets\Scripts\Managers\PlayerManager.cs" Line="5" Column="44" />
       <File FileName="Assets\Scripts\Managers\Managers.cs" Line="25" Column="33" />
       <File FileName="Assets\Scripts\Managers\MissionManager.cs" Line="28" Column="13" />
-      <File FileName="Assets\Scripts\GameController.cs" Line="41" Column="5" />
+      <File FileName="Assets\Scripts\GameController.cs" Line="69" Column="45" />
       <File FileName="Assets\Scripts\View\Light.cs" Line="17" Column="4" />
       <File FileName="Assets\Scripts\View\Bullet.cs" Line="21" Column="2" />
       <File FileName="Assets\Scripts\View\Bow.cs" Line="79" Column="46" />
