@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Ghost : Monster 
 {
-	void Start()
+	void Awake()
 	{
 		health = 3;
 		speed = 3f;
@@ -14,10 +14,10 @@ public class Ghost : Monster
 
 		triggerArea = 3f;
 
+		character = GameController.character;
 		sprite = GetComponentInChildren<SpriteRenderer>();
 
-
-		movement = new TwoPointMovement(sprite, transform, xMinPos, xMaxPos);
+		calmMovement = new TwoPointMovement(sprite, transform, xMinPos, xMaxPos);
 		triggerMovement = new AgressiveMovement(sprite, transform, character);
 		attackMovement = new StayInPlaceMovement(sprite, transform, character);
 		attackMethod = Damaging;

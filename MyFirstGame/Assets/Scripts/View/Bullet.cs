@@ -52,8 +52,7 @@ public class Bullet : MonoBehaviour
 		Collider2D[] colliders = Physics2D.OverlapCircleAll(spherePos, 0.1f);
 		if (colliders.Length > 0)
 		{
-			if (collider.gameObject != Parent && !hit && collider.gameObject.tag != "arrow"
-			    && collider.gameObject.tag != "bow" && collider.gameObject.tag != "health")
+			if (collider.gameObject != Parent && !hit && collider.gameObject.layer != LayerMask.NameToLayer("dont hit"))
 			{
 				attachOffset = collider.transform.position - transform.position;
 				target = collider.gameObject.transform;
@@ -77,6 +76,13 @@ public class Bullet : MonoBehaviour
 		startRot = transform.right;
 		startPos = transform.position;
 		float time = (2f * (float)force.magnitude * (float)Mathf.Sin((float)Angle(new Vector2(1, 0), force))) / (float)Physics2D.gravity.magnitude;
+
+		// БАГ - FORCE.Y = 0
+		Debug.Log(force.ToString());
+		if (time == 0f)
+			time++;
+		// БАГ - FORCE.Y = 0
+
 		endPos = startPos;
 		endPos.x += Vector2.Dot(force, new Vector2(1, 0)) * time;
 		rotDirection = transform.right.y < 0 ? -1 : 1;

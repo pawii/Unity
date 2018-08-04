@@ -11,49 +11,36 @@ public class Monster : MonoBehaviour
 	protected float velocity;
 	protected float damageArea;
 	protected float damageRate;
-	private bool damaging;
+
+	private MonsterState state;
 
 	protected float triggerArea;
-	private bool trigger;
 
 	protected Transform character;
 	protected SpriteRenderer sprite;
 
 	public float xMinPos;
 	public float xMaxPos;
-	protected IMovement movement;
+	private IMovement movement;
+	protected IMovement calmMovement;
 	protected IMovement triggerMovement;
 	protected IMovement attackMovement;
 	protected Action<int, float> attackMethod;
 
 	protected float getDamagePower;
 	protected Rigidbody2D rb;
-	bool getHit;
 
-	void Awake()
+	Coroutine damageCoroutine;
+
+	void Start()
 	{
-		health = 1;
-		speed = 1f;
-		damage = -1;
-		velocity = 1f;
-		damageArea = 1;
-		damageRate = 1f;
-		damaging = false;
+		state = MonsterState.Find;
 
-		triggerArea = 3f;
-		trigger = false;
+		movement = calmMovement;
 
-		character = GameController.character;
-		sprite = GetComponentInChildren<SpriteRenderer>();
-
-
-		movement = new StayInPlaceMovement(sprite, transform, character);
-		triggerMovement = movement;
-		attackMovement = movement;
-		attackMethod = (damage, velocity) => { };
-
-		getDamagePower = 1f;
-		getHit = false;
+		HidePlace[] hidePlaces = FindObjectsOfType(typeof(HidePlace)) as HidePlace[];
+		foreach (HidePlace hidePlace in hidePlaces)
+			hidePlace.Attach(this);
 	}
 
 	public void OnHit(MessageParameters parameters)
@@ -72,16 +59,30 @@ public class Monster : MonoBehaviour
 		}
 	}
 
+	public void OnCharacterHided()
+	{
+		if(damageCoroutine != null)
+			StopCoroutine(damageCoroutine);
+		state = MonsterState.Calm;
+		movement = calmMovement;
+	}
+
+	public void OnCharacterSeemed()
+	{
+		state = MonsterState.Find;
+	}
+
 	IEnumerator GetHit()
 	{
-		getHit = true;
+		MonsterState tmp = state;
+		state = MonsterState.GetHit;
 		yield return new WaitForSeconds(1);
-		getHit = false;
+		state = tmp;
 	}
 
 	protected void Move()
 	{
-		if(!getHit)
+		if(state != MonsterState.GetHit)
 			transform.position = Vector2.Lerp(transform.position, movement.Move(), speed* Time.deltaTime);
 	}
 
@@ -89,23 +90,23 @@ public class Monster : MonoBehaviour
 	// ПАТТЕРН "ШАБЛОННЫЙ МЕТОД"
 	void Update()
 	{
-		if (!trigger)
+		if (state == MonsterState.Find)
 		{
 			foreach (Collider2D collider in Physics2D.OverlapCircleAll(transform.position, triggerArea))
 				if (collider.gameObject.tag == "character")
 				{
-					trigger = true;
+					state = MonsterState.Triggered;
 					movement = triggerMovement;
 				}
 		}
 		else
 		{
-			if (!damaging)
+			if (state == MonsterState.Triggered)
 			{
 				foreach (Collider2D collider in Physics2D.OverlapCircleAll(transform.position, damageArea))
 					if (collider.gameObject.tag == "character")
 					{
-						StartCoroutine(Damaging());
+						damageCoroutine = StartCoroutine(Damaging());
 						movement = attackMovement;
 					}
 			}
@@ -113,12 +114,11 @@ public class Monster : MonoBehaviour
 		Move();	}
 	IEnumerator Damaging()
 	{
-		damaging = true;
+		state = MonsterState.Attacked;
 		attackMethod.Invoke(damage, velocity);
 		yield return new WaitForSeconds(damageRate);
-		damaging = false;
+		state = MonsterState.Triggered;
 		movement = triggerMovement;
 	}
 	// ПАТТЕРН "ШАБЛОННЫЙ МЕТОД"
-
 }

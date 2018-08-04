@@ -10,19 +10,24 @@ public class CharacterMovement : MonoBehaviour
 	int getDamagePower = 15;
 
 	private Rigidbody2D rb;
+	public static bool Lock { private get; set; }
 
 	private bool isGrounded = true;
 
 	void Awake()
 	{
 		rb = GetComponent<Rigidbody2D>();
+		Lock = false;
 	}
 
 	void Update()
 	{
-		SetGrounded();
-		if (Input.GetButton("Horizontal")) Run();
-		if (Input.GetButtonDown("Jump") && isGrounded) Jump();
+		if (!Lock)
+		{
+			SetGrounded();
+			if (Input.GetButton("Horizontal")) Run();
+			if (Input.GetButtonDown("Jump") && isGrounded) Jump();
+		}
 	}
 
 	void SetGrounded()

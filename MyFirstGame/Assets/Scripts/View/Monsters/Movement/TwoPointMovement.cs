@@ -9,6 +9,7 @@ public class TwoPointMovement : IMovement
 	public Transform Weapon { get; set; }
 	public float XMinPoint { get; set; }
 	public float XMaxPoint { get; set; }
+	int directionX;
 
 	public TwoPointMovement(SpriteRenderer sprite, Transform target, float xMinPoint, float xMaxPoint)
 	{
@@ -17,6 +18,7 @@ public class TwoPointMovement : IMovement
 		Weapon = null;
 		XMinPoint = xMinPoint;
 		XMaxPoint = xMaxPoint;
+		directionX = Sprite.flipX ? 1 : -1;
 	}
 
 	public TwoPointMovement(SpriteRenderer sprite, Transform target, float xMinPoint, float xMaxPoint, Transform weapon) :
@@ -27,12 +29,22 @@ public class TwoPointMovement : IMovement
 
 	public virtual Vector2 Move()
 	{
-		int direction = Sprite.flipX ? 1 : -1;
-		if (Target.position.x <= XMinPoint || Target.position.x >= XMaxPoint)
+		if (Target.position.x <= XMinPoint)
 		{
-			direction *= -1;
-			Sprite.flipX = !Sprite.flipX;
-			if (Weapon != null)
+			directionX = 1;
+			Sprite.flipX = true;
+			if (Weapon != null && Weapon.localPosition.x < 0)
+			{
+				Vector2 weaponPos = Weapon.localPosition;
+				weaponPos.x = -weaponPos.x;
+				Weapon.localPosition = weaponPos;
+			}
+		}
+		else if (Target.position.x >= XMaxPoint)
+		{
+			directionX = -1;
+			Sprite.flipX = false;
+			if (Weapon != null && Weapon.localPosition.x > 0)
 			{
 				Vector2 weaponPos = Weapon.localPosition;
 				weaponPos.x = -weaponPos.x;
@@ -40,7 +52,7 @@ public class TwoPointMovement : IMovement
 			}
 		}
 
-		Vector2 pos = Target.position + Target.right * direction;
+		Vector2 pos = Target.position + Target.right * directionX;
 		return pos;
 	}
 }

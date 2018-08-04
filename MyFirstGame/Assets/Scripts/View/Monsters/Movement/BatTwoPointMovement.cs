@@ -8,7 +8,7 @@ public class BatTwoPointMovement : TwoPointMovement
 	public float YMaxPoint { get; set; }
 	private float amplitude;
 	private float avgPoint;
-	private int direction;
+	private int directionY;
 	
 	public BatTwoPointMovement(SpriteRenderer sprite, Transform target, float xMinPoint, float xMaxPoint, 
 	                           float yMinPoint, float yMaxPoint) : base(sprite, target, xMinPoint, xMaxPoint)
@@ -17,7 +17,7 @@ public class BatTwoPointMovement : TwoPointMovement
 		YMaxPoint = yMaxPoint;
 		SetAmplitude();
 		avgPoint = YMinPoint + (YMaxPoint - YMinPoint) / 2f;
-		direction = 1;
+		directionY = 1;
 	}
 
 	public override Vector2 Move()
@@ -26,17 +26,17 @@ public class BatTwoPointMovement : TwoPointMovement
 
 		if (pos.y >= (avgPoint + amplitude))
 		{
-			direction = -1;
+			directionY = -1;
 		}
 		else if (pos.y <= (avgPoint - amplitude))
 		{
-			direction = 1;
+			directionY = 1;
 		}
 		else if (pos.y <= (avgPoint + 0.1f) && pos.y >= (avgPoint - 0.1f))
 		{
 			SetAmplitude();
 		}
-		pos.y += Target.up.y* direction;
+		pos.y += Target.up.y* directionY;
 
 		return pos;
 	}

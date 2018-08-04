@@ -22,10 +22,13 @@ public class Bow : MonoBehaviour
 
 	public int damage = 1;
 
+	public static bool Lock { private get; set; }
+
 
 	void Start()
 	{
 		characterSprite = character.GetComponent<SpriteRenderer>();
+		Lock = false;
 	}
 
 	void Update()
@@ -54,13 +57,13 @@ public class Bow : MonoBehaviour
 		transform.localPosition = pos;
 
 		// ВЫСТРЕЛ
-		if (Input.GetMouseButtonDown(0) && requireShoot)
+		if (Input.GetMouseButtonDown(0) && requireShoot && !Lock)
 		{
 			time1 = (float)DateTime.Now.Second + (float)DateTime.Now.Millisecond / (float)1000;
 			power = true;
 		}
 
-		if (Input.GetMouseButtonUp(0) && power)
+		if (Input.GetMouseButtonUp(0) && power && !Lock)
 		{
 			time2 = (float)DateTime.Now.Second + (float)DateTime.Now.Millisecond / (float)1000;
 			if (time2 < time1)

@@ -9,7 +9,7 @@ public class Bat : Monster
 	public float yMinPoint;
 	public float yMaxPoint;
 
-	void Start()
+	void Awake()
 	{
 		health = 3;
 		speed = 3f;
@@ -19,10 +19,10 @@ public class Bat : Monster
 
 		triggerArea = 10f;
 
+		character = GameController.character;
 		sprite = GetComponentInChildren<SpriteRenderer>();
 
-
-		movement = new BatTwoPointMovement(sprite, transform, xMinPos, xMaxPos, yMinPoint, yMaxPoint);
+		calmMovement = new BatTwoPointMovement(sprite, transform, xMinPos, xMaxPos, yMinPoint, yMaxPoint);
 		triggerMovement = new BatAgressiveMovement(sprite, transform, character, yMinPoint, yMaxPoint);
 		attackMovement = new StayInPlaceMovement(sprite, transform, character);
 		attackMethod = Damaging;

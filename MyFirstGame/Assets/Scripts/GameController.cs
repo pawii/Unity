@@ -6,6 +6,8 @@ public class GameController : MonoBehaviour
 {
 	public static Transform character { get; private set;}
 	public static GameObject lightPrefab { get; private set; }
+	public static int startLevel = 2;
+	static GameObject light;
 
 	void Awake()
 	{
@@ -36,8 +38,8 @@ public class GameController : MonoBehaviour
 
 	public static void OnManagersStarted()
 	{
-		Managers.Mission.GoToNext();
-		//Managers.Mission.GoToNext();
+		for (int i = 0; i < startLevel; i++)
+			Managers.Mission.GoToNext();
 	}
 
 	public static void FinishLevel()
@@ -46,19 +48,29 @@ public class GameController : MonoBehaviour
 		{ 
 			Managers.Mission.GoToNext();
 			character.position = new Vector2(0, 0);
+			RemoveLight();
 		}
 	}
 
 	public static void AddLight()
 	{
-		Transform bow = character.GetChild(0).GetChild(0);
 		if (!Managers.Inventory.ligth)
 		{
+			Transform bow = character.GetChild(0).GetChild(0);
 			Managers.Inventory.ligth = true;
 
-			GameObject light = Instantiate(lightPrefab);
+			light = Instantiate(lightPrefab);
 			light.transform.parent = bow;
 			light.transform.localPosition = new Vector3(0, 0, -2);
+		}
+	}
+
+	static void RemoveLight()
+	{
+		if (Managers.Inventory.ligth)
+		{
+			Managers.Inventory.ligth = false;
+			Destroy(light);
 		}
 	}
 
