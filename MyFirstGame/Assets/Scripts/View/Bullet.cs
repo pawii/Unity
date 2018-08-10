@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour 
 {
-	public GameObject Parent { get; set; }
+	public List<GameObject> parents;
 	private Rigidbody2D rb;
 	private bool hit = true;
-
+	Transform colliderTransform;
 
 	private Vector2 force;
 	Vector2 startPos;
@@ -23,12 +23,16 @@ public class Bullet : MonoBehaviour
 	void Awake()
 	{
 		rb = GetComponent<Rigidbody2D>();
+		parents = new List<GameObject>();
+		colliderTransform = transform.Find("Collider");
 	}
 
 	void Update()
 	{
 		if (!hit)
 		{
+			SearchTrigger();
+
 			float percent = (transform.position.x - startPos.x) / ((endPos.x - startPos.x) / 2);
 			Vector2 curRot;
 			curRot.x = startRot.x;
@@ -38,35 +42,37 @@ public class Bullet : MonoBehaviour
 				curRot.y = startRot.y + startRot.y* percent;
 			transform.right = curRot;
 		}
-		else
-		{
-			if (target)				transform.position = (Vector2)target.position - attachOffset;
-			else
-				Destroy(gameObject);
-		}
 	}
 
-	void OnTriggerEnter2D(Collider2D collider)
+	void SearchTrigger()
 	{
-		Vector2 spherePos = transform.position + transform.right / 10;
-		Collider2D[] colliders = Physics2D.OverlapCircleAll(spherePos, 0.1f);
-		if (colliders.Length > 0)
+		Collider2D[] colliders = Physics2D.OverlapCircleAll(colliderTransform.position, 0.1f);
+		foreach (Collider2D collider in colliders)
 		{
-			if (collider.gameObject != Parent && !hit && collider.gameObject.layer != LayerMask.NameToLayer("dont hit"))
+			bool next = false;
+			foreach (GameObject parent in parents)
+				if (parent == collider.gameObject)
+			{ next = true; break; }
+			if (next)
+				continue;
+
+			if (!hit && collider.gameObject.layer != LayerMask.NameToLayer("dont hit"))
 			{
-				attachOffset = collider.transform.position - transform.position;
-				target = collider.gameObject.transform;
-				MessageParameters parameters = new MessageParameters(Parent.GetComponentInChildren<SpriteRenderer>(), damage);
+				hit = true;
+				Destroy(rb);
+
+				transform.parent = collider.transform;
+
+				MessageParameters parameters = new MessageParameters(null, damage);
 				collider.gameObject.SendMessage("OnHit", parameters, SendMessageOptions.DontRequireReceiver);
 				StartCoroutine(Hitting());
+				return;
 			}
 		}
 	}
 
 	IEnumerator Hitting()
 	{
-		hit = true;
-		rb.bodyType = RigidbodyType2D.Static;
 		yield return new WaitForSeconds(2);
 		Destroy(gameObject);
 	}
@@ -75,10 +81,10 @@ public class Bullet : MonoBehaviour
 	{
 		startRot = transform.right;
 		startPos = transform.position;
-		float time = (2f * (float)force.magnitude * (float)Mathf.Sin((float)Angle(new Vector2(1, 0), force))) / (float)Physics2D.gravity.magnitude;
+		float time = (2f * (float)force.magnitude * (float)Mathf.Sin((float)Methods.Angle(new Vector2(1, 0), force))) / (float)Physics2D.gravity.magnitude;
 
 		// БАГ - FORCE.Y = 0
-		Debug.Log(force.ToString());
+		//Debug.Log(force.ToString());
 		if (time == 0f)
 			time++;
 		// БАГ - FORCE.Y = 0
@@ -87,12 +93,6 @@ public class Bullet : MonoBehaviour
 		endPos.x += Vector2.Dot(force, new Vector2(1, 0)) * time;
 		rotDirection = transform.right.y < 0 ? -1 : 1;
 	}
-
-	private float Angle(Vector2 start, Vector2 end)
-	{
-		float angel = Vector2.Angle(start, end);
-		angel = angel / 180 * Mathf.PI;
-		return angel;	}
 
 	public void Shoot(int damage, Vector2 force)
 	{

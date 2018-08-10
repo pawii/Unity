@@ -55,12 +55,16 @@
      <Compile Include="Assets\Scripts\Managers\Managers.cs" />
      <Compile Include="Assets\Scripts\Managers\MissionManager.cs" />
      <Compile Include="Assets\Scripts\Managers\PlayerManager.cs" />
+     <Compile Include="Assets\Scripts\Methods.cs" />
+     <Compile Include="Assets\Scripts\SimpleCCD.cs" />
      <Compile Include="Assets\Scripts\UI\LivesPanel.cs" />
      <Compile Include="Assets\Scripts\UI\NotificationText.cs" />
      <Compile Include="Assets\Scripts\UI\UIController.cs" />
-     <Compile Include="Assets\Scripts\View\Bow.cs" />
      <Compile Include="Assets\Scripts\View\Bullet.cs" />
      <Compile Include="Assets\Scripts\View\CameraMovement.cs" />
+     <Compile Include="Assets\Scripts\View\Character\RotateToScreenPoint.cs" />
+     <Compile Include="Assets\Scripts\View\Character\Stylesheet-1\AnimationState.cs" />
+     <Compile Include="Assets\Scripts\View\Character\Stylesheet-1\TorsoUp.cs" />
      <Compile Include="Assets\Scripts\View\CharacterController.cs" />
      <Compile Include="Assets\Scripts\View\CharacterMovement.cs" />
      <Compile Include="Assets\Scripts\View\Finish.cs" />

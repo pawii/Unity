@@ -6,7 +6,7 @@ public class GameController : MonoBehaviour
 {
 	public static Transform character { get; private set;}
 	public static GameObject lightPrefab { get; private set; }
-	public static int startLevel = 2;
+	public static int startLevel = 1;
 	static GameObject light;
 
 	void Awake()
@@ -56,11 +56,10 @@ public class GameController : MonoBehaviour
 	{
 		if (!Managers.Inventory.ligth)
 		{
-			Transform bow = character.GetChild(0).GetChild(0);
 			Managers.Inventory.ligth = true;
 
 			light = Instantiate(lightPrefab);
-			light.transform.parent = bow;
+			light.transform.parent = character;
 			light.transform.localPosition = new Vector3(0, 0, -2);
 		}
 	}

@@ -16,7 +16,7 @@ public class MonsterBow : MonoBehaviour
 		newBullet.transform.right = transform.right;
 
 		Bullet script = newBullet.GetComponent<Bullet>();
-		script.Parent = transform.parent.gameObject.transform.parent.gameObject;
+		script.parents.Add(transform.parent.gameObject.transform.parent.gameObject);
 		Vector2 force = transform.right * charge;
 		script.Shoot(damage, force);	}
 }

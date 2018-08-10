@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour 
 {
-	private Transform target;
+	public Transform target;
 	public float speed = 2f;
 
 	void Start()
 	{
-		target = GameController.character;
+		//target = GameController.character;
 	}
 
 	void Update()

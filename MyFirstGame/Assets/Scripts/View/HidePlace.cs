@@ -18,9 +18,9 @@ public class HidePlace : MonoBehaviour
 		Debug.Log("OK");
 		isHided = !isHided;
 		if (isHided)
-		{ CharacterMovement.Lock = true; Bow.Lock = true; }
+			CharacterController.Lock = true;
 		else
-		{ CharacterMovement.Lock = false; Bow.Lock = false; }
+			CharacterController.Lock = false; 
 		Notify();
 	}
 

@@ -4,41 +4,62 @@ using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour 
 {
+	Animator anim;
+	private int State
+	{
+		get { return anim.GetInteger("state"); }
+		set { anim.SetInteger("state", value); }	}
+
 	public float speed = 5f;
-	public float jumpPower = 5f;
+	public float jumpPower = 10f;
 	[SerializeField]
-	int getDamagePower = 15;
+	int getDamagePower = 5;
 
 	private Rigidbody2D rb;
-	public static bool Lock { private get; set; }
 
 	private bool isGrounded = true;
 
 	void Awake()
 	{
 		rb = GetComponent<Rigidbody2D>();
-		Lock = false;
+		anim = GetComponent<Animator>();
 	}
 
 	void Update()
 	{
-		if (!Lock)
+		if (!CharacterController.Lock)
 		{
 			SetGrounded();
+			if(isGrounded) State = (int)AnimationState.Idle;
 			if (Input.GetButton("Horizontal")) Run();
 			if (Input.GetButtonDown("Jump") && isGrounded) Jump();
+			if (!isGrounded) State = (int)AnimationState.Jump;
 		}
 	}
 
 	void SetGrounded()
 	{
-		Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 0.3f);
-		isGrounded = colliders.Length > 1;
+		isGrounded = false;
+
+		Vector3 pos = transform.position;
+		pos.y -= 0.8f;
+		Collider2D[] colliders = Physics2D.OverlapCircleAll(pos, 0.1f);
+		foreach (Collider2D collider in colliders)
+			if (collider.gameObject.layer == LayerMask.NameToLayer("ground"))
+				isGrounded = true;
 	}
 
 	void Run()
 	{
 		Vector2 direction = transform.right * Input.GetAxis("Horizontal");
+
+		if (isGrounded)
+			if (direction.x * transform.localScale.x > 0)
+				State = (int)AnimationState.Run;
+			else
+				State = (int)AnimationState.RunBack;
+
+
 		transform.position = Vector2.MoveTowards(transform.position, (Vector2)transform.position + direction, 
 		                                         speed * Time.deltaTime);
 	}
@@ -47,6 +68,8 @@ public class CharacterMovement : MonoBehaviour
 	{
 		Vector2 force = transform.up * jumpPower;
 		rb.AddForce(force, ForceMode2D.Impulse);
+
+		State = (int)AnimationState.Jump;
 	}
 
 	public void OnHit(MessageParameters parameters)
