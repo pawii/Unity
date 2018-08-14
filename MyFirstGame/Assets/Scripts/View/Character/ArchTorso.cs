@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class TorsoUp : MonoBehaviour
+public class ArchTorso : MonoBehaviour
 {
+	public ArchState Mediator { private get; set; }
 	static Animator anim;
 	public static bool IsShoot
 	{
@@ -37,23 +38,10 @@ public class TorsoUp : MonoBehaviour
 
 	void Update()
 	{
-		Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		Vector2 newRight = mousePos - (Vector2)transform.position;
-
-		Vector3 newAngel = transform.localEulerAngles;
-
-		if (newRight.y < 0)
-			newAngel.z = -45 * Mathf.Sin(Methods.Angle(newRight, new Vector2(1, 0)));
-		else
-			newAngel.z = 45 * Mathf.Sin(Methods.Angle(newRight, new Vector2(1, 0)));
-
-		transform.localEulerAngles = newAngel;
-
-
-
-
 		if (Input.GetMouseButtonDown(0) && requireShoot && !CharacterController.Lock)
 		{
+			Mediator.fastSpeed = false;
+
 			time1 = (float)DateTime.Now.Second + (float)DateTime.Now.Millisecond / (float)1000;
 			power = true;
 
@@ -62,6 +50,8 @@ public class TorsoUp : MonoBehaviour
 
 		if (Input.GetMouseButtonUp(0) && power && !CharacterController.Lock)
 		{
+			Mediator.fastSpeed = true;
+
 			time2 = (float)DateTime.Now.Second + (float)DateTime.Now.Millisecond / (float)1000;
 			if (time2 < time1)
 				time2 += 60;
@@ -82,7 +72,7 @@ public class TorsoUp : MonoBehaviour
 		newBullet.transform.position = arrow.position;
 		newBullet.transform.rotation = arrow.rotation;
 
-		newBullet.transform.right = CharacterController.flipX ? -arrow.right : arrow.right;
+		newBullet.transform.right = Mediator.GetFlipX() ? -arrow.right : arrow.right;
 
 		//if (Managers.Inventory.ligth)
 		//{
@@ -94,7 +84,7 @@ public class TorsoUp : MonoBehaviour
 		Bullet script = newBullet.GetComponent<Bullet>();
 		script.parents.Add(arrow.parent.parent.gameObject);
 		script.parents.Add(arrow.parent.parent.parent.gameObject);
-		Vector2 force = CharacterController.flipX ? -arrow.right : arrow.right;
+		Vector2 force = Mediator.GetFlipX() ? -arrow.right : arrow.right;
 
 		force *= charge;
 		script.Shoot(damage, force);

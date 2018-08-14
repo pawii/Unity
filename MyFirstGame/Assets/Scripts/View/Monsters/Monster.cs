@@ -45,6 +45,7 @@ public class Monster : MonoBehaviour
 
 	public void OnHit(MessageParameters parameters)
 	{
+		Debug.Log("HIT");
 		StartCoroutine(GetHit());
 		health--;
 		if (health < 1)

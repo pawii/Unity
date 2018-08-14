@@ -62,9 +62,15 @@
      <Compile Include="Assets\Scripts\UI\UIController.cs" />
      <Compile Include="Assets\Scripts\View\Bullet.cs" />
      <Compile Include="Assets\Scripts\View\CameraMovement.cs" />
+     <Compile Include="Assets\Scripts\View\Character\AnimationState.cs" />
+     <Compile Include="Assets\Scripts\View\Character\ArchState.cs" />
+     <Compile Include="Assets\Scripts\View\Character\ArchTorso.cs" />
+     <Compile Include="Assets\Scripts\View\Character\Axe.cs" />
+     <Compile Include="Assets\Scripts\View\Character\ICharacterState.cs" />
+     <Compile Include="Assets\Scripts\View\Character\MeleeState.cs" />
+     <Compile Include="Assets\Scripts\View\Character\MeleeTorso.cs" />
      <Compile Include="Assets\Scripts\View\Character\RotateToScreenPoint.cs" />
-     <Compile Include="Assets\Scripts\View\Character\Stylesheet-1\AnimationState.cs" />
-     <Compile Include="Assets\Scripts\View\Character\Stylesheet-1\TorsoUp.cs" />
+     <Compile Include="Assets\Scripts\View\Character\TorsoRotate.cs" />
      <Compile Include="Assets\Scripts\View\CharacterController.cs" />
      <Compile Include="Assets\Scripts\View\CharacterMovement.cs" />
      <Compile Include="Assets\Scripts\View\Finish.cs" />

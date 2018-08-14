@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour 
 {
+	public ICharacterState CharacterState { get; set; }
+
 	Animator anim;
-	private int State
+	private int AnimatorState
 	{
 		get { return anim.GetInteger("state"); }
 		set { anim.SetInteger("state", value); }	}
 
-	public float speed = 5f;
+	public bool FlipX { get { return transform.localScale.x < 0; } }
+
+	public float runSpeed = 5f;
+	public float walkSpeed = 2.5f;
 	public float jumpPower = 10f;
 	[SerializeField]
 	int getDamagePower = 5;
@@ -21,6 +26,8 @@ public class CharacterMovement : MonoBehaviour
 
 	void Awake()
 	{
+		CharacterState = new ArchState(this);
+
 		rb = GetComponent<Rigidbody2D>();
 		anim = GetComponent<Animator>();
 	}
@@ -30,11 +37,16 @@ public class CharacterMovement : MonoBehaviour
 		if (!CharacterController.Lock)
 		{
 			SetGrounded();
-			if(isGrounded) State = (int)AnimationState.Idle;
+			if (isGrounded) { AnimatorState = (int)AnimationState.Idle; CharacterState.isRun = false; }
 			if (Input.GetButton("Horizontal")) Run();
 			if (Input.GetButtonDown("Jump") && isGrounded) Jump();
-			if (!isGrounded) State = (int)AnimationState.Jump;
+			if (!isGrounded) { AnimatorState = (int)AnimationState.Jump; CharacterState.isRun = false; }
 		}
+	}
+
+	void OnGUI()
+	{
+		if (Event.current.isKey) CharacterState.OnKeyDown(Event.current.keyCode);
 	}
 
 	void SetGrounded()
@@ -55,11 +67,18 @@ public class CharacterMovement : MonoBehaviour
 
 		if (isGrounded)
 			if (direction.x * transform.localScale.x > 0)
-				State = (int)AnimationState.Run;
+				if (CharacterState.fastSpeed)
+					AnimatorState = (int)AnimationState.Run;
+				else
+					AnimatorState = (int)AnimationState.Walk;
 			else
-				State = (int)AnimationState.RunBack;
+				if (CharacterState.fastSpeed)
+					AnimatorState = (int)AnimationState.RunBack;
+				else
+					AnimatorState = (int)AnimationState.WalkBack;
+		CharacterState.isRun = true;
 
-
+		float speed = CharacterState.fastSpeed || !isGrounded ? runSpeed : walkSpeed;
 		transform.position = Vector2.MoveTowards(transform.position, (Vector2)transform.position + direction, 
 		                                         speed * Time.deltaTime);
 	}
@@ -69,7 +88,7 @@ public class CharacterMovement : MonoBehaviour
 		Vector2 force = transform.up * jumpPower;
 		rb.AddForce(force, ForceMode2D.Impulse);
 
-		State = (int)AnimationState.Jump;
+		AnimatorState = (int)AnimationState.Jump;
 	}
 
 	public void OnHit(MessageParameters parameters)

@@ -5,11 +5,13 @@ using System;
 
 public class RotateToScreenPoint : MonoBehaviour
 {
+	CharacterController cc;
 	float offset;
 
 	void Start()
 	{
 		offset = transform.localEulerAngles.z;
+		cc = GetComponentInParent<CharacterController>();
 	}
 
 	void LateUpdate()
@@ -17,7 +19,7 @@ public class RotateToScreenPoint : MonoBehaviour
 		Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		Vector2 newRight = mousePos - (Vector2)transform.position;
 
-		if (CharacterController.flipX)
+		if (cc.FlipX)
 			newRight *= -1;
 
 		transform.right = newRight;

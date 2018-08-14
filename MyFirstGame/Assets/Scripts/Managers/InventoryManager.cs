@@ -10,7 +10,6 @@ public class InventoryManager : MonoBehaviour, IGameManager
 	public void StartUp()
 	{
 		status = ManagerStatus.Initializing;
-		Debug.Log("Inventory manager starting...");
 
 		ligth = false;
 

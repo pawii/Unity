@@ -7,11 +7,11 @@ public class CharacterController : MonoBehaviour
 {
 	float radius = 2f;
 
-	public static bool flipX;
-	private bool FlipX
+	private bool flipX;
+	public bool FlipX
 	{
 		get { return flipX; }
-		set
+		private set
 		{
 			if (value == flipX)
 				return;
@@ -51,5 +51,6 @@ public class CharacterController : MonoBehaviour
 			foreach (Collider2D collider in colliders)
 				collider.gameObject.SendMessage("Operate", SendMessageOptions.DontRequireReceiver);
 		}
+
 	}
 }

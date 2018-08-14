@@ -13,8 +13,6 @@ public class MissionManager : MonoBehaviour, IGameManager
 	{
 		status = ManagerStatus.Initializing;
 
-		Debug.Log("Mission manager stardet...");
-
 		UpdateData(0, 3);
 
 		status = ManagerStatus.Started;

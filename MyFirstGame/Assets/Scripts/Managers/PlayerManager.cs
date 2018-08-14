@@ -12,7 +12,6 @@ public class PlayerManager : MonoBehaviour, IGameManager
 	public void StartUp()
 	{
 		status = ManagerStatus.Initializing;
-		Debug.Log("Player manager started...");
 
 		UpdateData(5, 5);
 
