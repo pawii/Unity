@@ -24,9 +24,7 @@ public class MeleeState : MonoBehaviour, ICharacterState
 		meleePrefab = Resources.Load<GameObject>("MeleeWeapon");
 		this.context = context;
 
-        Create();
-
-		isRun = false;
+        //Create();
 	}
 
 	public MeleeState(CharacterMovement context, ICharacterState anotherState) : this(context)
@@ -61,6 +59,7 @@ public class MeleeState : MonoBehaviour, ICharacterState
 
 		meleeTorso = curObj.GetComponent<MeleeTorso>();
 		meleeTorso.mediator = this;
+		curObj.GetComponentInChildren<Axe>().mediator = this;
 
 		if (context.FlipX)
 			curObj.transform.localScale = new Vector3(-5, 5, 1);
@@ -68,6 +67,8 @@ public class MeleeState : MonoBehaviour, ICharacterState
 			curObj.transform.localScale = new Vector3(5, 5, 1);
 		curObj.transform.parent = context.transform.Find("TorsoDown");
 		curObj.transform.localPosition = new Vector2(0, 0);
+
+		isRun = false;
 	}
 
 	public bool GetFlipX()

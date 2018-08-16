@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class MessageParameters
 {
-	public SpriteRenderer Sprite { get; private set; }
+	public int Direction { get; private set; }
 	public int Damage { get; private set; }
 
-	public MessageParameters(SpriteRenderer sprite, int damage)
+	public MessageParameters(int direction, int damage)
 	{
-		Sprite = sprite;
+		Direction = direction;
 		Damage = damage;
 	}
 }

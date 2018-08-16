@@ -31,7 +31,7 @@ public class Bullet : MonoBehaviour
 	{
 		if (!hit)
 		{
-			SearchTrigger();
+			//SearchTrigger();
 
 			float percent = (transform.position.x - startPos.x) / ((endPos.x - startPos.x) / 2);
 			Vector2 curRot;
@@ -41,6 +41,30 @@ public class Bullet : MonoBehaviour
 			else
 				curRot.y = startRot.y + startRot.y* percent;
 			transform.right = curRot;
+		}
+	}
+
+	void OnTriggerEnter2D(Collider2D collider)
+	{
+		foreach (GameObject parent in parents)
+			if (parent == collider.gameObject)
+				return;
+
+		if (!hit && collider.gameObject.layer != LayerMask.NameToLayer("dont hit"))
+		{
+			hit = true;
+			Destroy(rb);
+
+			transform.parent = collider.transform;
+
+			int direction = force.x < 0 ? -1 : 1;
+			MessageParameters parameters = new MessageParameters(direction, damage);
+			if (collider.gameObject.tag != "shield")
+			{
+				collider.gameObject.SendMessageUpwards("OnHit", parameters, SendMessageOptions.DontRequireReceiver);
+				Debug.Log(collider.gameObject);
+			}
+			StartCoroutine(Hitting());
 		}
 	}
 
@@ -63,10 +87,14 @@ public class Bullet : MonoBehaviour
 
 				transform.parent = collider.transform;
 
-				MessageParameters parameters = new MessageParameters(null, damage);
-				collider.gameObject.SendMessage("OnHit", parameters, SendMessageOptions.DontRequireReceiver);
+				int direction = force.x < 0 ? -1 : 1;
+				MessageParameters parameters = new MessageParameters(direction, damage);
+				if (collider.tag == null || collider.tag != "shield")
+				{
+					collider.gameObject.SendMessageUpwards("OnHit", parameters, SendMessageOptions.DontRequireReceiver);
+					Debug.Log(collider.gameObject);
+				}
 				StartCoroutine(Hitting());
-				return;
 			}
 		}
 	}

@@ -35,8 +35,8 @@ public class Bat : Monster
 	{
 		bullet.transform.position = transform.position + (character.position - transform.position) / 2;
 		bullet.transform.up = character.position - transform.position;
-        Instantiate(bullet); 
-		MessageParameters parameters = new MessageParameters(sprite, damage);
+        Instantiate(bullet);
+		MessageParameters parameters = new MessageParameters(Methods.GetDirection(gameObject), damage);
 		character.SendMessage("OnHit", parameters, SendMessageOptions.DontRequireReceiver);
 	}
 }

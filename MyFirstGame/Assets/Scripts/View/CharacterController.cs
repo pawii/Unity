@@ -7,26 +7,26 @@ public class CharacterController : MonoBehaviour
 {
 	float radius = 2f;
 
+public static bool Lock { get; set; }
+
 	private bool flipX;
 	public bool FlipX
 	{
-		get { return flipX; }
-		private set
+	get { return flipX; }
+	private set
+	{
+		if (value == flipX)
+			return;
+		else
 		{
-			if (value == flipX)
-				return;
-			else
-			{
-				Vector3 newScale = transform.localScale;
-				newScale.x *= -1;
+			Vector3 newScale = transform.localScale;
+			newScale.x *= -1;
 				transform.localScale = newScale;
 
 				flipX = !flipX;
 			}
 		}
 	}
-
-	public static bool Lock { get; set; }
 
 	void Awake()
 	{

@@ -15,6 +15,8 @@ public class ArchState : MonoBehaviour, ICharacterState
 
 	public ArchState(CharacterMovement context)
 	{
+		anotherState = new MeleeState(context, this);
+
 		fastSpeed = true;
 		isRun = false;
 

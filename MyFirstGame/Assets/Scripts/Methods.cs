@@ -9,4 +9,9 @@ public static class Methods
 		float angel = Vector2.Angle(start, end);
 		angel = angel / 180 * Mathf.PI;
 		return angel;	}
+
+	public static int GetDirection(GameObject gameObject)
+	{
+		return gameObject.transform.localScale.x > 0 ? 1 : -1;
+	}
 }

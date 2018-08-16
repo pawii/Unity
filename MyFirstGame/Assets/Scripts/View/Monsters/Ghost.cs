@@ -28,6 +28,6 @@ public class Ghost : Monster
 
 	void Damaging(int damage, float velocity)
 	{
-		MessageParameters parameters = new MessageParameters(sprite, damage);
+		MessageParameters parameters = new MessageParameters(Methods.GetDirection(gameObject), damage);
 		character.SendMessage("OnHit", parameters, SendMessageOptions.DontRequireReceiver);	}
 }

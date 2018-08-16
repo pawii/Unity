@@ -96,8 +96,7 @@ public class CharacterMovement : MonoBehaviour
 		GameController.ChangeHealth(parameters.Damage);
 
 		Vector2 getDamageForce = new Vector2(0.1f, 1);
-		int getDamageDiretion = parameters.Sprite.flipX ? 1 : -1;
-		getDamageForce.x *= getDamageDiretion;
+		getDamageForce.x *= parameters.Direction;
 		if (rb != null)
 		{
 			rb.velocity = Vector3.zero;
