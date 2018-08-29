@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IMovement 
 {
-	SpriteRenderer Sprite { get; set; }
+	Unit Unit { get; set; }
 	Transform Target { get; set; }
 	Vector2 Move();
 }

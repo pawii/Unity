@@ -10,8 +10,8 @@ public class BatAgressiveMovement : AgressiveMovement
 	private float avgPoint;
 	private int direction;
 
-	public BatAgressiveMovement(SpriteRenderer sprite, Transform target, Transform triggertarget,
-	                            float yMinPoint, float yMaxPoint) : base(sprite, target, triggertarget)
+	public BatAgressiveMovement(Unit unit, Transform target, Transform triggertarget,
+	                            float yMinPoint, float yMaxPoint) : base(unit, target, triggertarget)
 	{
 		YMinPoint = yMinPoint;
 		YMaxPoint = yMaxPoint;
@@ -37,7 +37,6 @@ public class BatAgressiveMovement : AgressiveMovement
 			SetAmplitude();
 		}
 		pos.y += Target.up.y * direction;
-		//Debug.Log(direction);
 
 		return pos;
 	}

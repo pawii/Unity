@@ -4,27 +4,19 @@ using UnityEngine;
 
 public class TwoPointMovement : IMovement
 {
-	public SpriteRenderer Sprite { get; set; }
+	public Unit Unit { get; set; }
 	public Transform Target { get; set; }
-	public Transform Weapon { get; set; }
 	public float XMinPoint { get; set; }
 	public float XMaxPoint { get; set; }
 	int directionX;
 
-	public TwoPointMovement(SpriteRenderer sprite, Transform target, float xMinPoint, float xMaxPoint)
+	public TwoPointMovement(Unit unit, Transform target, float xMinPoint, float xMaxPoint)
 	{
-		Sprite = sprite;
+		Unit = unit;
 		Target = target;
-		Weapon = null;
 		XMinPoint = xMinPoint;
 		XMaxPoint = xMaxPoint;
-		directionX = Sprite.flipX ? 1 : -1;
-	}
-
-	public TwoPointMovement(SpriteRenderer sprite, Transform target, float xMinPoint, float xMaxPoint, Transform weapon) :
-	this(sprite, target, xMinPoint, xMaxPoint)
-	{
-		Weapon = weapon;
+		directionX = Unit.FlipX ? 1 : -1;
 	}
 
 	public virtual Vector2 Move()
@@ -32,24 +24,12 @@ public class TwoPointMovement : IMovement
 		if (Target.position.x <= XMinPoint)
 		{
 			directionX = 1;
-			Sprite.flipX = true;
-			if (Weapon != null && Weapon.localPosition.x < 0)
-			{
-				Vector2 weaponPos = Weapon.localPosition;
-				weaponPos.x = -weaponPos.x;
-				Weapon.localPosition = weaponPos;
-			}
+			Unit.FlipX = true;
 		}
 		else if (Target.position.x >= XMaxPoint)
 		{
 			directionX = -1;
-			Sprite.flipX = false;
-			if (Weapon != null && Weapon.localPosition.x > 0)
-			{
-				Vector2 weaponPos = Weapon.localPosition;
-				weaponPos.x = -weaponPos.x;
-				Weapon.localPosition = weaponPos;
-			}
+			Unit.FlipX = false;
 		}
 
 		Vector2 pos = Target.position + Target.right * directionX;

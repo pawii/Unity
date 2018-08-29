@@ -61,16 +61,16 @@
      <Compile Include="Assets\Scripts\UI\NotificationText.cs" />
      <Compile Include="Assets\Scripts\UI\UIController.cs" />
      <Compile Include="Assets\Scripts\View\Bullet.cs" />
+     <Compile Include="Assets\Scripts\View\BulletFactory.cs" />
      <Compile Include="Assets\Scripts\View\CameraMovement.cs" />
      <Compile Include="Assets\Scripts\View\Character\AnimationState.cs" />
-     <Compile Include="Assets\Scripts\View\Character\ArchState.cs" />
      <Compile Include="Assets\Scripts\View\Character\ArchTorso.cs" />
      <Compile Include="Assets\Scripts\View\Character\Axe.cs" />
-     <Compile Include="Assets\Scripts\View\Character\ICharacterState.cs" />
-     <Compile Include="Assets\Scripts\View\Character\MeleeState.cs" />
+     <Compile Include="Assets\Scripts\View\Character\CharacterWeapon.cs" />
      <Compile Include="Assets\Scripts\View\Character\MeleeTorso.cs" />
      <Compile Include="Assets\Scripts\View\Character\RotateToScreenPoint.cs" />
      <Compile Include="Assets\Scripts\View\Character\TorsoRotate.cs" />
+     <Compile Include="Assets\Scripts\View\Character\WeaponObserver.cs" />
      <Compile Include="Assets\Scripts\View\CharacterController.cs" />
      <Compile Include="Assets\Scripts\View\CharacterMovement.cs" />
      <Compile Include="Assets\Scripts\View\Finish.cs" />
@@ -93,6 +93,7 @@
      <Compile Include="Assets\Scripts\View\Monsters\Movement\IntelligenceMovement.cs" />
      <Compile Include="Assets\Scripts\View\Monsters\Movement\StayInPlaceMovement.cs" />
      <Compile Include="Assets\Scripts\View\Monsters\Movement\TwoPointMovement.cs" />
+     <Compile Include="Assets\Scripts\View\Unit.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Unity5/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

@@ -10,8 +10,8 @@ public class BatTwoPointMovement : TwoPointMovement
 	private float avgPoint;
 	private int directionY;
 	
-	public BatTwoPointMovement(SpriteRenderer sprite, Transform target, float xMinPoint, float xMaxPoint, 
-	                           float yMinPoint, float yMaxPoint) : base(sprite, target, xMinPoint, xMaxPoint)
+	public BatTwoPointMovement(Unit unit, Transform target, float xMinPoint, float xMaxPoint, 
+	                           float yMinPoint, float yMaxPoint) : base(unit, target, xMinPoint, xMaxPoint)
 	{
 		YMinPoint = yMinPoint;
 		YMaxPoint = yMaxPoint;

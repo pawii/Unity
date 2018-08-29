@@ -4,25 +4,22 @@ using UnityEngine;
 
 public class ArcherAttackMovement : IMovement
 {
-	public SpriteRenderer Sprite { get; set; }
+	public Unit Unit { get; set; }
 	public Transform Target { get; set; }
 	public Transform TriggerTarget { get; set; }
 	public Transform Weapon { get; set; }
 	public float Velocity { get; set; }
 	public float MinCoordY { get; set; }
 
-	public ArcherAttackMovement(SpriteRenderer sprite, Transform target, Transform triggerTarget, Transform weapon,
+	public ArcherAttackMovement(Unit unit, Transform target, Transform triggerTarget, Transform weapon,
 					   float velocity, float minCoordY)
 	{
-		Sprite = sprite;
+		Unit = unit;
 		Target = target;
 		TriggerTarget = triggerTarget;
 		Weapon = weapon;
 		Velocity = velocity;
 		MinCoordY = minCoordY;
-
-		// ЦЕЛИТСЯ НЕ В ПУСТОЙ ОБЪЕКТ, А В СПРАЙТ
-		TriggerTarget = triggerTarget.GetComponentInChildren<SpriteRenderer>().transform;
 	}
 
 	public Vector2 Move()
@@ -61,6 +58,8 @@ public class ArcherAttackMovement : IMovement
 
 		// ПОВОРОТ
 		Vector2 newRight = directionPoint;
+		//if (Unit.FlipX)
+		//	newRight.x = -Mathf.Abs(newRight.x);
 		if (newRight.y > MinCoordY)
 			Weapon.right = newRight;
 
@@ -71,7 +70,10 @@ public class ArcherAttackMovement : IMovement
 		else
 			pos.y = -Vector3.Dot(Weapon.right, Target.up * -1);
 		if (pos.y > MinCoordY)
-			pos.x = Vector3.Dot(Weapon.right, Target.right);
+			if(directionPoint.x >= 0)
+				pos.x = -Vector3.Dot(Weapon.right, Target.right);
+			else
+				pos.x = Vector3.Dot(Weapon.right, Target.right);
 		else
 			pos.x = Weapon.localPosition.x;
 
@@ -80,10 +82,10 @@ public class ArcherAttackMovement : IMovement
 		Weapon.localPosition = pos;
 
 
-		if (Weapon.localPosition.x >= 0)
-			Sprite.flipX = true;
+		if (directionPoint.x >= 0)
+			Unit.FlipX = true;
 		else
-			Sprite.flipX = false;
+			Unit.FlipX = false;
 
 
 		return Target.position;

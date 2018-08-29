@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Bullet : MonoBehaviour 
 {
-	public List<GameObject> parents;
+	public Func<GameObject, bool> parentEquals;
 	private Rigidbody2D rb;
 	private bool hit = true;
 	Transform colliderTransform;
@@ -23,7 +24,6 @@ public class Bullet : MonoBehaviour
 	void Awake()
 	{
 		rb = GetComponent<Rigidbody2D>();
-		parents = new List<GameObject>();
 		colliderTransform = transform.Find("Collider");
 	}
 
@@ -31,24 +31,21 @@ public class Bullet : MonoBehaviour
 	{
 		if (!hit)
 		{
-			//SearchTrigger();
-
 			float percent = (transform.position.x - startPos.x) / ((endPos.x - startPos.x) / 2);
 			Vector2 curRot;
 			curRot.x = startRot.x;
 			if (rotDirection == 1)
 				curRot.y = startRot.y - startRot.y * percent;
 			else
-				curRot.y = startRot.y + startRot.y* percent;
+				curRot.y = startRot.y + startRot.y * percent;
 			transform.right = curRot;
 		}
 	}
 
 	void OnTriggerEnter2D(Collider2D collider)
 	{
-		foreach (GameObject parent in parents)
-			if (parent == collider.gameObject)
-				return;
+		if (parentEquals.Invoke(collider.gameObject))
+			return;
 
 		if (!hit && collider.gameObject.layer != LayerMask.NameToLayer("dont hit"))
 		{
@@ -65,37 +62,6 @@ public class Bullet : MonoBehaviour
 				Debug.Log(collider.gameObject);
 			}
 			StartCoroutine(Hitting());
-		}
-	}
-
-	void SearchTrigger()
-	{
-		Collider2D[] colliders = Physics2D.OverlapCircleAll(colliderTransform.position, 0.1f);
-		foreach (Collider2D collider in colliders)
-		{
-			bool next = false;
-			foreach (GameObject parent in parents)
-				if (parent == collider.gameObject)
-			{ next = true; break; }
-			if (next)
-				continue;
-
-			if (!hit && collider.gameObject.layer != LayerMask.NameToLayer("dont hit"))
-			{
-				hit = true;
-				Destroy(rb);
-
-				transform.parent = collider.transform;
-
-				int direction = force.x < 0 ? -1 : 1;
-				MessageParameters parameters = new MessageParameters(direction, damage);
-				if (collider.tag == null || collider.tag != "shield")
-				{
-					collider.gameObject.SendMessageUpwards("OnHit", parameters, SendMessageOptions.DontRequireReceiver);
-					Debug.Log(collider.gameObject);
-				}
-				StartCoroutine(Hitting());
-			}
 		}
 	}
 

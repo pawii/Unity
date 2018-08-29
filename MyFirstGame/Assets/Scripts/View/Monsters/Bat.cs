@@ -20,11 +20,10 @@ public class Bat : Monster
 		triggerArea = 10f;
 
 		character = GameController.character;
-		sprite = GetComponentInChildren<SpriteRenderer>();
 
-		calmMovement = new BatTwoPointMovement(sprite, transform, xMinPos, xMaxPos, yMinPoint, yMaxPoint);
-		triggerMovement = new BatAgressiveMovement(sprite, transform, character, yMinPoint, yMaxPoint);
-		attackMovement = new StayInPlaceMovement(sprite, transform, character);
+		calmMovement = new BatTwoPointMovement(this, transform, xMinPos, xMaxPos, yMinPoint, yMaxPoint);
+		triggerMovement = new BatAgressiveMovement(this, transform, character, yMinPoint, yMaxPoint);
+		attackMovement = new StayInPlaceMovement(this, transform, character);
 		attackMethod = Damaging;
 
 		getDamagePower = 5;

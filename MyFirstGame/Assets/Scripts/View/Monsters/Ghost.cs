@@ -15,11 +15,10 @@ public class Ghost : Monster
 		triggerArea = 3f;
 
 		character = GameController.character;
-		sprite = GetComponentInChildren<SpriteRenderer>();
 
-		calmMovement = new TwoPointMovement(sprite, transform, xMinPos, xMaxPos);
-		triggerMovement = new AgressiveMovement(sprite, transform, character);
-		attackMovement = new StayInPlaceMovement(sprite, transform, character);
+		calmMovement = new TwoPointMovement(this, transform, xMinPos, xMaxPos);
+		triggerMovement = new AgressiveMovement(this, transform, character);
+		attackMovement = new StayInPlaceMovement(this, transform, character);
 		attackMethod = Damaging;
 
 		getDamagePower = 5;

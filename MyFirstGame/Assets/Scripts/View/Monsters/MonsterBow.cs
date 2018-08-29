@@ -11,12 +11,15 @@ public class MonsterBow : MonoBehaviour
 
 	public void Shoot(int damage, float charge)
 	{
-		GameObject newBullet = Instantiate(bullet);
+		/*GameObject newBullet = Instantiate(bullet);
 		newBullet.transform.position = transform.position;
 		newBullet.transform.right = transform.right;
 
 		Bullet script = newBullet.GetComponent<Bullet>();
-		script.parents.Add(transform.parent.gameObject.transform.parent.gameObject);
+
+		script.parentEquals = GetComponentInParent<Archer>().Equals;*/
+
 		Vector2 force = transform.right * charge;
-		script.Shoot(damage, force);	}
+
+		BulletFactory.CreateArrow(transform, 1, force, GetComponentInParent<Archer>().Equals, false);	}
 }

@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class StayInPlaceMovement : IMovement
 {
-	public SpriteRenderer Sprite { get; set; }
+	public Unit Unit { get; set; }
 	public Transform Target { get; set; }
 	public Transform TriggerTarget { get; set; }
 
-	public StayInPlaceMovement(SpriteRenderer sprite, Transform target, Transform triggerTarget)
+	public StayInPlaceMovement(Unit unit, Transform target, Transform triggerTarget)
 	{
-		Sprite = sprite;
+		Unit = unit;
 		Target = target;
 		TriggerTarget = triggerTarget;
 	}
@@ -18,9 +18,9 @@ public class StayInPlaceMovement : IMovement
 	public Vector2 Move()
 	{
 		if (Target.position.x - TriggerTarget.position.x >= 0)
-			Sprite.flipX = false;
+			Unit.FlipX = false;
 		else
-			Sprite.flipX = true;
+			Unit.FlipX = true;
 		
 		Vector2 pos = Target.position;
 		return pos;	}

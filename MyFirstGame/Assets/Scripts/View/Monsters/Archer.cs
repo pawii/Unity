@@ -19,16 +19,15 @@ public class Archer : Monster
 		triggerArea = 20f;
 
 		character = GameController.character;
-		sprite = GetComponentInChildren<SpriteRenderer>();
 		bowScript = GetComponentInChildren<MonsterBow>();
 		bowTransform = bowScript.gameObject.transform;
 
 		velocity = Mathf.Sqrt(damageArea* Physics2D.gravity.magnitude);
 		minCoordY = -0.5f;
 
-		calmMovement = new TwoPointMovement(sprite, transform, xMinPos, xMaxPos, bowTransform);
-		triggerMovement = new AgressiveMovement(sprite, transform, character, bowTransform);
-		attackMovement = new ArcherAttackMovement(sprite, transform, character, bowTransform, velocity, minCoordY);
+		calmMovement = new TwoPointMovement(this, transform, xMinPos, xMaxPos);
+		triggerMovement = new AgressiveMovement(this, transform, character);
+		attackMovement = new ArcherAttackMovement(this, transform, character, bowTransform, velocity, minCoordY);
 		attackMethod = bowScript.Shoot;
 
 		getDamagePower = 5;

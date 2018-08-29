@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Monster : MonoBehaviour 
+public class Monster : Unit 
 {
 	protected int health;
 	protected float speed;
@@ -17,7 +17,6 @@ public class Monster : MonoBehaviour
 	protected float triggerArea;
 
 	protected Transform character;
-	protected SpriteRenderer sprite;
 
 	public float xMinPos;
 	public float xMaxPos;
@@ -122,4 +121,15 @@ public class Monster : MonoBehaviour
 		movement = triggerMovement;
 	}
 	// ПАТТЕРН "ШАБЛОННЫЙ МЕТОД"
+
+
+
+	// ВЫПОЛНЯЕТ РОЛЬ ФАСАДА
+
+	public bool Equals(GameObject value)
+	{
+		foreach (SpriteRenderer child in GetComponentsInChildren<SpriteRenderer>())
+			if (child.gameObject.Equals(value))
+				return true;
+		return false;	}
 }

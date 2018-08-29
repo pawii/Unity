@@ -5,7 +5,10 @@ using System;
 
 public class ArchTorso : MonoBehaviour
 {
-	public ArchState Mediator { private get; set; }
+	bool fastSpeed { get; set; }
+	bool isRun { get; set; }
+
+	public WeaponObserver Observer { private get; set; }
 	static Animator anim;
 	public static bool IsShoot
 	{
@@ -40,7 +43,7 @@ public class ArchTorso : MonoBehaviour
 	{
 		if (Input.GetMouseButtonDown(0) && requireShoot && !CharacterController.Lock)
 		{
-			Mediator.fastSpeed = false;
+			Observer.fastSpeed = false;
 
 			time1 = (float)DateTime.Now.Second + (float)DateTime.Now.Millisecond / (float)1000;
 			power = true;
@@ -50,7 +53,7 @@ public class ArchTorso : MonoBehaviour
 
 		if (Input.GetMouseButtonUp(0) && power && !CharacterController.Lock)
 		{
-			Mediator.fastSpeed = true;
+			Observer.fastSpeed = true;
 
 			time2 = (float)DateTime.Now.Second + (float)DateTime.Now.Millisecond / (float)1000;
 			if (time2 < time1)
@@ -68,26 +71,24 @@ public class ArchTorso : MonoBehaviour
 
 	private void Shoot(float charge)
 	{
-		GameObject newBullet = Instantiate(bullet);
+		/*GameObject newBullet = Instantiate(bullet);
 		newBullet.transform.position = arrow.position;
-		newBullet.transform.rotation = arrow.rotation;
 
-		newBullet.transform.right = Mediator.GetFlipX() ? -arrow.right : arrow.right;
+		newBullet.transform.right = arrow.TransformDirection(arrow.right).x < 0 ? -arrow.right : arrow.right;
 
-		//if (Managers.Inventory.ligth)
-		//{
-		//	GameObject light = Instantiate(GameController.lightPrefab);
-		//	light.transform.parent = newBullet.transform;
-		//	light.transform.localPosition = new Vector3(0, 0, -2);
-		//}
+		if (Managers.Inventory.ligth)
+		{
+			GameObject light = Instantiate(GameController.lightPrefab);
+			light.transform.parent = newBullet.transform;
+			light.transform.localPosition = new Vector3(0, 0, -1);
+		}
 
 		Bullet script = newBullet.GetComponent<Bullet>();
-		script.parents.Add(arrow.parent.parent.gameObject);
-		script.parents.Add(arrow.parent.parent.parent.gameObject);
-		Vector2 force = Mediator.GetFlipX() ? -arrow.right : arrow.right;
+		script.parentEquals = Observer.Equals;*/
+		Vector2 force = Observer.GetFlipX() ? -arrow.right : arrow.right;
 
 		force *= charge;
-		script.Shoot(damage, force);
+		BulletFactory.CreateArrow(arrow, 1, force, Observer.Equals, false);
 	}
 
 	private IEnumerator ShootDelay()
