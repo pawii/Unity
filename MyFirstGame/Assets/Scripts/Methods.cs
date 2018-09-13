@@ -6,8 +6,8 @@ public static class Methods
 {
 	public static float Angle(Vector2 start, Vector2 end)
 	{
-		float angel = Vector2.Angle(start, end);
-		angel = angel / 180 * Mathf.PI;
+		float angel = (float)Vector2.Angle(start, end);
+		angel = (float)angel / 180f * (float)Mathf.PI;
 		return angel;	}
 
 	public static int GetDirection(GameObject gameObject)

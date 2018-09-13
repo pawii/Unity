@@ -13,6 +13,7 @@ public class Managers : MonoBehaviour
 
 	private List<IGameManager> _startSequence;
 
+	#region Unity lifecycle
 	void Awake()
 	{
 		Player = GetComponent<PlayerManager>();
@@ -25,6 +26,7 @@ public class Managers : MonoBehaviour
 		_startSequence.Add(Inventory);
 		StartCoroutine(StartupManagers());
 	}
+	#endregion
 
 	private IEnumerator StartupManagers()
 	{

@@ -5,14 +5,19 @@ using System;
 
 public class CharacterController : Unit
 {
-	WeaponObserver weaponObserver;
-	CharacterMovement movement;
+	public static bool flipX;
+	private bool fastSpeed;
+
+	public static event Action<bool> Run;
+	public static event Action Jump;
+	public static event Action<int> GetDamage;
 
 	float radiusInteraction = 2f;
 
 	public static bool Lock { get; set; }
 
-	Animator anim;
+	[SerializeField]
+	private Animator anim;
 	private int AnimatorState
 	{
 		get { return anim.GetInteger("state"); }
@@ -23,17 +28,25 @@ public class CharacterController : Unit
 
 	void Awake()
 	{
-		weaponObserver = GetComponent<WeaponObserver>();
-		movement = GetComponent<CharacterMovement>();
-		weaponObserver.SetArch();
+		fastSpeed = true;
+
+		ArchTorso.FastSpeedChanged += OnFastSpeedChanged;
+		MeleeTorso.FastSpeedChanged += OnFastSpeedChanged;
+
+		WeaponFactory.SetArch(transform, FlipX);
 
 		FlipX = false;
+		flipX = false;
 
 		Lock = false;
 
-		anim = GetComponent<Animator>();
-
 		isGrounded = true;
+	}
+
+	void OnDestroy()
+	{
+		ArchTorso.FastSpeedChanged -= OnFastSpeedChanged;
+		MeleeTorso.FastSpeedChanged -= OnFastSpeedChanged;
 	}
 
 	void Update()
@@ -42,10 +55,18 @@ public class CharacterController : Unit
 
 		Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		Vector2 newRight = mousePos - (Vector2)transform.position;
-		if (newRight.x< 0 && !FlipX)
+
+		if (newRight.x < 0 && !FlipX)
+		{
 			FlipX = true;
+			flipX = true;
+		}
+
 		else if (newRight.x >= 0 && FlipX)
+		{
 			FlipX = false;
+			flipX = false;
+		}
 
 
 		// ДВИЖЕНИЕ И АНИМАЦИЯ
@@ -53,28 +74,35 @@ public class CharacterController : Unit
 		if (!Lock)
 		{
             SetGrounded();
-			if (isGrounded) { AnimatorState = (int)AnimationState.Idle; weaponObserver.isRun = false; }
+
+			if (isGrounded) 
+				AnimatorState = (int)AnimationState.Idle;
+			
 			if (Input.GetButton("Horizontal"))
 			{
-				bool isRun = weaponObserver.fastSpeed || !isGrounded;
-				movement.Run(isRun);
+				bool isRun = fastSpeed || !isGrounded;
+				Run(isRun);
 
 				if (isGrounded)
-					if (!FlipX)
-						if (weaponObserver.fastSpeed)
+					//if (!FlipX)
+						//if (fastSpeed)
 							AnimatorState = (int)AnimationState.Run;
-						else
-							AnimatorState = (int)AnimationState.Walk;
-					else
-						if (weaponObserver.fastSpeed)
-							AnimatorState = (int)AnimationState.RunBack;
-						else
-							AnimatorState = (int)AnimationState.WalkBack;
-				
-				weaponObserver.isRun = true;
+						//else
+						//	AnimatorState = (int)AnimationState.Walk;
+				//	else
+					//	if (fastSpeed)
+						//	AnimatorState = (int)AnimationState.RunBack;
+						//else
+						//	AnimatorState = (int)AnimationState.WalkBack;
 			}
-			if (Input.GetButtonDown("Jump") && isGrounded) { movement.Jump(); AnimatorState = (int)AnimationState.Jump;}
-			if (!isGrounded) { AnimatorState = (int)AnimationState.Jump; weaponObserver.isRun = false; }
+			if (Input.GetButtonDown("Jump") && isGrounded) 
+			{
+				Jump(); 
+				AnimatorState = (int)AnimationState.Jump;
+			}
+
+			if (!isGrounded)
+				AnimatorState = (int)AnimationState.Jump;
 		}
 	}
 
@@ -90,21 +118,21 @@ public class CharacterController : Unit
 			switch (e.keyCode)
 			{
 				case KeyCode.Q:
-					weaponObserver.SetArch();
+					WeaponFactory.SetArch(transform, FlipX);
 					break;
+
 				case KeyCode.E:
-					weaponObserver.SetMelee();
+					WeaponFactory.SetMelee(transform, FlipX);
 					break;
+
 				case KeyCode.W:
 					Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, radiusInteraction);
-					foreach (Collider2D collider in colliders)
-						collider.gameObject.SendMessage("Operate", SendMessageOptions.DontRequireReceiver);
+					for (int i = 0; i < colliders.Length; i++)
+						colliders[i].gameObject.SendMessage("Operate", SendMessageOptions.DontRequireReceiver);
 					break;
 			}
 		}
 	}
-
-
 
 	public void SetGrounded()
 	{
@@ -113,13 +141,18 @@ public class CharacterController : Unit
 		Vector3 pos = transform.position;
 		pos.y -= 1f;
 		Collider2D[] colliders = Physics2D.OverlapCircleAll(pos, 0.1f);
-		foreach (Collider2D collider in colliders)
-			if (collider.gameObject.layer != LayerMask.NameToLayer("dont hit"))
+		for (int i = 0; i < colliders.Length; i++)
+			if (colliders[i].gameObject.layer != LayerMask.NameToLayer("dont hit"))
 				isGrounded = true;	}
 
 	public void OnHit(MessageParameters parameters)
 	{
 		GameController.ChangeHealth(parameters.Damage);
 
-		movement.GetDamage(parameters.Direction);	}
+		GetDamage(parameters.Direction);	}
+
+	private void OnFastSpeedChanged(bool fastSpeed)
+	{
+		this.fastSpeed = fastSpeed;
+	}
 }

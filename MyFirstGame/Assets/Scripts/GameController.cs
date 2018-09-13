@@ -1,55 +1,69 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class GameController : MonoBehaviour 
 {
+	[SerializeField]
+	private Transform ch;
 	public static Transform character { get; private set;}
-	public static GameObject lightPrefab { get; private set; }
-	public static int startLevel = 1;
+	private static GameObject lightPrefab;
+	private static int startLevel = 1;
 	static GameObject light;
 
-	void Awake()
-	{
-		DontDestroyOnLoad(gameObject);
+	public static event Action<string> ShowNotification;
+	public static event Action RemoveNotification;
+	public static event Action RefreshLives;
 
-		character = GetComponentInChildren<CharacterMovement>().gameObject.transform;
-		character.position = new Vector2(0, 0);
+	private void Awake()
+	{
+		character = ch;
 
 		lightPrefab = Resources.Load("Light") as GameObject;
+
+		Managers.Mission.LevelLoad += OnLevelLoad;
+	}
+
+	private void Destroy()
+	{
+		Managers.Mission.LevelLoad -= OnLevelLoad;
 	}
 
 	public static IEnumerator ReloadGame()
 	{
-		UIController.NotificationText.Text = "LEVEL FAILED";
-		UIController.NotificationText.Active = true;
+		ShowNotification("LEVEL FAILED");
 		yield return new WaitForSeconds(2);
 		Managers.Mission.RestartCurrent();
 		Managers.Player.Reload();
-		character.position = new Vector2(0, 0);
-		UIController.LivesPanel.Refresh();
-		UIController.NotificationText.Active = false;	}
+		RefreshLives();
+		RemoveNotification();	}
 
 	public static void ChangeHealth(int value)
 	{
 		Managers.Player.ChangeHealth(value);
-		UIController.LivesPanel.Refresh();
+		RefreshLives();
 	}
 
 	public static void OnManagersStarted()
 	{
+		ShowNotification("PLEASE, WAIT");
 		for (int i = 0; i < startLevel; i++)
-			Managers.Mission.GoToNext();
+			Managers.Mission.GoNext();
+		//Application.LoadLevel("TestSprites");
 	}
 
 	public static void FinishLevel()
 	{
-		if (Managers.Player.health > 0)
-		{ 
-			Managers.Mission.GoToNext();
-			character.position = new Vector2(0, 0);
-			RemoveLight();
-		}
+		ShowNotification("PLEASE, WAIT");
+
+		Managers.Mission.GoNext();
+		RemoveLight();
+	}
+
+	private void OnLevelLoad()
+	{
+		RemoveNotification();
 	}
 
 	public static void AddLight()
@@ -73,10 +87,7 @@ public class GameController : MonoBehaviour
 		}
 	}
 
-	public static IEnumerator OnGameComplete()
+	public static void OnGameComplete()
 	{
-		UIController.NotificationText.Text = "GAME CMPLETE";
-		UIController.NotificationText.Active = true;
-		yield return new WaitForSeconds(2);
-		UIController.NotificationText.Active = false;	}
+		ShowNotification("GAME COMPLETE");	}
 }

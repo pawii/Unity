@@ -20,32 +20,62 @@ public class Monster : Unit
 
 	public float xMinPos;
 	public float xMaxPos;
-	private IMovement movement;
-	protected IMovement calmMovement;
-	protected IMovement triggerMovement;
-	protected IMovement attackMovement;
-	protected Action<int, float> attackMethod;
+	protected Movement movement;
 
 	protected float getDamagePower;
-	protected Rigidbody2D rb;
+	[SerializeField]
+	private Rigidbody2D rb;
 
 	Coroutine damageCoroutine;
+
+
+	#region Unity lifecycle
+	void Awake()
+	{
+		Messenger.AddListener(GameEvent.CHARACTER_SEEMED, OnCharacterSeemed);
+		Messenger.AddListener(GameEvent.CHARACTER_HIDED, OnCharacterHided);
+	}
 
 	void Start()
 	{
 		state = MonsterState.Find;
+	}
 
-		movement = calmMovement;
+	// ПАТТЕРН "ШАБЛОННЫЙ МЕТОД"
+	void Update()
+	{
+		if (state == MonsterState.Find)
+		{
+			foreach (Collider2D collider in Physics2D.OverlapCircleAll(transform.position, triggerArea))
+				if (collider.gameObject.tag == "character")
+				{
+					SetTriggered();
+				}
+		}
+		else
+		{
+			if (state == MonsterState.Triggered)
+			{
+				foreach (Collider2D collider in Physics2D.OverlapCircleAll(transform.position, damageArea))
+					if (collider.gameObject.tag == "character")
+					{
+						SetAgressive();
+						break;
+					}
+			}
+		}
+		Move();
+	}
+	#endregion
 
-		HidePlace[] hidePlaces = FindObjectsOfType(typeof(HidePlace)) as HidePlace[];
-		foreach (HidePlace hidePlace in hidePlaces)
-			hidePlace.Attach(this);
+	void OnDestroy()
+	{
+		Messenger.RemoveListener(GameEvent.CHARACTER_SEEMED, OnCharacterSeemed);
+		Messenger.RemoveListener(GameEvent.CHARACTER_HIDED, OnCharacterHided);
 	}
 
 	public void OnHit(MessageParameters parameters)
 	{
-		Debug.Log("HIT");
-		StartCoroutine(GetHit());
 		health--;
 		if (health < 1)
 			Destroy(gameObject);
@@ -56,14 +86,16 @@ public class Monster : Unit
 			rb.velocity = Vector3.zero;
 			rb.AddForce(getDamagePower * getDamageForce, ForceMode2D.Impulse);
 		}
+
+		if (state == MonsterState.Calm || state == MonsterState.Find)
+            SetTriggered();
 	}
 
 	public void OnCharacterHided()
 	{
 		if(damageCoroutine != null)
 			StopCoroutine(damageCoroutine);
-		state = MonsterState.Calm;
-		movement = calmMovement;
+		SetCalm();
 	}
 
 	public void OnCharacterSeemed()
@@ -71,65 +103,42 @@ public class Monster : Unit
 		state = MonsterState.Find;
 	}
 
-	IEnumerator GetHit()
-	{
-		MonsterState tmp = state;
-		state = MonsterState.GetHit;
-		yield return new WaitForSeconds(1);
-		state = tmp;
-	}
-
 	protected void Move()
 	{
 		if(state != MonsterState.GetHit)
-			transform.position = Vector2.Lerp(transform.position, movement.Move(), speed* Time.deltaTime);
+			transform.position = Vector2.Lerp(transform.position, movement.Move(), speed * Time.deltaTime);
 	}
 
 
-	// ПАТТЕРН "ШАБЛОННЫЙ МЕТОД"
-	void Update()
-	{
-		if (state == MonsterState.Find)
-		{
-			foreach (Collider2D collider in Physics2D.OverlapCircleAll(transform.position, triggerArea))
-				if (collider.gameObject.tag == "character")
-				{
-					state = MonsterState.Triggered;
-					movement = triggerMovement;
-				}
-		}
-		else
-		{
-			if (state == MonsterState.Triggered)
-			{
-				foreach (Collider2D collider in Physics2D.OverlapCircleAll(transform.position, damageArea))
-					if (collider.gameObject.tag == "character")
-					{
-						damageCoroutine = StartCoroutine(Damaging());
-						movement = attackMovement;
-						break;
-					}
-			}
-		}
-		Move();	}
 	IEnumerator Damaging()
 	{
-		state = MonsterState.Attacked;
-		attackMethod.Invoke(damage, velocity);
+		Attack();
 		yield return new WaitForSeconds(damageRate);
-		state = MonsterState.Triggered;
-		movement = triggerMovement;
+		SetTriggered();
 	}
-	// ПАТТЕРН "ШАБЛОННЫЙ МЕТОД"
 
-
-
-	// ВЫПОЛНЯЕТ РОЛЬ ФАСАДА
-
-	public bool Equals(GameObject value)
+	protected virtual void Attack()
 	{
-		foreach (SpriteRenderer child in GetComponentsInChildren<SpriteRenderer>())
-			if (child.gameObject.Equals(value))
-				return true;
-		return false;	}
+	}
+
+	protected virtual void SetCalm()
+	{
+		state = MonsterState.Calm;
+	}
+
+	protected virtual void SetTriggered()
+	{
+		state = MonsterState.Triggered;
+	}
+
+	protected virtual void SetAgressive()
+	{
+		state = MonsterState.Attacked;
+		damageCoroutine = StartCoroutine(Damaging());
+	}
+
+	protected void OnChangeFlipX(bool flipX)
+	{
+		FlipX = flipX;
+	}
 }

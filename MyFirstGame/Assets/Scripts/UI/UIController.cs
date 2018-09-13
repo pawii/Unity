@@ -5,17 +5,39 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour 
 {
-	public static LivesPanel LivesPanel { get; private set; }
-	public static NotificationText NotificationText { get; private set; }
+	[SerializeField]
+	private Text NotificationText;
+	[SerializeField]
+	private GameObject background;
 
 	void Awake()
 	{
-		LivesPanel = GetComponentInChildren<LivesPanel>();
-		NotificationText = GetComponentInChildren<NotificationText>();
+		GameController.ShowNotification += OnShowNotificatin;
+		GameController.RemoveNotification += OnRemoveNotification;
+	}
+
+	void Destroy()
+	{
+		GameController.ShowNotification -= OnShowNotificatin;
+		GameController.RemoveNotification -= OnRemoveNotification;
 	}
 
 	void Start()
 	{
-		NotificationText.Active = false;
+		NotificationText.gameObject.SetActive(false);
+	}
+
+	public void OnShowNotificatin(string notification)
+	{
+		NotificationText.text = notification;
+		NotificationText.gameObject.SetActive(true);
+		background.SetActive(true);
+	}
+
+	public void OnRemoveNotification()
+	{
+		NotificationText.gameObject.SetActive(false);
+		NotificationText.text = string.Empty;
+		background.SetActive(false);
 	}
 }

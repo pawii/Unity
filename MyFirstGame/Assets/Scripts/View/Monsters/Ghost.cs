@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Ghost : Monster 
 {
+	[SerializeField]
+	private Animator anim;
+
 	void Awake()
 	{
 		health = 3;
@@ -16,17 +19,42 @@ public class Ghost : Monster
 
 		character = GameController.character;
 
-		calmMovement = new TwoPointMovement(this, transform, xMinPos, xMaxPos);
-		triggerMovement = new AgressiveMovement(this, transform, character);
-		attackMovement = new StayInPlaceMovement(this, transform, character);
-		attackMethod = Damaging;
+		movement = new TwoPointMovement(FlipX, transform, xMinPos, xMaxPos);
+		movement.ChangeFlipX += OnChangeFlipX;
 
 		getDamagePower = 5;
-		rb = GetComponent<Rigidbody2D>();
 	}
 
-	void Damaging(int damage, float velocity)
+	void OnDestroy()
 	{
-		MessageParameters parameters = new MessageParameters(Methods.GetDirection(gameObject), damage);
-		character.SendMessage("OnHit", parameters, SendMessageOptions.DontRequireReceiver);	}
+		movement.ChangeFlipX -= OnChangeFlipX;
+	}
+
+	protected override void Attack()
+	{
+		anim.SetTrigger("Attack");	}
+
+	protected override void SetCalm()
+	{
+		base.SetCalm();
+		movement.ChangeFlipX -= OnChangeFlipX;
+		movement = new TwoPointMovement(FlipX, transform, xMinPos, xMaxPos);
+		movement.ChangeFlipX += OnChangeFlipX;
+	}
+
+	protected override void SetTriggered()
+	{
+		base.SetTriggered();
+		movement.ChangeFlipX -= OnChangeFlipX;
+		movement = new AgressiveMovement(this, transform, character);
+		movement.ChangeFlipX += OnChangeFlipX;
+	}
+
+	protected override void SetAgressive()
+	{
+		base.SetAgressive();
+		movement.ChangeFlipX -= OnChangeFlipX;
+		movement = new StayInPlaceMovement(this, transform.position, character);
+		movement.ChangeFlipX += OnChangeFlipX;
+	}
 }

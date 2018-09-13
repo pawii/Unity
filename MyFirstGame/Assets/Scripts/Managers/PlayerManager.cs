@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour, IGameManager 
+public class PlayerManager : MonoBehaviour, IGameManager
 {
 	public ManagerStatus status { get; private set; }
 	public int health { get; private set; }
-	public int maxHealth { get; private set; }
-
+	[SerializeField]
+	private int maxHealth = 5;
 
 	public void StartUp()
 	{
 		status = ManagerStatus.Initializing;
 
-		UpdateData(5, 5);
+		UpdateData(maxHealth, maxHealth);
 
 		status = ManagerStatus.Started;
 	}
@@ -28,12 +28,12 @@ public class PlayerManager : MonoBehaviour, IGameManager
 	{
 		health += value;
 		if (health > maxHealth) health = maxHealth;
-		else if (health < 0) health = 0;		if (health == 0) StartCoroutine(GameController.ReloadGame());
-		Debug.Log("Health: " + health);
+		else if (health < 0) health = 0;		if (health == 0) 
+			StartCoroutine(GameController.ReloadGame());
 	}
 
 	public void Reload()
 	{
-		UpdateData(5, 5);
+		UpdateData(maxHealth, maxHealth);
 	}
 }

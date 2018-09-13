@@ -4,32 +4,67 @@ using UnityEngine;
 
 public class Archer : Monster 
 {
-	public float minCoordY;
-	private Transform bowTransform;
-	private MonsterBow bowScript;
+	float minCoordY;
+	[SerializeField]
+	private Animator anim;
+	[SerializeField] 
+	private Transform bow;
 
 	void Awake()
 	{
 		health = 3;
 		speed = 3f;
 		damage = -1;
-		damageArea = 20f;
-		damageRate = 5f;
+		damageArea = 7f;
+		damageRate = 2f;
 
-		triggerArea = 20f;
+		triggerArea = 7;
 
 		character = GameController.character;
-		bowScript = GetComponentInChildren<MonsterBow>();
-		bowTransform = bowScript.gameObject.transform;
 
-		velocity = Mathf.Sqrt(damageArea* Physics2D.gravity.magnitude);
+		velocity = (float)Mathf.Sqrt((float)damageArea* (float)Physics2D.gravity.magnitude);
 		minCoordY = -0.5f;
 
-		calmMovement = new TwoPointMovement(this, transform, xMinPos, xMaxPos);
-		triggerMovement = new AgressiveMovement(this, transform, character);
-		attackMovement = new ArcherAttackMovement(this, transform, character, bowTransform, velocity, minCoordY);
-		attackMethod = bowScript.Shoot;
+		movement = new TwoPointMovement(FlipX, transform, xMinPos, xMaxPos);
+		movement.ChangeFlipX += OnChangeFlipX;
 
-		getDamagePower = 5;
-		rb = GetComponent<Rigidbody2D>();	}
+		getDamagePower = 5;	}
+
+	void OnDestroy()
+	{
+		movement.ChangeFlipX -= OnChangeFlipX;
+	}
+
+	protected override void SetCalm()
+	{
+		base.SetCalm();
+		movement.ChangeFlipX -= OnChangeFlipX;
+		movement = new TwoPointMovement(FlipX, transform, xMinPos, xMaxPos);
+		movement.ChangeFlipX += OnChangeFlipX;
+	}
+
+	protected override void SetTriggered()
+	{
+		base.SetTriggered();
+		anim.SetBool("attack", false);
+		movement.ChangeFlipX -= OnChangeFlipX;
+		movement = new AgressiveMovement(FlipX, transform, character);
+		movement.ChangeFlipX += OnChangeFlipX;
+	}
+
+	protected override void SetAgressive()
+	{
+		base.SetAgressive();
+		anim.SetBool("attack", true);
+		movement.ChangeFlipX -= OnChangeFlipX;
+		movement = new StayInPlaceMovement(FlipX, transform.position, character);
+		movement.ChangeFlipX += OnChangeFlipX;
+	}
+
+	protected override void Attack()
+	{
+		Vector2 force = FlipX ? bow.right : -bow.right;
+		force *= velocity;
+		BulletFactory.CreateArrow(bow, damage, force, tag);
+	}
 }

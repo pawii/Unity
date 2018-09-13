@@ -1,38 +1,38 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class TwoPointMovement : IMovement
+public class TwoPointMovement : Movement
 {
-	public Unit Unit { get; set; }
-	public Transform Target { get; set; }
-	public float XMinPoint { get; set; }
-	public float XMaxPoint { get; set; }
+	protected Transform target;
+	private float xMinPoint;
+	private float xMaxPoint;
 	int directionX;
 
-	public TwoPointMovement(Unit unit, Transform target, float xMinPoint, float xMaxPoint)
+	public TwoPointMovement(bool flipX, Transform target, float xMinPoint, float xMaxPoint)
 	{
-		Unit = unit;
-		Target = target;
-		XMinPoint = xMinPoint;
-		XMaxPoint = xMaxPoint;
-		directionX = Unit.FlipX ? 1 : -1;
+		this.flipX = flipX;
+		this.target = target;
+		this.xMinPoint = xMinPoint;
+		this.xMaxPoint = xMaxPoint;
+		directionX = flipX ? 1 : -1;
 	}
 
-	public virtual Vector2 Move()
+	public override Vector3 Move()
 	{
-		if (Target.position.x <= XMinPoint)
+		if (target.position.x <= xMinPoint)
 		{
 			directionX = 1;
-			Unit.FlipX = true;
+			FlipX = true;
 		}
-		else if (Target.position.x >= XMaxPoint)
+		else if (target.position.x >= xMaxPoint)
 		{
 			directionX = -1;
-			Unit.FlipX = false;
+			FlipX = false;
 		}
 
-		Vector2 pos = Target.position + Target.right * directionX;
+		Vector3 pos = target.position + target.right * directionX;
 		return pos;
 	}
 }

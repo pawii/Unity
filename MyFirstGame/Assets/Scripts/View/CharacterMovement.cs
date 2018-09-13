@@ -4,26 +4,39 @@ using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour 
 {
-	public float runSpeed = 5f;
-	public float walkSpeed = 2.5f;
-	public float jumpPower = 10f;
+	[SerializeField]
+	private float runSpeed = 5f;
+	[SerializeField]
+	private float walkSpeed = 2.5f;
+	[SerializeField]
+	private float jumpPower = 10f;
 	[SerializeField]
 	int getDamagePower = 5;
 
+	[SerializeField]
 	private Rigidbody2D rb;
 
 	void Awake()
 	{
-		rb = GetComponent<Rigidbody2D>();
+		CharacterController.Run += Run;
+		CharacterController.Jump += Jump;
+		CharacterController.GetDamage += GetDamage;
+	}
+
+	void OnDestroy()
+	{
+		CharacterController.Run -= Run;
+		CharacterController.Jump -= Jump;
+		CharacterController.GetDamage -= GetDamage;
 	}
 
 	public void Run(bool isRun)
 	{
-		Vector2 direction = transform.right * Input.GetAxis("Horizontal");
+		Vector3 direction = transform.right * Input.GetAxis("Horizontal");
 
 
 		float speed = isRun ? runSpeed : walkSpeed;
-		transform.position = Vector2.MoveTowards(transform.position, (Vector2)transform.position + direction, 
+		transform.position = Vector2.MoveTowards(transform.position, transform.position + direction, 
 		                                         speed * Time.deltaTime);
 	}
 

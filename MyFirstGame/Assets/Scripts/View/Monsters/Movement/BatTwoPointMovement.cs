@@ -4,25 +4,25 @@ using UnityEngine;
 
 public class BatTwoPointMovement : TwoPointMovement 
 {
-	public float YMinPoint { get; set; }
-	public float YMaxPoint { get; set; }
+	private float yMinPoint;
+	private float yMaxPoint;
 	private float amplitude;
 	private float avgPoint;
 	private int directionY;
 	
-	public BatTwoPointMovement(Unit unit, Transform target, float xMinPoint, float xMaxPoint, 
-	                           float yMinPoint, float yMaxPoint) : base(unit, target, xMinPoint, xMaxPoint)
+	public BatTwoPointMovement(bool flipX, Transform target, float xMinPoint, float xMaxPoint, 
+	                           float yMinPoint, float yMaxPoint) : base(flipX, target, xMinPoint, xMaxPoint)
 	{
-		YMinPoint = yMinPoint;
-		YMaxPoint = yMaxPoint;
+		this.yMinPoint = yMinPoint;
+		this.yMaxPoint = yMaxPoint;
 		SetAmplitude();
-		avgPoint = YMinPoint + (YMaxPoint - YMinPoint) / 2f;
+		avgPoint = yMinPoint + (yMaxPoint - yMinPoint) / 2f;
 		directionY = 1;
 	}
 
-	public override Vector2 Move()
+	public override Vector3 Move()
 	{
-		Vector2 pos = base.Move();
+		Vector3 pos = base.Move();
 
 		if (pos.y >= (avgPoint + amplitude))
 		{
@@ -36,13 +36,13 @@ public class BatTwoPointMovement : TwoPointMovement
 		{
 			SetAmplitude();
 		}
-		pos.y += Target.up.y* directionY;
+		pos.y += target.up.y* directionY;
 
 		return pos;
 	}
 
 	private void SetAmplitude()
 	{
-		amplitude = ((YMaxPoint - YMinPoint) / 2f) * Random.Range(0.3f, 1f);
+		amplitude = ((yMaxPoint - yMinPoint) / 2f) * Random.Range(0.3f, 1f);
 	}
 }

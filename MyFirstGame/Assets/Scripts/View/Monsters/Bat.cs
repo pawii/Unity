@@ -21,21 +21,43 @@ public class Bat : Monster
 
 		character = GameController.character;
 
-		calmMovement = new BatTwoPointMovement(this, transform, xMinPos, xMaxPos, yMinPoint, yMaxPoint);
-		triggerMovement = new BatAgressiveMovement(this, transform, character, yMinPoint, yMaxPoint);
-		attackMovement = new StayInPlaceMovement(this, transform, character);
-		attackMethod = Damaging;
+		movement = new BatTwoPointMovement(FlipX, transform, xMinPos, xMaxPos, yMinPoint, yMaxPoint);
+		movement.ChangeFlipX += OnChangeFlipX;
 
 		getDamagePower = 5;
-		rb = GetComponent<Rigidbody2D>();
 	}
 
-	void Damaging(int damage, float velocity)
+	void OnDestroy()
 	{
-		bullet.transform.position = transform.position + (character.position - transform.position) / 2;
-		bullet.transform.up = character.position - transform.position;
-        Instantiate(bullet);
-		MessageParameters parameters = new MessageParameters(Methods.GetDirection(gameObject), damage);
-		character.SendMessage("OnHit", parameters, SendMessageOptions.DontRequireReceiver);
+		movement.ChangeFlipX -= OnChangeFlipX;
+	}
+
+	protected override void Attack()
+	{
+		BulletFactory.CreateBatBullet(transform.position, damage, FlipX ? 1 : -1);
+	}
+
+	protected override void SetCalm()
+	{
+		base.SetCalm();
+		movement.ChangeFlipX -= OnChangeFlipX;
+		movement = new BatTwoPointMovement(FlipX, transform, xMinPos, xMaxPos, yMinPoint, yMaxPoint);
+		movement.ChangeFlipX += OnChangeFlipX;
+	}
+
+	protected override void SetTriggered()
+	{
+		base.SetTriggered();
+		movement.ChangeFlipX -= OnChangeFlipX;
+		movement = new BatAgressiveMovement(FlipX, transform, character, yMinPoint, yMaxPoint);
+		movement.ChangeFlipX += OnChangeFlipX;
+	}
+
+	protected override void SetAgressive()
+	{
+		base.SetAgressive();
+		movement.ChangeFlipX -= OnChangeFlipX;
+		movement = new StayInPlaceMovement(FlipX, transform.position, character);
+		movement.ChangeFlipX += OnChangeFlipX;
 	}
 }

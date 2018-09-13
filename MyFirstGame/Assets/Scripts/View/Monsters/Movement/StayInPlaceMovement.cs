@@ -1,27 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class StayInPlaceMovement : IMovement
+public class StayInPlaceMovement : Movement
 {
-	public Unit Unit { get; set; }
-	public Transform Target { get; set; }
-	public Transform TriggerTarget { get; set; }
+	private Vector3 target;
+	private Transform triggerTarget;
 
-	public StayInPlaceMovement(Unit unit, Transform target, Transform triggerTarget)
+	public StayInPlaceMovement(bool flipX, Vector3 target, Transform triggerTarget)
 	{
-		Unit = unit;
-		Target = target;
-		TriggerTarget = triggerTarget;
+		this.flipX = flipX;
+		this.target = target;
+		this.triggerTarget = triggerTarget;
 	}
 
-	public Vector2 Move()
+	public override Vector3 Move()
 	{
-		if (Target.position.x - TriggerTarget.position.x >= 0)
-			Unit.FlipX = false;
+		if (target.x - triggerTarget.position.x >= 0)
+			FlipX = false;
 		else
-			Unit.FlipX = true;
-		
-		Vector2 pos = Target.position;
-		return pos;	}
+			FlipX = true;
+
+		return target;	}
 }

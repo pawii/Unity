@@ -4,9 +4,21 @@ using UnityEngine;
 
 public class Finish : MonoBehaviour 
 {
+	bool locker = false;
+
 	void OnTriggerEnter2D(Collider2D collider)
 	{
-		if (collider.gameObject.tag == "character")
+		if (!locker && collider.gameObject.tag == "character")
+		{ 
 			GameController.FinishLevel();
+			StartCoroutine(Delay());
+		}
+	}
+
+	IEnumerator Delay()
+	{
+		locker = true;
+		yield return new WaitForSeconds(1);
+		locker = false;
 	}
 }

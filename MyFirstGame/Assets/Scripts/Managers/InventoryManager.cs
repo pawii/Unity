@@ -7,6 +7,7 @@ public class InventoryManager : MonoBehaviour, IGameManager
 	public ManagerStatus status { get; private set; }
 	public bool ligth { get; set; }
 
+	#region Unity lifecycle
 	public void StartUp()
 	{
 		status = ManagerStatus.Initializing;
@@ -15,4 +16,5 @@ public class InventoryManager : MonoBehaviour, IGameManager
 
 		status = ManagerStatus.Started;
 	}
+	#endregion
 }

@@ -5,10 +5,10 @@ using System;
 
 public class Bullet : MonoBehaviour 
 {
-	public Func<GameObject, bool> parentEquals;
+	private string parentTag;
+	[SerializeField]
 	private Rigidbody2D rb;
 	private bool hit = true;
-	Transform colliderTransform;
 
 	private Vector2 force;
 	Vector2 startPos;
@@ -19,13 +19,6 @@ public class Bullet : MonoBehaviour
 	int rotDirection;
 
 	int damage;
-
-
-	void Awake()
-	{
-		rb = GetComponent<Rigidbody2D>();
-		colliderTransform = transform.Find("Collider");
-	}
 
 	void Update()
 	{
@@ -44,7 +37,7 @@ public class Bullet : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D collider)
 	{
-		if (parentEquals.Invoke(collider.gameObject))
+		if (collider.tag == parentTag)
 			return;
 
 		if (!hit && collider.gameObject.layer != LayerMask.NameToLayer("dont hit"))
@@ -59,7 +52,6 @@ public class Bullet : MonoBehaviour
 			if (collider.gameObject.tag != "shield")
 			{
 				collider.gameObject.SendMessageUpwards("OnHit", parameters, SendMessageOptions.DontRequireReceiver);
-				Debug.Log(collider.gameObject);
 			}
 			StartCoroutine(Hitting());
 		}
@@ -79,8 +71,8 @@ public class Bullet : MonoBehaviour
 
 		// БАГ - FORCE.Y = 0
 		//Debug.Log(force.ToString());
-		if (time == 0f)
-			time++;
+		//if (time == 0f)
+		//{ time++; Debug.Log("NOT OK"); }
 		// БАГ - FORCE.Y = 0
 
 		endPos = startPos;
@@ -88,12 +80,14 @@ public class Bullet : MonoBehaviour
 		rotDirection = transform.right.y < 0 ? -1 : 1;
 	}
 
-	public void Shoot(int damage, Vector2 force)
+	public void Shoot(int damage, Vector2 force, string parentTag)
 	{
 		this.damage = damage;
 		this.force = force;
+		this.parentTag = parentTag;
 		CalculateData();
 		rb.AddForce(force, ForceMode2D.Impulse);
 		hit = false;
+		//Debug.Log("FORCE Y: " + force.y);
 	}
 }

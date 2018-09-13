@@ -1,50 +1,32 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class MeleeTorso : MonoBehaviour
 {
-	Axe axe;
-	WeaponObserver observer;
-	public WeaponObserver Observer 
-	{ 
-		private get { return observer; } 
-		set 
-		{
-			observer = value;
-			axe.Observer = value;
-		}
-	}
-	public bool IsRun 
-	{
-		get { return anim.GetBool("Run"); }
-		set { anim.SetBool("Run", value); }
-	}
+	[SerializeField]
+	private Animator anim;
 
-	Animator anim;
+	public static event Action<bool> FastSpeedChanged;
 
-	void Awake()
-	{
-		anim = GetComponent<Animator>();
-		axe = GetComponentInChildren<Axe>();
-	}
-
+	#region Unity lifecycle
 	void Update()
 	{
 		if (Input.GetMouseButtonDown(0))
 			anim.SetTrigger("Attack");
-		
+
 		if (Input.GetMouseButtonDown(1))
 		{
 			anim.SetBool("Protect", true);
-			Observer.fastSpeed = false;
+			FastSpeedChanged(false);
 		}
 
 		if (Input.GetMouseButtonUp(1))
 		{
 			anim.SetBool("Protect", false);
-			Observer.fastSpeed = true;
+			FastSpeedChanged(true);
 		}
-
 	}
+	#endregion
 }

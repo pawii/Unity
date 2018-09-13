@@ -3,4 +3,4 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum AnimationState 
-{ Idle, Run, Jump, RunBack, Walk, WalkBack }
+{ Idle, Jump, Run, RunBack, Walk, WalkBack }

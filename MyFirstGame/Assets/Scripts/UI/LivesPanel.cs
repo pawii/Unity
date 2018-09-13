@@ -8,10 +8,17 @@ public class LivesPanel : MonoBehaviour
 
 	void Awake()
 	{
+		GameController.RefreshLives += Refresh;
+
 		for (int i = 0; i < hearts.Length; i++)
 		{
 			hearts[i] = transform.GetChild(i);
 		}
+	}
+
+	void OnDestroy()
+	{
+		GameController.RefreshLives -= Refresh;
 	}
 
 	public void Refresh()

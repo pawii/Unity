@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public abstract class Unit : MonoBehaviour 
 {
@@ -21,4 +22,6 @@ public abstract class Unit : MonoBehaviour
 				flipX = !flipX;
 			}
 		}	}
+
+	private event Action<bool> FlipxChange;
 }

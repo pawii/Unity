@@ -4,15 +4,25 @@ using UnityEngine;
 
 public class Axe : MonoBehaviour 
 {
-	public WeaponObserver Observer { private get; set; }
-	int damage = 1;
+	private int damage = 1;
+	bool dontHit = false;
 
-	void OnTriggerEnter2D(Collider2D collider)
+	#region Unity lifecycle
+	void OnCollisionEnter2D(Collision2D collision)
 	{
-		if (collider.tag != "character")
+		if (collision.gameObject.tag != "character" && !dontHit)
 		{
-			int direction = Observer.GetFlipX() ? -1 : 1;
-			collider.gameObject.SendMessage("OnHit", new MessageParameters(direction, damage));
+			int direction = CharacterController.flipX ? -1 : 1;
+			collision.gameObject.SendMessage("OnHit", new MessageParameters(direction, damage));
+			StartCoroutine(Delay());
 		}
+	}
+	#endregion
+
+	IEnumerator Delay()
+	{
+		dontHit = true;
+		yield return new WaitForSeconds(0.5f);
+		dontHit = false;
 	}
 }

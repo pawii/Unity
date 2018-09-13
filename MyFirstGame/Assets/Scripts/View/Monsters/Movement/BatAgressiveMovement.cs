@@ -4,25 +4,25 @@ using UnityEngine;
 
 public class BatAgressiveMovement : AgressiveMovement
 {
-	public float YMinPoint { get; set; }
-	public float YMaxPoint { get; set; }
+	private float yMinPoint;
+	private float yMaxPoint;
 	private float amplitude;
 	private float avgPoint;
 	private int direction;
 
-	public BatAgressiveMovement(Unit unit, Transform target, Transform triggertarget,
-	                            float yMinPoint, float yMaxPoint) : base(unit, target, triggertarget)
+	public BatAgressiveMovement(bool flipX, Transform target, Transform triggertarget,
+								float yMinPoint, float yMaxPoint) : base(flipX, target, triggertarget)
 	{
-		YMinPoint = yMinPoint;
-		YMaxPoint = yMaxPoint;
+		this.yMinPoint = yMinPoint;
+		this.yMaxPoint = yMaxPoint;
 		SetAmplitude();
-		avgPoint = YMinPoint + (YMaxPoint - YMinPoint) / 2f;
+		avgPoint = yMinPoint + (yMaxPoint - yMinPoint) / 2f;
 		direction = 1;
 	}
 
-	public override Vector2 Move()
+	public override Vector3 Move()
 	{
-		Vector2 pos = base.Move();
+		Vector3 pos = base.Move();
 
 		if (pos.y >= (avgPoint + amplitude))
 		{
@@ -36,13 +36,13 @@ public class BatAgressiveMovement : AgressiveMovement
 		{
 			SetAmplitude();
 		}
-		pos.y += Target.up.y * direction;
+		pos.y += target.up.y * direction;
 
 		return pos;
 	}
 
 	private void SetAmplitude()
 	{
-		amplitude = ((YMaxPoint - YMinPoint) / 2f) * Random.Range(0.3f, 1f);
+		amplitude = ((yMaxPoint - yMinPoint) / 2f) * Random.Range(0.3f, 1f);
 	}
 }
