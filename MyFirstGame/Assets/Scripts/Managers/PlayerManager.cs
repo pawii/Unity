@@ -6,34 +6,30 @@ public class PlayerManager : MonoBehaviour, IGameManager
 {
 	public ManagerStatus status { get; private set; }
 	public int health { get; private set; }
-	[SerializeField]
-	private int maxHealth = 5;
+	private const int maxHealth = 5;
+    public bool HasLigth { get; set; }
 
 	public void StartUp()
 	{
 		status = ManagerStatus.Initializing;
 
-		UpdateData(maxHealth, maxHealth);
+        health = maxHealth;
+        HasLigth = false;
 
 		status = ManagerStatus.Started;
-	}
-
-	void UpdateData(int health, int maxHealth)
-	{
-		this.health = health;
-		this.maxHealth = maxHealth;
 	}
 
 	public void ChangeHealth(int value)
 	{
 		health += value;
 		if (health > maxHealth) health = maxHealth;
-		else if (health < 0) health = 0;		if (health == 0) 
+		else if (health < 0) health = 0;
+		if (health == 0) 
 			StartCoroutine(GameController.ReloadGame());
 	}
 
 	public void Reload()
 	{
-		UpdateData(maxHealth, maxHealth);
+        health = maxHealth;
 	}
 }

@@ -13,7 +13,6 @@ public class HidePlace : MonoBehaviour
 
 	public void Operate()
 	{
-		Debug.Log("OK");
 		isHided = !isHided;
 		if (isHided)
 		{

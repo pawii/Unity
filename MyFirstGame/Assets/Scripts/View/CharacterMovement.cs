@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Profiling;
 
 public class CharacterMovement : MonoBehaviour 
 {
@@ -42,13 +43,13 @@ public class CharacterMovement : MonoBehaviour
 
 	public void Jump()
 	{
-		Vector2 force = transform.up * jumpPower;
+		Vector3 force = transform.up * jumpPower;
 		rb.AddForce(force, ForceMode2D.Impulse);
 	}
 
 	public void GetDamage(int direction)
 	{
-		Vector2 getDamageForce = new Vector2(0.1f, 1);
+		Vector3 getDamageForce = new Vector3(0.1f, 1, 0);
 		getDamageForce.x *= direction;
 		if (rb != null)
 		{

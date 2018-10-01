@@ -10,11 +10,11 @@ public class Bullet : MonoBehaviour
 	private Rigidbody2D rb;
 	private bool hit = true;
 
-	private Vector2 force;
-	Vector2 startPos;
-	Vector2 endPos;
-	Vector2 startRot;
-	Vector2 attachOffset;
+	private Vector3 force;
+	Vector3 startPos;
+	Vector3 endPos;
+	Vector3 startRot;
+	Vector3 attachOffset;
 	Transform target;
 	int rotDirection;
 
@@ -25,7 +25,7 @@ public class Bullet : MonoBehaviour
 		if (!hit)
 		{
 			float percent = (transform.position.x - startPos.x) / ((endPos.x - startPos.x) / 2);
-			Vector2 curRot;
+			Vector3 curRot = Vector3.zero;
 			curRot.x = startRot.x;
 			if (rotDirection == 1)
 				curRot.y = startRot.y - startRot.y * percent;

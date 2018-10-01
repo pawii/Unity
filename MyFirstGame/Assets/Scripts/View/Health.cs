@@ -23,8 +23,8 @@ public class Health : MonoBehaviour
 			direction = -1;
 		else if (transform.position.y <= startY - amplitude / 2)
 			direction = 1;
-		Vector2 target = transform.position + transform.up * direction;
-		transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
+		Vector3 target = transform.position + transform.up * direction;
+		transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
 	}
 
 	void OnTriggerEnter2D(Collider2D collider)

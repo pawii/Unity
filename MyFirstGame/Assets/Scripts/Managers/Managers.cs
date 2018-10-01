@@ -1,42 +1,40 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 [RequireComponent(typeof(PlayerManager))]
 [RequireComponent(typeof(MissionManager))]
-[RequireComponent(typeof(InventoryManager))]
 public class Managers : MonoBehaviour 
 {
 	public static PlayerManager Player { get; private set; }
 	public static MissionManager Mission { get; private set; }
-	public static InventoryManager Inventory { get; private set; }
 
-	private List<IGameManager> _startSequence;
+	private List<IGameManager> managers;
+
+    public static event Action ManagersStarted;
 
 	#region Unity lifecycle
 	void Awake()
 	{
-		Player = GetComponent<PlayerManager>();
-		Mission = GetComponent<MissionManager>();
-		Inventory = GetComponent<InventoryManager>();
+        Player = GetComponent<PlayerManager>();
+        Mission = GetComponent<MissionManager>();
 
-		_startSequence = new List<IGameManager>();
-		_startSequence.Add(Player);
-		_startSequence.Add(Mission);
-		_startSequence.Add(Inventory);
+		managers = new List<IGameManager>();
+		managers.Add(Player);
+		managers.Add(Mission);
 		StartCoroutine(StartupManagers());
 	}
 	#endregion
 
 	private IEnumerator StartupManagers()
 	{
-
-		foreach (IGameManager manager in _startSequence)
-			manager.StartUp();
+		for(int i = 0; i < managers.Count; i++)
+			managers[i].StartUp();
 
 		yield return null;
 
-		int numModules = _startSequence.Count;
+		int numModules = managers.Count;
 		int numReady = 0;
 
 		while (numReady < numModules)
@@ -44,8 +42,8 @@ public class Managers : MonoBehaviour
 			int lastReady = numReady;
 			numReady = 0;
 
-			foreach (IGameManager manager in _startSequence)
-				if (manager.status == ManagerStatus.Started)
+			for(int i = 0; i < managers.Count; i++)
+				if (managers[i].status == ManagerStatus.Started)
 					numReady++;
 
 			if (numReady > lastReady)
@@ -55,5 +53,6 @@ public class Managers : MonoBehaviour
 
 			yield return null;
 		}
-		GameController.OnManagersStarted();	}
+        ManagersStarted();
+	}
 }

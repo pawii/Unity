@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Archer : Monster 
+public partial class Archer : Monster 
 {
-	float minCoordY;
 	[SerializeField]
 	private Animator anim;
 	[SerializeField] 
-	private Transform bow;
+	private Transform arrow;
+
+    private float bowAngel;
+    private float maxVelocity;
 
 	void Awake()
 	{
@@ -23,12 +25,18 @@ public class Archer : Monster
 		character = GameController.character;
 
 		velocity = (float)Mathf.Sqrt((float)damageArea* (float)Physics2D.gravity.magnitude);
-		minCoordY = -0.5f;
 
 		movement = new TwoPointMovement(FlipX, transform, xMinPos, xMaxPos);
 		movement.ChangeFlipX += OnChangeFlipX;
 
-		getDamagePower = 5;	}
+		getDamagePower = 5;
+
+
+        // ДЛЯ ВТОРОЙ ЧАСТИ КЛАССА
+        headOffset = head.localEulerAngles.z;
+        armOffset = arm.localEulerAngles.z;
+        maxVelocity = 10f;
+    }
 
 	void OnDestroy()
 	{
@@ -61,10 +69,89 @@ public class Archer : Monster
 		movement.ChangeFlipX += OnChangeFlipX;
 	}
 
-	protected override void Attack()
+    protected override void Attack()
 	{
-		Vector2 force = FlipX ? bow.right : -bow.right;
-		force *= velocity;
-		BulletFactory.CreateArrow(bow, damage, force, tag);
-	}
+        if (bowAngel != 0)
+        {
+            Vector3 direction = FlipX ? arrow.right : -arrow.right;
+
+            // ВЫСЧИТЫВАЕМ V(СИЛУ)
+            float x = character.position.x - arrow.position.x;
+            if(x < 0)
+            {
+                x = x * -1;
+                bowAngel = 180 - bowAngel;
+            }
+            float y = 0;
+            float h = arrow.position.y - character.position.y; // ВОЗМОЖНО БАГ
+            float alpha = Methods.GradToRad(bowAngel); // ВОЗМОЖНО БАГ
+
+            float velocity = Mathf.Sqrt(-Physics2D.gravity.magnitude * Mathf.Pow(x, 2) / ((y - Mathf.Tan(alpha) * x - h) * 2 * Mathf.Pow(Mathf.Cos(alpha), 2)));
+            velocity = Mathf.Clamp(velocity, 0, maxVelocity);
+
+            direction *= velocity;
+            BulletFactory.CreateArrow(arrow, damage, direction, tag);
+        }
+    }
+}
+
+// ОТВЕЧАЕТ ЗА ВРАЩЕНИЕ ЛУКА
+public partial class Archer : Monster
+{
+    float headOffset;
+    float armOffset;
+
+    [SerializeField]
+    private Transform head;
+    [SerializeField]
+    private Transform arm;
+
+    void LateUpdate()
+    {
+        if (state == MonsterState.Attacked)
+        {
+            Vector3 toTarget = new Vector3(character.position.x - arrow.position.x,
+                character.position.y - arrow.position.y, 0);
+            if (Mathf.Abs(toTarget.x) <= damageArea + 1)
+            {
+                Vector3 newAngel = Vector3.zero;
+
+                // НАПРАВЛЯЕМ УГОЛ ПРЯМО НА ЦЕЛЬ
+                newAngel.z = Vector3.Angle(Vector3.right, toTarget);
+
+                // РАССТАВЛЯЕМ ЗНАКИ
+                if (toTarget.y < 0)
+                    newAngel.z = newAngel.z * -1;
+
+                // ВЫЧИСЛЯЕМ ОФФСЕТ
+                // ЕСЛИ toTarget.x = damageArea, ТО ОФФСЕТ = 45
+                // ЕСЛИ toTarget.x = 0, ТО ОФФСЕТ = 0
+                float offset = Mathf.Abs(toTarget.x) / damageArea * 45;
+
+                // ОГРАНИЧИВАЕМ ОФФСЕТ
+                // ЕСЛИ |УГОЛ|=90, ОФФСЕТ *= 0
+                // ЕСЛИ |УГОЛ|=0, ОФФСЕТ *= 1
+                offset = offset * (90 - Mathf.Abs(newAngel.z)) / 90;
+
+                newAngel.z += offset;
+
+                bowAngel = newAngel.z;
+
+                Vector3 headAngel = newAngel;
+                headAngel.z += headOffset;
+                Vector3 armAngel = newAngel;
+                armAngel.z += armOffset;
+
+                // ЕСЛИ toTarget.x < 0, ТО ЗЕРКАЛЬНО ОТРАЖАЕМ УГОЛ
+                if (toTarget.x < 0)
+                {
+                    armAngel.z = armAngel.z * -1;
+                    headAngel.z = (headAngel.z * -1) - 180;
+                }
+
+                arm.localEulerAngles = armAngel;
+                head.localEulerAngles = headAngel;
+            }
+        }
+    }
 }

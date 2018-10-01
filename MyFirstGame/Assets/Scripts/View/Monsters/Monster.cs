@@ -12,7 +12,7 @@ public class Monster : Unit
 	protected float damageArea;
 	protected float damageRate;
 
-	private MonsterState state;
+	protected MonsterState state;
 
 	protected float triggerArea;
 
@@ -80,7 +80,7 @@ public class Monster : Unit
 		if (health < 1)
 			Destroy(gameObject);
 		Vector2 getDamageForce = new Vector2(0.1f, 1);
-		getDamageForce.x *= parameters.Direction;
+		getDamageForce.x *= parameters.direction;
 		if (rb != null)
 		{
 			rb.velocity = Vector3.zero;

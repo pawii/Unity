@@ -10,8 +10,8 @@ public class GameController : MonoBehaviour
 	public static Transform character { get; private set;}
 	private static GameObject lightPrefab;
 	private static int startLevel = 1;
-	static GameObject light;
-
+	static new GameObject light;
+    
 	public static event Action<string> ShowNotification;
 	public static event Action RemoveNotification;
 	public static event Action RefreshLives;
@@ -22,13 +22,14 @@ public class GameController : MonoBehaviour
 
 		lightPrefab = Resources.Load("Light") as GameObject;
 
-		Managers.Mission.LevelLoad += OnLevelLoad;
+        Managers.ManagersStarted += OnManagersStarted;
 	}
 
 	private void Destroy()
 	{
-		Managers.Mission.LevelLoad -= OnLevelLoad;
-	}
+        Managers.ManagersStarted -= OnManagersStarted;
+        Managers.Mission.LevelLoad -= OnLevelLoad;
+    }
 
 	public static IEnumerator ReloadGame()
 	{
@@ -37,7 +38,8 @@ public class GameController : MonoBehaviour
 		Managers.Mission.RestartCurrent();
 		Managers.Player.Reload();
 		RefreshLives();
-		RemoveNotification();	}
+		RemoveNotification();
+	}
 
 	public static void ChangeHealth(int value)
 	{
@@ -45,10 +47,12 @@ public class GameController : MonoBehaviour
 		RefreshLives();
 	}
 
-	public static void OnManagersStarted()
-	{
-		ShowNotification("PLEASE, WAIT");
-		for (int i = 0; i < startLevel; i++)
+	private void OnManagersStarted()
+    {
+        ShowNotification("PLEASE, WAIT");
+
+        Managers.Mission.LevelLoad += OnLevelLoad;
+        for (int i = 0; i < startLevel; i++)
 			Managers.Mission.GoNext();
 		//Application.LoadLevel("TestSprites");
 	}
@@ -61,16 +65,16 @@ public class GameController : MonoBehaviour
 		RemoveLight();
 	}
 
-	private void OnLevelLoad()
+	public static void OnLevelLoad()
 	{
 		RemoveNotification();
 	}
 
 	public static void AddLight()
 	{
-		if (!Managers.Inventory.ligth)
+		if (!Managers.Player.HasLigth)
 		{
-			Managers.Inventory.ligth = true;
+			Managers.Player.HasLigth = true;
 
 			light = Instantiate(lightPrefab);
 			light.transform.parent = character;
@@ -80,14 +84,15 @@ public class GameController : MonoBehaviour
 
 	static void RemoveLight()
 	{
-		if (Managers.Inventory.ligth)
+		if (Managers.Player.HasLigth)
 		{
-			Managers.Inventory.ligth = false;
+			Managers.Player.HasLigth = false;
 			Destroy(light);
 		}
 	}
 
 	public static void OnGameComplete()
 	{
-		ShowNotification("GAME COMPLETE");	}
+		ShowNotification("GAME COMPLETE");
+	}
 }

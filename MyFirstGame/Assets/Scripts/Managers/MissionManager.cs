@@ -7,41 +7,35 @@ public class MissionManager : MonoBehaviour, IGameManager
 {
 	public ManagerStatus status { get; private set; }
 
-	[SerializeField]
 	private int curLevel;
-	[SerializeField]
-	private int maxLevel;
+	private const int maxLevel = 3;
 
-	GameObject levelPrefab;
+	private GameObject levelPrefab;
 
-	public event Action LevelLoad;
+    public event Action LevelLoad;
 
 	public void StartUp()
 	{
 		status = ManagerStatus.Initializing;
 
-        UpdateData(0, 3);
+        curLevel = 0;
 
 		status = ManagerStatus.Started;
 	}
 
 	public void RestartCurrent()
 	{
-
 		if (levelPrefab != null)
+		{
 			Destroy(levelPrefab);
+			GC.Collect();
+		}
 		levelPrefab = Resources.Load<GameObject>("Level" + curLevel);
 		levelPrefab = Instantiate(levelPrefab);
-		float offset = curLevel * 100;
+		int offset = curLevel * 100;
 		levelPrefab.transform.position = new Vector3(0, offset, 0);
 		GameController.character.transform.position = new Vector3(0, offset + 4, 0);
 		StartCoroutine(Delay());
-	}
-
-	public void UpdateData(int curLevel, int maxLevel)
-	{
-		this.curLevel = curLevel;
-		this.maxLevel = maxLevel;
 	}
 
 	public void GoNext()
@@ -55,12 +49,11 @@ public class MissionManager : MonoBehaviour, IGameManager
 		{
 			GameController.OnGameComplete();
 		}
-	}
+	}
 
 	IEnumerator Delay()
 	{
 		yield return new WaitForSeconds(2);
-		LevelLoad();
-
+        LevelLoad();
 	}
 }

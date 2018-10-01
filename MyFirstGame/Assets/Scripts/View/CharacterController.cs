@@ -12,7 +12,7 @@ public class CharacterController : Unit
 	public static event Action Jump;
 	public static event Action<int> GetDamage;
 
-	float radiusInteraction = 2f;
+	private float radiusInteraction = 2f;
 
 	public static bool Lock { get; set; }
 
@@ -24,9 +24,9 @@ public class CharacterController : Unit
 		set { anim.SetInteger("state", value); }
 	}
 
-	bool isGrounded;
+	private bool isGrounded;
 
-	void Awake()
+	private void Awake()
 	{
 		fastSpeed = true;
 
@@ -53,8 +53,8 @@ public class CharacterController : Unit
 	{
 		// ВЫЧИСЛЕНИЕ FLIPX
 
-		Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		Vector2 newRight = mousePos - (Vector2)transform.position;
+		Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		Vector3 newRight = mousePos - transform.position;
 
 		if (newRight.x < 0 && !FlipX)
 		{
@@ -147,9 +147,9 @@ public class CharacterController : Unit
 
 	public void OnHit(MessageParameters parameters)
 	{
-		GameController.ChangeHealth(parameters.Damage);
+		GameController.ChangeHealth(parameters.damage);
 
-		GetDamage(parameters.Direction);	}
+		GetDamage(parameters.direction);	}
 
 	private void OnFastSpeedChanged(bool fastSpeed)
 	{

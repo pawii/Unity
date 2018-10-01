@@ -22,7 +22,7 @@ public class Arrow : MonoBehaviour
 
 		force *= charge;
 
-		if (Managers.Inventory.ligth)
+		if (Managers.Player.HasLigth)
 			BulletFactory.CreateArrowWithLight(transform, damage, force, tag);
 		else
 			BulletFactory.CreateArrow(transform, damage, force, tag);
