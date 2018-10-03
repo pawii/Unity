@@ -3,9 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Monster : Unit 
+public class Monster : MonoBehaviour// : Unit 
 {
-	protected int health;
+    private bool flipX;
+    protected bool FlipX
+    {
+        get { return flipX; }
+        set
+        {
+            if (value == flipX)
+                return;
+            else
+            {
+                Vector3 newScale = transform.localScale;
+                newScale.x *= -1;
+                transform.localScale = newScale;
+
+                flipX = !flipX;
+            }
+        }
+    }
+
+    protected int health;
 	protected float speed;
 	protected int damage;
 	protected float damageArea;
@@ -44,7 +63,6 @@ public class Monster : Unit
     void Start()
 	{
 		state = MonsterState.Find;
-        Debug.Log("Monster: " + FlipX);
     }
 
 	// ПАТТЕРН "ШАБЛОННЫЙ МЕТОД"

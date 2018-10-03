@@ -7,9 +7,8 @@ public class IntelligenceMovement : Movement
 {
 	private Transform target;
 
-	public IntelligenceMovement(bool flipX, Transform target)
-	{
-		this.flipX = flipX;
+	public IntelligenceMovement(bool flipX, Transform target) : base(flipX)
+    {
 		this.target = target;
 	}
 

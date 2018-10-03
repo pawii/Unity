@@ -8,9 +8,8 @@ public class StayInPlaceMovement : Movement
 	private Vector3 target;
 	private Transform triggerTarget;
 
-	public StayInPlaceMovement(bool flipX, Vector3 target, Transform triggerTarget)
-	{
-		this.flipX = flipX;
+	public StayInPlaceMovement(bool flipX, Vector3 target, Transform triggerTarget) : base(flipX)
+    {
 		this.target = target;
 		this.triggerTarget = triggerTarget;
 	}

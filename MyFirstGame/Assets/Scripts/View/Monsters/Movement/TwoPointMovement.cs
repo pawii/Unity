@@ -10,9 +10,8 @@ public class TwoPointMovement : Movement
 	private float xMaxPoint;
 	int directionX;
 
-	public TwoPointMovement(bool flipX, Transform target, float xMinPoint, float xMaxPoint)
-	{
-		this.flipX = flipX;
+	public TwoPointMovement(bool flipX, Transform target, float xMinPoint, float xMaxPoint) : base(flipX)
+    {
 		this.target = target;
 		this.xMinPoint = xMinPoint;
 		this.xMaxPoint = xMaxPoint;

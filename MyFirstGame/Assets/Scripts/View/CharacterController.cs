@@ -3,9 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class CharacterController : Unit
+public class CharacterController : MonoBehaviour
 {
-	public static bool flipX;
+	private static bool flipX;
+    public static bool Get_FlipX() { return flipX; }
+    private void Set_FlipX(bool value)
+    {
+        if (value == flipX)
+            return;
+        else
+        {
+            Vector3 newScale = transform.localScale;
+            newScale.x *= -1;
+            transform.localScale = newScale;
+
+            flipX = !flipX;
+        }
+    }
+
 	private bool fastSpeed;
 
 	public static event Action<bool> Run;
@@ -34,10 +49,7 @@ public class CharacterController : Unit
 		ArchTorso.FastSpeedChanged += OnFastSpeedChanged;
 		MeleeTorso.FastSpeedChanged += OnFastSpeedChanged;
 
-		WeaponFactory.SetArch(transform, FlipX);
-
-		FlipX = false;
-		flipX = false;
+        flipX = false;
 
 		Lock = false;
 
@@ -45,7 +57,8 @@ public class CharacterController : Unit
 
         Messenger.AddListener(GameEvent.CHARACTER_HIDED, OnCharacterHided);
         Messenger.AddListener(GameEvent.CHARACTER_SEEMED, OnCharacterSeemed);
-        Debug.Log("charater: " + FlipX);
+
+        WeaponFactory.SetArch(transform, flipX);
     }
 
 	void OnDestroy()
@@ -64,17 +77,11 @@ public class CharacterController : Unit
 		Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		Vector3 newRight = mousePos - transform.position;
 
-		if (newRight.x < 0 && !FlipX)
-		{
-			FlipX = true;
-			flipX = true;
-		}
+        if (newRight.x < 0 && !flipX)
+            Set_FlipX(true);
 
-		else if (newRight.x >= 0 && FlipX)
-		{
-			FlipX = false;
-			flipX = false;
-		}
+        else if (newRight.x >= 0 && flipX)
+            Set_FlipX(false);
 
 
 		// ДВИЖЕНИЕ И АНИМАЦИЯ
@@ -126,11 +133,11 @@ public class CharacterController : Unit
 			switch (e.keyCode)
 			{
 				case KeyCode.Q:
-					WeaponFactory.SetArch(transform, FlipX);
+					WeaponFactory.SetArch(transform, flipX);
 					break;
 
 				case KeyCode.E:
-					WeaponFactory.SetMelee(transform, FlipX);
+					WeaponFactory.SetMelee(transform, flipX);
 					break;
 
 				case KeyCode.W:

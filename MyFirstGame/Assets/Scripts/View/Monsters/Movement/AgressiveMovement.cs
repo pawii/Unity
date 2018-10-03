@@ -8,9 +8,8 @@ public class AgressiveMovement : Movement
 	protected Transform target;
 	private Transform triggerTarget;
 
-	public AgressiveMovement(bool flipX, Transform target, Transform triggerTarget)
+	public AgressiveMovement(bool flipX, Transform target, Transform triggerTarget) : base(flipX)
 	{
-		this.flipX = flipX;
 		this.target = target;
 		this.triggerTarget = triggerTarget;
 	}

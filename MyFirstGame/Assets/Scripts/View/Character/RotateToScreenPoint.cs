@@ -19,7 +19,7 @@ public class RotateToScreenPoint : MonoBehaviour
 		Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		Vector3 newRight = mousePos - transform.position;
 
-		if (CharacterController.flipX)
+		if (CharacterController.Get_FlipX())
 			newRight.x = newRight.x * -1;
 
 		Vector3 newAngel = Vector3.zero;

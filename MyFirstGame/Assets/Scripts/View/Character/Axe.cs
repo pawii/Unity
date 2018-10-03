@@ -12,7 +12,7 @@ public class Axe : MonoBehaviour
 	{
 		if (collision.gameObject.tag != "character" && !dontHit)
 		{
-			int direction = CharacterController.flipX ? -1 : 1;
+			int direction = CharacterController.Get_FlipX() ? -1 : 1;
 			collision.gameObject.SendMessage("OnHit", new MessageParameters(direction, damage));
 			StartCoroutine(Delay());
 		}
