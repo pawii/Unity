@@ -17,27 +17,29 @@ public class CharacterMovement : MonoBehaviour
 	[SerializeField]
 	private Rigidbody2D rb;
 
-	void Awake()
+    #region Unity lifecycle
+    private void Awake()
 	{
 		CharacterController.Run += Run;
 		CharacterController.Jump += Jump;
 		CharacterController.GetDamage += GetDamage;
 	}
 
-	void OnDestroy()
+    private void OnDestroy()
 	{
 		CharacterController.Run -= Run;
 		CharacterController.Jump -= Jump;
 		CharacterController.GetDamage -= GetDamage;
 	}
+    #endregion
 
-	public void Run(bool isRun)
+    public void Run(bool isRun)
 	{
+        Vector3 pos = transform.position;
 		Vector3 direction = transform.right * Input.GetAxis("Horizontal");
 
-
 		float speed = isRun ? runSpeed : walkSpeed;
-		transform.position = Vector2.MoveTowards(transform.position, transform.position + direction, 
+		transform.position = Vector2.MoveTowards(pos, pos + direction, 
 		                                         speed * Time.deltaTime);
 	}
 

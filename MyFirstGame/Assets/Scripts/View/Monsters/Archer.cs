@@ -12,7 +12,8 @@ public partial class Archer : Monster
     private float bowAngel;
     private float maxVelocity;
 
-	void Awake()
+    #region Unity lifecycle
+    private void Awake()
 	{
 		health = 3;
 		speed = 3f;
@@ -22,9 +23,7 @@ public partial class Archer : Monster
 
 		triggerArea = 7;
 
-		character = GameController.character;
-
-		velocity = (float)Mathf.Sqrt((float)damageArea* (float)Physics2D.gravity.magnitude);
+		character = GameController.Character;
 
 		movement = new TwoPointMovement(FlipX, transform, xMinPos, xMaxPos);
 		movement.ChangeFlipX += OnChangeFlipX;
@@ -38,12 +37,13 @@ public partial class Archer : Monster
         maxVelocity = 10f;
     }
 
-	void OnDestroy()
+    private void OnDestroy()
 	{
 		movement.ChangeFlipX -= OnChangeFlipX;
 	}
+    #endregion
 
-	protected override void SetCalm()
+    protected override void SetCalm()
 	{
 		base.SetCalm();
 		movement.ChangeFlipX -= OnChangeFlipX;
@@ -73,17 +73,20 @@ public partial class Archer : Monster
 	{
         if (bowAngel != 0)
         {
+            Vector3 characterPos = character.position;
+            Vector3 arrowPos = arrow.position;
+
             Vector3 direction = FlipX ? arrow.right : -arrow.right;
 
             // ВЫСЧИТЫВАЕМ V(СИЛУ)
-            float x = character.position.x - arrow.position.x;
+            float x = characterPos.x - arrowPos.x;
             if(x < 0)
             {
                 x = x * -1;
                 bowAngel = 180 - bowAngel;
             }
             float y = 0;
-            float h = arrow.position.y - character.position.y; // ВОЗМОЖНО БАГ
+            float h = arrowPos.y - characterPos.y; // ВОЗМОЖНО БАГ
             float alpha = Methods.GradToRad(bowAngel); // ВОЗМОЖНО БАГ
 
             float velocity = Mathf.Sqrt(-Physics2D.gravity.magnitude * Mathf.Pow(x, 2) / ((y - Mathf.Tan(alpha) * x - h) * 2 * Mathf.Pow(Mathf.Cos(alpha), 2)));
@@ -98,8 +101,8 @@ public partial class Archer : Monster
 // ОТВЕЧАЕТ ЗА ВРАЩЕНИЕ ЛУКА
 public partial class Archer : Monster
 {
-    float headOffset;
-    float armOffset;
+    private float headOffset;
+    private float armOffset;
 
     [SerializeField]
     private Transform head;

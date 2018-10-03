@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Finish : MonoBehaviour 
 {
-	bool locker = false;
+	private bool locker = false;
 
-	void OnTriggerEnter2D(Collider2D collider)
+    private void OnTriggerEnter2D(Collider2D collider)
 	{
 		if (!locker && collider.gameObject.tag == "character")
 		{ 
@@ -15,7 +15,7 @@ public class Finish : MonoBehaviour
 		}
 	}
 
-	IEnumerator Delay()
+    private IEnumerator Delay()
 	{
 		locker = true;
 		yield return new WaitForSeconds(1);

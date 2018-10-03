@@ -14,7 +14,8 @@ public abstract class Movement
 		{
 			flipX = value;
 			ChangeFlipX(value);
-		}	}
+		}
+	}
 
 	public virtual Vector3 Move()
 	{

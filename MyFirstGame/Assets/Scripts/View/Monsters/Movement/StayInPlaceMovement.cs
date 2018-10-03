@@ -22,5 +22,6 @@ public class StayInPlaceMovement : Movement
 		else
 			FlipX = true;
 
-		return target;	}
+		return target;
+	}
 }

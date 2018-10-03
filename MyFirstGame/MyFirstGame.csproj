@@ -121,7 +121,6 @@
     <Compile Include="Assets\Scripts\View\Monsters\Movement\Movement.cs" />
     <Compile Include="Assets\Scripts\View\Monsters\Movement\StayInPlaceMovement.cs" />
     <Compile Include="Assets\Scripts\View\Monsters\Movement\TwoPointMovement.cs" />
-    <Compile Include="Assets\Scripts\View\Monsters\RotateToCharacter.cs" />
     <Compile Include="Assets\Scripts\View\Unit.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class GhostCollider : MonoBehaviour 
 {
-	int damage = -1;
-	bool hitRequire;
-	float delay = 0.5f;
-	[SerializeField] Animator anim;
+    [SerializeField]
+    private int damage = -1;
+    [SerializeField]
+    private float delay = 0.5f;
+	[SerializeField]
+    private Animator anim;
 
-	private void Awake()
+    private bool hitRequire;
+
+    private void Awake()
 	{
 		hitRequire = true;
 	}
@@ -25,7 +29,7 @@ public class GhostCollider : MonoBehaviour
 		{
 			hitRequire = false;
 			MessageParameters parameters = new MessageParameters(Methods.GetDirection(gameObject), damage);
-			GameController.character.SendMessage("OnHit", parameters, SendMessageOptions.DontRequireReceiver);
+			GameController.Character.SendMessage("OnHit", parameters, SendMessageOptions.DontRequireReceiver);
 		}
 	}
 

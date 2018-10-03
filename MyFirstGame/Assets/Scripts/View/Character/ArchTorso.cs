@@ -16,8 +16,8 @@ public class ArchTorso : MonoBehaviour
 
 	private float time1;
 	private float time2;
-	bool requireShoot = true;
-	bool power = false;
+    private bool requireShoot = true;
+    private bool power = false;
 
 	[SerializeField]
 	private float shootDelay = 0.5f;

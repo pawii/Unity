@@ -15,15 +15,17 @@ public class IntelligenceMovement : Movement
 
 	public override Vector3 Move()
 	{
+        Vector3 targetPos = target.position;
 		int direction = FlipX ? 1 : -1;
-		Vector3 spherePos = target.position;
+		Vector3 spherePos = targetPos;
 		spherePos.y += 0.5f;
 		spherePos.x += 0.5f * direction;
-		foreach (Collider2D collider in Physics2D.OverlapCircleAll(spherePos, 0.1f))
-			if (collider.gameObject.layer == LayerMask.NameToLayer("ground"))
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(spherePos, 0.1f);
+        for(int i = 0; i < colliders.Length; i++)
+			if (colliders[i].gameObject.layer == LayerMask.NameToLayer("ground"))
 				FlipX = !FlipX;
 
-		Vector3 pos = target.position + target.right * direction;
+		Vector3 pos = targetPos + target.right * direction;
 		return pos;
 	}
 }

@@ -6,10 +6,13 @@ public class Bat : Monster
 {
 	[SerializeField]
 	private GameObject bullet;
-	public float yMinPoint;
-	public float yMaxPoint;
+    [SerializeField]
+	private float yMinPoint;
+    [SerializeField]
+	private float yMaxPoint;
 
-	void Awake()
+    #region Unity lifecycle
+    private void Awake()
 	{
 		health = 3;
 		speed = 3f;
@@ -19,7 +22,7 @@ public class Bat : Monster
 
 		triggerArea = 10f;
 
-		character = GameController.character;
+		character = GameController.Character;
 
 		movement = new BatTwoPointMovement(FlipX, transform, xMinPos, xMaxPos, yMinPoint, yMaxPoint);
 		movement.ChangeFlipX += OnChangeFlipX;
@@ -27,12 +30,13 @@ public class Bat : Monster
 		getDamagePower = 5;
 	}
 
-	void OnDestroy()
+    private void OnDestroy()
 	{
 		movement.ChangeFlipX -= OnChangeFlipX;
 	}
+    #endregion
 
-	protected override void Attack()
+    protected override void Attack()
 	{
 		BulletFactory.CreateBatBullet(transform.position, damage, FlipX ? 1 : -1);
 	}

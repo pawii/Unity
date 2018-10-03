@@ -7,7 +7,8 @@ public class Ghost : Monster
 	[SerializeField]
 	private Animator anim;
 
-	void Awake()
+    #region Unity lifecycle
+    private void Awake()
 	{
 		health = 3;
 		speed = 3f;
@@ -17,7 +18,7 @@ public class Ghost : Monster
 
 		triggerArea = 3f;
 
-		character = GameController.character;
+		character = GameController.Character;
 
 		movement = new TwoPointMovement(FlipX, transform, xMinPos, xMaxPos);
 		movement.ChangeFlipX += OnChangeFlipX;
@@ -25,14 +26,16 @@ public class Ghost : Monster
 		getDamagePower = 5;
 	}
 
-	void OnDestroy()
+    private void OnDestroy()
 	{
 		movement.ChangeFlipX -= OnChangeFlipX;
 	}
+    #endregion
 
-	protected override void Attack()
+    protected override void Attack()
 	{
-		anim.SetTrigger("Attack");	}
+		anim.SetTrigger("Attack");
+	}
 
 	protected override void SetCalm()
 	{

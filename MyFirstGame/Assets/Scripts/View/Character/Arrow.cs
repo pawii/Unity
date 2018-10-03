@@ -18,7 +18,7 @@ public class Arrow : MonoBehaviour
 
 	private void Shoot(float charge, int damage)
 	{
-		Vector2 force = CharacterController.flipX ? -transform.right : transform.right;
+		Vector3 force = CharacterController.flipX ? -transform.right : transform.right;
 
 		force *= charge;
 

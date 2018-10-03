@@ -10,8 +10,8 @@ public class MeleeTorso : MonoBehaviour
 
 	public static event Action<bool> FastSpeedChanged;
 
-	#region Unity lifecycle
-	void Update()
+    #region Unity lifecycle
+    private void Update()
 	{
 		if (Input.GetMouseButtonDown(0))
 			anim.SetTrigger("Attack");

@@ -8,7 +8,6 @@ public class Monster : Unit
 	protected int health;
 	protected float speed;
 	protected int damage;
-	protected float velocity;
 	protected float damageArea;
 	protected float damageRate;
 
@@ -26,7 +25,7 @@ public class Monster : Unit
 	[SerializeField]
 	private Rigidbody2D rb;
 
-	Coroutine damageCoroutine;
+    private Coroutine damageCoroutine;
 
 
 	#region Unity lifecycle
@@ -34,20 +33,28 @@ public class Monster : Unit
 	{
 		Messenger.AddListener(GameEvent.CHARACTER_SEEMED, OnCharacterSeemed);
 		Messenger.AddListener(GameEvent.CHARACTER_HIDED, OnCharacterHided);
-	}
+    }
 
-	void Start()
+    void OnDestroy()
+    {
+        Messenger.RemoveListener(GameEvent.CHARACTER_SEEMED, OnCharacterSeemed);
+        Messenger.RemoveListener(GameEvent.CHARACTER_HIDED, OnCharacterHided);
+    }
+
+    void Start()
 	{
 		state = MonsterState.Find;
-	}
+        Debug.Log("Monster: " + FlipX);
+    }
 
 	// ПАТТЕРН "ШАБЛОННЫЙ МЕТОД"
 	void Update()
 	{
 		if (state == MonsterState.Find)
 		{
-			foreach (Collider2D collider in Physics2D.OverlapCircleAll(transform.position, triggerArea))
-				if (collider.gameObject.tag == "character")
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, triggerArea);
+            for(int i = 0; i < colliders.Length; i++)
+				if (colliders[i].gameObject.tag == "character")
 				{
 					SetTriggered();
 				}
@@ -56,8 +63,9 @@ public class Monster : Unit
 		{
 			if (state == MonsterState.Triggered)
 			{
-				foreach (Collider2D collider in Physics2D.OverlapCircleAll(transform.position, damageArea))
-					if (collider.gameObject.tag == "character")
+                Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, damageArea);
+                for (int i = 0; i < colliders.Length; i++)
+                    if (colliders[i].gameObject.tag == "character")
 					{
 						SetAgressive();
 						break;
@@ -68,18 +76,12 @@ public class Monster : Unit
 	}
 	#endregion
 
-	void OnDestroy()
-	{
-		Messenger.RemoveListener(GameEvent.CHARACTER_SEEMED, OnCharacterSeemed);
-		Messenger.RemoveListener(GameEvent.CHARACTER_HIDED, OnCharacterHided);
-	}
-
 	public void OnHit(MessageParameters parameters)
 	{
 		health--;
 		if (health < 1)
 			Destroy(gameObject);
-		Vector2 getDamageForce = new Vector2(0.1f, 1);
+		Vector3 getDamageForce = new Vector3(0.1f, 1, 0);
 		getDamageForce.x *= parameters.direction;
 		if (rb != null)
 		{
@@ -106,11 +108,10 @@ public class Monster : Unit
 	protected void Move()
 	{
 		if(state != MonsterState.GetHit)
-			transform.position = Vector2.Lerp(transform.position, movement.Move(), speed * Time.deltaTime);
+			transform.position = Vector3.Lerp(transform.position, movement.Move(), speed * Time.deltaTime);
 	}
-
-
-	IEnumerator Damaging()
+    
+	private IEnumerator Damaging()
 	{
 		Attack();
 		yield return new WaitForSeconds(damageRate);

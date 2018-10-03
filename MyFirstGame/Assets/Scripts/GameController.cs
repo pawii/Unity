@@ -7,10 +7,10 @@ public class GameController : MonoBehaviour
 {
 	[SerializeField]
 	private Transform ch;
-	public static Transform character { get; private set;}
+	public static Transform Character { get; private set;}
 	private static GameObject lightPrefab;
 	private static int startLevel = 1;
-	static new GameObject light;
+	private static GameObject light;
     
 	public static event Action<string> ShowNotification;
 	public static event Action RemoveNotification;
@@ -18,7 +18,7 @@ public class GameController : MonoBehaviour
 
 	private void Awake()
 	{
-		character = ch;
+		Character = ch;
 
 		lightPrefab = Resources.Load("Light") as GameObject;
 
@@ -77,7 +77,7 @@ public class GameController : MonoBehaviour
 			Managers.Player.HasLigth = true;
 
 			light = Instantiate(lightPrefab);
-			light.transform.parent = character;
+			light.transform.parent = Character;
 			light.transform.localPosition = new Vector3(0, 0, -2);
 		}
 	}

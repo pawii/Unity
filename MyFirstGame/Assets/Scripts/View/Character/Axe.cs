@@ -5,7 +5,7 @@ using UnityEngine;
 public class Axe : MonoBehaviour 
 {
 	private int damage = 1;
-	bool dontHit = false;
+    private bool dontHit = false;
 
 	#region Unity lifecycle
 	void OnCollisionEnter2D(Collision2D collision)
@@ -17,9 +17,9 @@ public class Axe : MonoBehaviour
 			StartCoroutine(Delay());
 		}
 	}
-	#endregion
+    #endregion
 
-	IEnumerator Delay()
+    private IEnumerator Delay()
 	{
 		dontHit = true;
 		yield return new WaitForSeconds(0.5f);

@@ -14,7 +14,7 @@ public class CharacterController : Unit
 
 	private float radiusInteraction = 2f;
 
-	public static bool Lock { get; set; }
+	public static bool Lock { get; private set; }
 
 	[SerializeField]
 	private Animator anim;
@@ -26,7 +26,8 @@ public class CharacterController : Unit
 
 	private bool isGrounded;
 
-	private void Awake()
+    #region Unity lifecycle
+    private void Awake()
 	{
 		fastSpeed = true;
 
@@ -41,13 +42,20 @@ public class CharacterController : Unit
 		Lock = false;
 
 		isGrounded = true;
-	}
+
+        Messenger.AddListener(GameEvent.CHARACTER_HIDED, OnCharacterHided);
+        Messenger.AddListener(GameEvent.CHARACTER_SEEMED, OnCharacterSeemed);
+        Debug.Log("charater: " + FlipX);
+    }
 
 	void OnDestroy()
 	{
 		ArchTorso.FastSpeedChanged -= OnFastSpeedChanged;
 		MeleeTorso.FastSpeedChanged -= OnFastSpeedChanged;
-	}
+
+        Messenger.RemoveListener(GameEvent.CHARACTER_HIDED, OnCharacterHided);
+        Messenger.RemoveListener(GameEvent.CHARACTER_SEEMED, OnCharacterSeemed);
+    }
 
 	void Update()
 	{
@@ -84,16 +92,16 @@ public class CharacterController : Unit
 				Run(isRun);
 
 				if (isGrounded)
-					//if (!FlipX)
-						//if (fastSpeed)
+			    //  if (!FlipX)
+				//      if (fastSpeed)
 							AnimatorState = (int)AnimationState.Run;
-						//else
-						//	AnimatorState = (int)AnimationState.Walk;
-				//	else
-					//	if (fastSpeed)
-						//	AnimatorState = (int)AnimationState.RunBack;
-						//else
-						//	AnimatorState = (int)AnimationState.WalkBack;
+				//      else
+				//      	AnimatorState = (int)AnimationState.Walk;
+				//  else
+				//      if (fastSpeed)
+				//      	AnimatorState = (int)AnimationState.RunBack;
+				//      else
+				//	        AnimatorState = (int)AnimationState.WalkBack;
 			}
 			if (Input.GetButtonDown("Jump") && isGrounded) 
 			{
@@ -127,14 +135,25 @@ public class CharacterController : Unit
 
 				case KeyCode.W:
 					Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, radiusInteraction);
-					for (int i = 0; i < colliders.Length; i++)
-						colliders[i].gameObject.SendMessage("Operate", SendMessageOptions.DontRequireReceiver);
+                    for (int i = 0; i < colliders.Length; i++)
+                        colliders[i].gameObject.SendMessage("Operate", SendMessageOptions.DontRequireReceiver);
 					break;
 			}
 		}
 	}
+    #endregion
 
-	public void SetGrounded()
+    private void OnCharacterSeemed()
+    {
+        Lock = false;
+    }
+
+    private void OnCharacterHided()
+    {
+        Lock = true;
+    }
+
+    public void SetGrounded()
 	{
 		isGrounded = false;
 
@@ -143,13 +162,15 @@ public class CharacterController : Unit
 		Collider2D[] colliders = Physics2D.OverlapCircleAll(pos, 0.1f);
 		for (int i = 0; i < colliders.Length; i++)
 			if (colliders[i].gameObject.layer != LayerMask.NameToLayer("dont hit"))
-				isGrounded = true;	}
+				isGrounded = true;
+	}
 
 	public void OnHit(MessageParameters parameters)
 	{
 		GameController.ChangeHealth(parameters.damage);
 
-		GetDamage(parameters.direction);	}
+		GetDamage(parameters.direction);
+	}
 
 	private void OnFastSpeedChanged(bool fastSpeed)
 	{

@@ -2,32 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Health : MonoBehaviour 
+public class Health : MonoBehaviour
 {
-	float amplitude;
-	int direction;
-	float startY;
-	float speed;
+    [SerializeField]
+    private float speed = 0.5f;
+    [SerializeField]
+    private float amplitude = 0.5f;
+	private int direction;
+    private float startY;
 
-	void Start()
+    private void Start()
 	{
-		amplitude = 0.5f;
 		direction = 1;
 		startY = transform.position.y;
-		speed = 0.5f;
 	}
 
-	void Update()
+    private void Update()
 	{
-		if (transform.position.y >= startY + amplitude / 2)
+        Vector3 pos = transform.position;
+		if (pos.y >= startY + amplitude / 2)
 			direction = -1;
-		else if (transform.position.y <= startY - amplitude / 2)
+		else if (pos.y <= startY - amplitude / 2)
 			direction = 1;
-		Vector3 target = transform.position + transform.up * direction;
-		transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+		Vector3 target = pos + transform.up * direction;
+		transform.position = Vector3.MoveTowards(pos, target, speed * Time.deltaTime);
 	}
 
-	void OnTriggerEnter2D(Collider2D collider)
+    private void OnTriggerEnter2D(Collider2D collider)
 	{
 		if (collider.gameObject.tag == "character")
 		{

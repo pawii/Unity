@@ -5,9 +5,9 @@ using System;
 
 public class BulletFactory : MonoBehaviour
 {
-	static GameObject arrowPrefab;
-	static GameObject batBulletPrefab;
-	static GameObject arrowLightPrefab;
+	private static GameObject arrowPrefab;
+    private static GameObject batBulletPrefab;
+    private static GameObject arrowLightPrefab;
 
 	static BulletFactory()
 	{
@@ -16,7 +16,7 @@ public class BulletFactory : MonoBehaviour
 		arrowLightPrefab = Resources.Load<GameObject>("ArrowLight");
 	}
 
-	public static GameObject CreateArrow(Transform sender, int damage, Vector2 force, string parentTag)
+	public static GameObject CreateArrow(Transform sender, int damage, Vector3 force, string parentTag)
 	{
 		GameObject arrow = Instantiate(arrowPrefab);
 		arrow.transform.position = sender.position;
@@ -29,7 +29,7 @@ public class BulletFactory : MonoBehaviour
 		return arrow;
 	}
 
-	public static GameObject CreateArrowWithLight(Transform sender, int damage, Vector2 force, string parentTag)
+	public static GameObject CreateArrowWithLight(Transform sender, int damage, Vector3 force, string parentTag)
 	{
 		GameObject lightParent = CreateArrow(sender, damage, force, parentTag);
 
@@ -42,9 +42,9 @@ public class BulletFactory : MonoBehaviour
 	public static void CreateBatBullet(Vector3 senderPosition, int damage, int direction)
 	{
 		GameObject bullet = Instantiate(batBulletPrefab);
-		bullet.transform.position = senderPosition + (GameController.character.position - senderPosition) / 2;
-		bullet.transform.up = GameController.character.position - senderPosition;
+		bullet.transform.position = senderPosition + (GameController.Character.position - senderPosition) / 2;
+		bullet.transform.up = GameController.Character.position - senderPosition;
 		MessageParameters parameters = new MessageParameters(direction, damage);
-		GameController.character.SendMessage("OnHit", parameters, SendMessageOptions.DontRequireReceiver);
+		GameController.Character.SendMessage("OnHit", parameters, SendMessageOptions.DontRequireReceiver);
 	}
 }

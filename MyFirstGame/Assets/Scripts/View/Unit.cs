@@ -21,7 +21,6 @@ public abstract class Unit : MonoBehaviour
 
 				flipX = !flipX;
 			}
-		}	}
-
-	private event Action<bool> FlipxChange;
+		}
+	}
 }

@@ -11,16 +11,17 @@ public class Bullet : MonoBehaviour
 	private bool hit = true;
 
 	private Vector3 force;
-	Vector3 startPos;
-	Vector3 endPos;
-	Vector3 startRot;
-	Vector3 attachOffset;
-	Transform target;
-	int rotDirection;
+    private Vector3 startPos;
+    private Vector3 endPos;
+    private Vector3 startRot;
+    private Vector3 attachOffset;
+    private Transform target;
+    private int rotDirection;
 
-	int damage;
+    private int damage;
 
-	void Update()
+    #region Unity lifecycle
+    private void Update()
 	{
 		if (!hit)
 		{
@@ -35,7 +36,7 @@ public class Bullet : MonoBehaviour
 		}
 	}
 
-	void OnTriggerEnter2D(Collider2D collider)
+    private void OnTriggerEnter2D(Collider2D collider)
 	{
 		if (collider.tag == parentTag)
 			return;
@@ -56,14 +57,15 @@ public class Bullet : MonoBehaviour
 			StartCoroutine(Hitting());
 		}
 	}
+    #endregion
 
-	IEnumerator Hitting()
+    private IEnumerator Hitting()
 	{
 		yield return new WaitForSeconds(2);
 		Destroy(gameObject);
 	}
 
-	void CalculateData()
+    private void CalculateData()
 	{
 		startRot = transform.right;
 		startPos = transform.position;
@@ -77,7 +79,7 @@ public class Bullet : MonoBehaviour
 
 		endPos = startPos;
 		endPos.x += Vector2.Dot(force, new Vector2(1, 0)) * time;
-		rotDirection = transform.right.y < 0 ? -1 : 1;
+		rotDirection = startRot.y < 0 ? -1 : 1;
 	}
 
 	public void Shoot(int damage, Vector2 force, string parentTag)
@@ -88,6 +90,5 @@ public class Bullet : MonoBehaviour
 		CalculateData();
 		rb.AddForce(force, ForceMode2D.Impulse);
 		hit = false;
-		//Debug.Log("FORCE Y: " + force.y);
 	}
 }

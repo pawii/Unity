@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class BatBullet : MonoBehaviour 
 {
-	void Start () 
+	private void Start () 
 	{
 		StartCoroutine(OnStart());	
 	}
 
-	IEnumerator OnStart()
+	private IEnumerator OnStart()
 	{
 		yield return new WaitForSeconds(1);
 		Destroy(gameObject);

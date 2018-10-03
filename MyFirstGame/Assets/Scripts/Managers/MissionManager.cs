@@ -34,7 +34,7 @@ public class MissionManager : MonoBehaviour, IGameManager
 		levelPrefab = Instantiate(levelPrefab);
 		int offset = curLevel * 100;
 		levelPrefab.transform.position = new Vector3(0, offset, 0);
-		GameController.character.transform.position = new Vector3(0, offset + 4, 0);
+		GameController.Character.transform.position = new Vector3(0, offset + 4, 0);
 		StartCoroutine(Delay());
 	}
 
@@ -51,7 +51,7 @@ public class MissionManager : MonoBehaviour, IGameManager
 		}
 	}
 
-	IEnumerator Delay()
+	private IEnumerator Delay()
 	{
 		yield return new WaitForSeconds(2);
         LevelLoad();

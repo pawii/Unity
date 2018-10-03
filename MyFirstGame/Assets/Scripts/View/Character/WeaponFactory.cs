@@ -12,7 +12,8 @@ public class WeaponFactory : MonoBehaviour
 	{
 		archWeapon = Resources.Load<GameObject>("ArchWeapon");
 		meleeWeapon = Resources.Load<GameObject>("MeleeWeapon");
-		curObj = null;	}
+		curObj = null;
+	}
 
 	public static void SetArch(Transform parent, bool flipX)
 	{
@@ -47,7 +48,8 @@ public class WeaponFactory : MonoBehaviour
 			curObj.transform.parent = parent;
 
 			curObj.transform.localPosition = Vector3.zero;
-		}	}
+		}
+	}
 
 	private static void Destroy()
 	{

@@ -21,18 +21,19 @@ public class TwoPointMovement : Movement
 
 	public override Vector3 Move()
 	{
-		if (target.position.x <= xMinPoint)
+        Vector3 targetPos = target.position;
+		if (targetPos.x <= xMinPoint)
 		{
 			directionX = 1;
 			FlipX = true;
 		}
-		else if (target.position.x >= xMaxPoint)
+		else if (targetPos.x >= xMaxPoint)
 		{
 			directionX = -1;
 			FlipX = false;
 		}
 
-		Vector3 pos = target.position + target.right * directionX;
+		Vector3 pos = targetPos + target.right * directionX;
 		return pos;
 	}
 }

@@ -6,30 +6,31 @@ using UnityEngine.Profiling;
 
 public class RotateToScreenPoint : MonoBehaviour
 {
-	float offset;
+    private float offset;
 
-	#region Unity lifecycle
-	void Start()
+    #region Unity lifecycle
+    private void Start()
 	{
 		offset = transform.localEulerAngles.z;
 	}
 
-	void LateUpdate()
+    private void LateUpdate()
 	{
-		Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		Vector2 newRight = mousePos - (Vector2)transform.position;
+		Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		Vector3 newRight = mousePos - transform.position;
 
 		if (CharacterController.flipX)
 			newRight.x = newRight.x * -1;
 
-		Vector3 newAngel = new Vector3(0, 0, 0);
+		Vector3 newAngel = Vector3.zero;
 
 		if (newRight.y >= 0)
-			newAngel.z = Vector2.Angle(new Vector2(1, 0), newRight);
+			newAngel.z = Vector2.Angle(Vector2.right, newRight);
 		else
-			newAngel.z = -Vector2.Angle(new Vector2(1, 0), newRight);
+			newAngel.z = -Vector2.Angle(Vector2.right, newRight);
 
 		newAngel.z += offset;
-		transform.localEulerAngles = newAngel;	}
+		transform.localEulerAngles = newAngel;
+	}
 	#endregion
 }
