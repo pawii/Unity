@@ -167,9 +167,8 @@ public class CharacterController : MonoBehaviour
 		Vector3 pos = transform.position;
 		pos.y -= 1f;
 		Collider2D[] colliders = Physics2D.OverlapCircleAll(pos, 0.1f);
-		for (int i = 0; i < colliders.Length; i++)
-			if (colliders[i].gameObject.layer != LayerMask.NameToLayer("dont hit"))
-				isGrounded = true;
+        if (colliders.Length >= 1)
+            isGrounded = true;
 	}
 
 	public void OnHit(MessageParameters parameters)

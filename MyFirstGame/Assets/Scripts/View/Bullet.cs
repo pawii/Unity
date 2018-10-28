@@ -71,10 +71,11 @@ public class Bullet : MonoBehaviour
 		startPos = transform.position;
 		float time = (2f * (float)force.magnitude * (float)Mathf.Sin((float)Methods.Angle(new Vector2(1, 0), force))) / (float)Physics2D.gravity.magnitude;
 
-		// БАГ - FORCE.Y = 0
-		//Debug.Log(force.ToString());
-		//if (time == 0f)
-		//{ time++; Debug.Log("NOT OK"); }
+        // БАГ - FORCE.Y = 0
+        if (time == 0f)
+        {
+            time++;
+        }
 		// БАГ - FORCE.Y = 0
 
 		endPos = startPos;

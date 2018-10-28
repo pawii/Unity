@@ -115,7 +115,8 @@ public partial class Archer : Monster
         {
             Vector3 toTarget = new Vector3(character.position.x - arrow.position.x,
                 character.position.y - arrow.position.y, 0);
-            if (Mathf.Abs(toTarget.x) <= damageArea + 1)
+            float absX = Mathf.Abs(toTarget.x);
+            if (absX <= damageArea + 1 && absX >= 1)
             {
                 Vector3 newAngel = Vector3.zero;
 
