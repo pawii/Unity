@@ -23,6 +23,25 @@ public class MissionManager : MonoBehaviour, IGameManager
 		status = ManagerStatus.Started;
 	}
 
+    public void LoadMainScene()
+    {
+        levelPrefab = Resources.Load<GameObject>("MainScene");
+        levelPrefab = Instantiate(levelPrefab);
+    }
+
+    public void LoadLevel(int level)
+    {
+        if (level <= maxLevel && level >= 0)
+        {
+            curLevel = level;
+            RestartCurrent();
+        }
+        else
+        {
+            throw new Exception("Level doesn't exists");
+        }
+    }
+
 	public void RestartCurrent()
 	{
 		if (levelPrefab != null)
@@ -32,10 +51,15 @@ public class MissionManager : MonoBehaviour, IGameManager
 		}
 		levelPrefab = Resources.Load<GameObject>("Level" + curLevel);
 		levelPrefab = Instantiate(levelPrefab);
-		int offset = curLevel * 100;
-		levelPrefab.transform.position = new Vector3(0, offset, 0);
-		GameController.Character.transform.position = new Vector3(0, offset + 4, 0);
-		StartCoroutine(Delay());
+
+        //int offset = curLevel * 100;
+        //levelPrefab.transform.position = new Vector3(0, offset, 0);
+        //GameController.Character.transform.position = new Vector3(0, offset + 4, 0);
+
+        levelPrefab.transform.position = new Vector3(0, 0, 0);
+        GameController.Character.transform.position = new Vector3(0, 4, 0);
+
+        StartCoroutine(Delay());
 	}
 
 	public void GoNext()

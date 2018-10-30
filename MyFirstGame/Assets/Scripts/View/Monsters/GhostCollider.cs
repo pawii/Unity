@@ -30,10 +30,11 @@ public class GhostCollider : MonoBehaviour
 			hitRequire = false;
 			MessageParameters parameters = new MessageParameters(Methods.GetDirection(gameObject), damage);
 			GameController.Character.SendMessage("OnHit", parameters, SendMessageOptions.DontRequireReceiver);
+            StartCoroutine(Delay());
 		}
 	}
 
-	private IEnumerable Delay()
+	private IEnumerator Delay()
 	{
 		yield return new WaitForSeconds(delay);
 		hitRequire = true;

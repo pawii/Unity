@@ -23,9 +23,10 @@ public class GameController : MonoBehaviour
 		lightPrefab = Resources.Load("Light") as GameObject;
 
         Managers.ManagersStarted += OnManagersStarted;
-	}
+        Managers.Mission.LevelLoad += OnLevelLoad;
+    }
 
-	private void Destroy()
+	private void OnDestroy()
 	{
         Managers.ManagersStarted -= OnManagersStarted;
         Managers.Mission.LevelLoad -= OnLevelLoad;
@@ -49,13 +50,15 @@ public class GameController : MonoBehaviour
 
 	private void OnManagersStarted()
     {
+        Managers.Mission.LoadMainScene();
+	}
+
+    public static void LoadLevel(int level)
+    {
         ShowNotification("PLEASE, WAIT");
 
-        Managers.Mission.LevelLoad += OnLevelLoad;
-        for (int i = 0; i < startLevel; i++)
-			Managers.Mission.GoNext();
-		//Application.LoadLevel("TestSprites");
-	}
+        Managers.Mission.LoadLevel(level);
+    }
 
 	public static void FinishLevel()
 	{

@@ -89,6 +89,7 @@
     <Compile Include="Assets\Scripts\Managers\PlayerManager.cs" />
     <Compile Include="Assets\Scripts\Methods.cs" />
     <Compile Include="Assets\Scripts\UI\LivesPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\MainScene.cs" />
     <Compile Include="Assets\Scripts\UI\UIController.cs" />
     <Compile Include="Assets\Scripts\View\Bullet.cs" />
     <Compile Include="Assets\Scripts\View\BulletFactory.cs" />
